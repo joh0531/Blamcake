@@ -17,3 +17,16 @@ go to server
 ```
 $ npm run dev
 ```
+
+## Built With
+* MongoDB - database
+* Express.js - back-end framework
+* React - front-end
+* Node.js - back-end
+* Material-UI - user interface
+
+## Authors
+* Jewon Oh
+* Paul Kwak
+* Matthew Phelps
+* Maru Choi
