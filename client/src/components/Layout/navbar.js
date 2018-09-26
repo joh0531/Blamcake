@@ -29,6 +29,7 @@ export default withStyles(theme => ({
                     </Grid>
                     <Grid item>
                         <Tabs value={value} onChange={this.handleChange}>
+                            <Tab label="Home" />
                             <Tab label="Stage 1" />
                             <Tab label="Stage 2" />
                         </Tabs>

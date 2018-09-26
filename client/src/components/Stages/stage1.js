@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { List, ListItem, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 
 export default withStyles(theme => ({
     stage1: {
@@ -15,27 +15,27 @@ export default withStyles(theme => ({
             DataBase Project Fall 2018 - Stage 1
         </Typography>
         <Typography variant="subheading">Group Members:</Typography>
-        {['Maru Choi', 'Paul Kwak', 'Jewon Oh', 'Matthew Phelps'].map(member => (
-            <Typography variant="caption">{`• ${member}`}</Typography>
+        {['Maru Choi', 'Paul Kwak', 'Jewon Oh', 'Matthew Phelps'].map((member, i) => (
+            <Typography key={i} variant="caption">{`• ${member}`}</Typography>
         ))}
         <Typography variant="title">Description</Typography>
-        {['Mobile responsive event app that provides a filtered calendar of ND events based on user interest.'].map(bullet => (
-            <Typography variant="caption">{`• ${bullet}`}</Typography>
+        {['Mobile responsive event app that provides a filtered calendar of ND events based on user interest.'].map((bullet, i) => (
+            <Typography key={i} variant="caption">{`• ${bullet}`}</Typography>
         ))}
         <Typography variant="title">Usefulness</Typography>
         {[
             'There is a calendar portion on the ND app that shows upcoming events. However, our app will be different in that it can display only events matching a variety of user interests (even multiple interests at once)',
             'Users may also submit their own events (they will be required to fill out ALL fields to provide robust information to other users)',
             'Users can see how many other users are attending an event or are subscribed to a calendar (i.e. series of events catered to an interest)'
-        ].map(bullet => (
-            <Typography variant="caption">{`• ${bullet}`}</Typography>
+        ].map((bullet, i) => (
+            <Typography key={i} variant="caption">{`• ${bullet}`}</Typography>
         ))}
         <Typography variant="title">Realness</Typography>
         {[
             'There is an ND events API where we can see upcoming events.',
             'User-submitted events are not surprisingly provided by the user.'
-        ].map(bullet => (
-            <Typography variant="caption">{`• ${bullet}`}</Typography>
+        ].map((bullet, i) => (
+            <Typography key={i} variant="caption">{`• ${bullet}`}</Typography>
         ))}
         <Typography variant="title">Functionality</Typography>
         <Typography variant="body2">Basic Functions</Typography>
@@ -46,7 +46,7 @@ export default withStyles(theme => ({
             'interact with ND event API',
             'query events based on particular calendar subscribed to'
         ].map((bullet, i) => (
-            <Typography variant="caption">{`${i + 1}. ${bullet}`}</Typography>
+            <Typography key={i} variant="caption">{`${i + 1}. ${bullet}`}</Typography>
         ))}
         <Typography variant="body2">Advanced Functions</Typography>
         {[
@@ -55,7 +55,7 @@ export default withStyles(theme => ({
             'Keep track of user subscribed to each calendar',
             'Customized email notifications based on calendars subscribed to, events attending, and email notification preferences'
         ].map((bullet, i) => (
-            <Typography variant="caption">{`${i + 1}. ${bullet}`}</Typography>
+            <Typography key={i} variant="caption">{`${i + 1}. ${bullet}`}</Typography>
         ))}
         <Typography variant="title">Diagram Description</Typography>
         <Typography variant="caption">
