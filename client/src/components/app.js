@@ -1,6 +1,14 @@
 import React, { Component, Fragment } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { AppBar, CssBaseline, Grid, Tab, Tabs, Typography } from '@material-ui/core'
+import {
+    AppBar,
+    CssBaseline,
+    Grid,
+    Tab,
+    Tabs,
+    Typography
+} from '@material-ui/core'
+import Stage1 from './stage1'
 
 export default withStyles(theme => ({
     title: {
@@ -31,12 +39,13 @@ export default withStyles(theme => ({
                         </Grid>
                         <Grid item>
                             <Tabs value={value} onChange={this.handleChange}>
-                                <Tab label="Home" />
-                                <Tab label="Else" />
+                                <Tab label="Stage 1" />
+                                <Tab label="Stage 2" />
                             </Tabs>
                         </Grid>
                     </Grid>
                 </AppBar>
+                <Stage1 />
             </Fragment>
         )
     }
