@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import { AppBar, Grid, Tab, Tabs, Typography } from '@material-ui/core'
 
@@ -29,9 +30,9 @@ export default withStyles(theme => ({
                     </Grid>
                     <Grid item>
                         <Tabs value={value} onChange={this.handleChange}>
-                            <Tab label="Home" />
-                            <Tab label="Stage 1" />
-                            <Tab label="Stage 2" />
+                            <Tab component={Link} label="Home" to="/" />
+                            <Tab component={Link} label="Stage 1" to="/stage1" />
+                            <Tab component={Link} label="Stage 2" to="/stage2"/>
                         </Tabs>
                     </Grid>
                 </Grid>
