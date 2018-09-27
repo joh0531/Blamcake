@@ -1,6 +1,7 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
+import { erDiagram } from '../../images'
 
 export default withStyles(theme => ({
     stage1: {
@@ -57,6 +58,8 @@ export default withStyles(theme => ({
         ].map((bullet, i) => (
             <Typography key={i} variant="caption">{`${i + 1}. ${bullet}`}</Typography>
         ))}
+        <Typography variant="title">ER Diagram</Typography>
+        <img src={erDiagram} />
         <Typography variant="title">Diagram Description</Typography>
         <Typography variant="caption">
             {'Users has the attributes netid(varchar), password(varchar), and email(varchar), and attends Events. Users can also submit User Events. Events has the attributes id(int), all_day(boolean), created_at(varchar/date), location(varchar), start_at(varchar/date), end_at(varchar/date), content(varchar), title(varchar), image(link to image, varchar), url(link to event website, varchar), isFeatured(boolean). User Events is a Events and has the attributes club(varchar) and netid(varchar). ND Events is Events, and the data is parsed from the dataset from ND events website. Users can also subscribe to Calendars, which has the attributes category(char), length(int, number of hours). Calendars has Events. It also has Notification Preferences, which has the attributes email(varchar, email of user), regularity(varchar), timeofday(varchar, time).'}
