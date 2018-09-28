@@ -29,15 +29,37 @@ export default withStyles(theme => ({
 		</Typography>
 		<Paper className={classes.paper}>
 			<Typography variant="headline">
-				1. Relational Schema
+				1a. Relational Schema
 			</Typography>
 			{[
 				'Events(ID, all_day, created_at, location, start_at, end_at, content, title, image, url, isFeatured)',
 				'NDEvent(ID, all_day, created_at, location, start_at, end_at, content, title, image, url, isFeatured)',
 				'UserEvent(ID, all_day, created_at, location, start_at, end_at, content, title, image, url, isFeatured, club, netid)',
 				'Users(NETID, password, email)',
-				'Calendar(CATEGORY, length)',
+				'Calendar(CATEGORY, LENGTH)',
 				'NotificationPreferences(EMAIL, timeofday, regularity)',
+			].map((bullet, i) => (
+				<Typography
+					className={classes.indented}
+					color="inherit"
+					key={i}
+					variant="caption"
+				>
+					{`• ${bullet}`}
+				</Typography>
+			))}
+		</Paper>
+		<Paper className={classes.paper}>
+			<Typography variant="headline">
+				1b. Functional Dependencies 
+			</Typography>
+			{[
+				'Events: { ID -> all_day, created_at, location, start_at, end_at, content, title, image, url, isFeatured }',
+				'NDEvent: { ID -> all_day, created_at, location, start_at, end_at, content, title, image, url, isFeatured }',
+				'UserEvent: { ID -> all_day, created_at, location, start_at, end_at, content, title, image, url, isFeatured, club, netid }',
+				'Users: { NETID -> password, email }',
+				'Calendar: { }',
+				'Notification Preferences: { EMAIL -> timeofday, regularity }',
 			].map((bullet, i) => (
 				<Typography
 					className={classes.indented}
