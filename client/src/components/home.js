@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles'
 import { Typography, Grid, Paper } from '@material-ui/core'
+import events from './content'
 
 // export default withStyles() => <h1>HOME!</h1>
 
@@ -29,7 +30,7 @@ export default withStyles(theme => ({
 }))(({ classes }) => (
     <div className={classes.home}>
 		<Grid container className={classes.gridcontainer}> 
-			{[1,2,3,4,5,6,7].map((num) => (
+			{events.map((num) => (
 			
 			<Grid item xs>
 				<Paper className={classes.paper}>{`${num}`}</Paper>
