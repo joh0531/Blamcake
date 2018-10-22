@@ -29,8 +29,6 @@ export default withStyles(theme => ({
                             Blamcake
                         </Typography>
 					</Grid>
-					<Grid item>
-					</Grid>
                     <Grid item>
                         <Tabs value={value} onChange={this.handleChange}>
 							<Tab 
