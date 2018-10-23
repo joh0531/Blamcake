@@ -38,6 +38,10 @@ const EventSchema = new mongoose.Schema({
     },
     featured_image_url: {
         type: String
+    },
+    category: {
+        required: true,
+        type: String
     }
 })
 
