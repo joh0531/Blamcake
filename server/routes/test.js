@@ -15,6 +15,7 @@ router.get('/', jsonParser, (req, res) => {
     //     .catch(error => res.send(error))
 	console.log('hi');
 	res.render('index',{user: "Great User",title:"homepage"});
+	res.send('hi');
 })
 
 router.post('/', jsonParser, (req, res) => {
