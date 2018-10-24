@@ -2,10 +2,18 @@ import React, { Fragment } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { Card, CardActions, Button, Typography } from '@material-ui/core'
 import { CardContent, CardMedia, CardActionArea } from '@material-ui/core'
+import { purple } from '@material-ui/core/colors'
 //import LocationOn from 'material-ui-icons/LocationOn'
 import events from './content'
 
 export default withStyles(theme => ({
+	card: {
+		margin: theme.spacing.unit * 2,
+	},
+	pretty: {
+		color: purple[500]
+	}
+
 	//paper: {
 	//	margin: theme.spacing.unit * 0,
 	//	padding: theme.spacing.unit * 4,
@@ -26,11 +34,20 @@ export default withStyles(theme => ({
 				<CardMedia>
 				</CardMedia>
 				<CardContent>
-					<Typography variant="subtitle" component="h3">
+					<Typography i
+						variant="subtitle" 
+						component="h2"
+						color="primary"
+						gutterBottom
+					>
 						{ title }
 					</Typography>
-					<Typography variant="h6" component="h3">
-						{ content }: ...{ location }
+					<Typography variant="h5" component="h4">
+						{ content }
+					</Typography>
+					<Typography variant="h6" component="h5"
+						className={classes.pretty}>
+						Location : { location }
 					</Typography>
 				</CardContent>
 			</CardActionArea>
