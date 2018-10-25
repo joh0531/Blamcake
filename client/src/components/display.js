@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { Card, CardActions, Button, Typography, Grid } from '@material-ui/core'
-import { CardContent, CardMedia, CardActionArea } from '@material-ui/core'
+import { CardContent, CardMedia, CardActionArea, IconButton } from '@material-ui/core'
 import { purple } from '@material-ui/core/colors'
 import LocationOn from '@material-ui/icons/LocationOn'
 import events from './mockevents'
