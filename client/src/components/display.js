@@ -70,9 +70,6 @@ export default withStyles(theme => ({
 						>
 							{ title }
 						</Typography>
-						<Typography variant="subtitle1" gutterBottom>
-							{ content }
-						</Typography>
 						<div>
 							<LocationOn 
 								className={classes.icon} 
@@ -101,7 +98,11 @@ export default withStyles(theme => ({
 					timeout="auto"
 					unmountOnExit
 				>
-					me
+					<CardContent>
+						<Typography variant="body1">
+							{ content }
+						</Typography>
+					</CardContent>
 				</Collapse>
 			</Card>
 			))}
