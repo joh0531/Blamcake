@@ -4,6 +4,7 @@ import { Card, CardActions, Button, Typography, Grid } from '@material-ui/core'
 import { CardContent, CardMedia, CardActionArea, IconButton } from '@material-ui/core'
 import { purple } from '@material-ui/core/colors'
 import LocationOn from '@material-ui/icons/LocationOn'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import events from './mockevents'
 
 export default withStyles(theme => ({
@@ -15,12 +16,14 @@ export default withStyles(theme => ({
 	location: {
 		color: purple[300],
 		fontSize: 16,
+		float: "left",
 	},
 	icon: {
 		color: purple[400],
 		marginRight: theme.spacing.unit * 1.5,
 		marginTop: theme.spacing.unit * 1.5,
 		fontSize: 18,
+		float: "left",
 	},
 	//paper: {
 	//	margin: theme.spacing.unit * 0,
@@ -57,12 +60,10 @@ export default withStyles(theme => ({
 							className={classes.icon} 
 							fontSize="small"
 							gutterBottom
-							style={{float:"left"}}
 						/>
 						<Typography 
 							variant="overline" 
 							className={classes.location}
-							style={{float:"left"}}
 						>
 							Location : { location }
 						</Typography>
