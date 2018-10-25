@@ -13,12 +13,14 @@ export default withStyles(theme => ({
 		padding: theme.spacing.unit * 1.5,
 	},
 	location: {
-		color: purple[500],
-		fontSize: 14,
+		color: purple[300],
+		fontSize: 16,
 	},
 	icon: {
+		color: purple[400],
 		marginRight: theme.spacing.unit * 1.5,
 		marginTop: theme.spacing.unit * 1.5,
+		fontSize: 18,
 	},
 	//paper: {
 	//	margin: theme.spacing.unit * 0,
@@ -47,19 +49,24 @@ export default withStyles(theme => ({
 					>
 						{ title }
 					</Typography>
-					<Typography variant="subtitle1">
+					<Typography variant="subtitle1" gutterBottom>
 						{ content }
 					</Typography>
-					<Typography 
-						variant="overline" 
-						className={classes.location}
-					>
+					<div>
 						<LocationOn 
 							className={classes.icon} 
 							fontSize="small"
+							gutterBottom
+							style={{float:"left"}}
 						/>
-						Location : { location }
-					</Typography>
+						<Typography 
+							variant="overline" 
+							className={classes.location}
+							style={{float:"left"}}
+						>
+							Location : { location }
+						</Typography>
+					</div>
 				</CardContent>
 			</CardActionArea>
 		</Card>
