@@ -1,7 +1,9 @@
-import React, { Fragment } from 'react'
+import React, { Component, Fragment } from 'react'
+import classnames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
-import { Card, CardActions, Button, Typography, Grid } from '@material-ui/core'
-import { CardContent, CardMedia, CardActionArea, IconButton } from '@material-ui/core'
+import { Card, CardActions, Button, Typography } from '@material-ui/core'
+import { Collapse, Grid, IconButton } from '@material-ui/core'
+import { CardContent, CardMedia, CardActionArea } from '@material-ui/core'
 import { purple } from '@material-ui/core/colors'
 import LocationOn from '@material-ui/icons/LocationOn'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -16,7 +18,7 @@ export default withStyles(theme => ({
 	location: {
 		color: purple[300],
 		fontSize: 16,
-		float: "left",
+		float: 'left',
 	},
 	icon: {
 		color: purple[400],
@@ -25,65 +27,85 @@ export default withStyles(theme => ({
 		fontSize: 18,
 		float: "left",
 	},
-	//paper: {
-	//	margin: theme.spacing.unit * 0,
-	//	padding: theme.spacing.unit * 4,
-	//	//width: 200,
-	//	height: 200,
-	//},
-	//gridcontainer: {
-	//	direction: "row",
-	//	justify: "flex-start",
-	//	alignItems: "baseline",
-	//	margin: theme.spacing.unit * 0,
-	//},
-}))(({ classes }) => (
-	<Grid container justify="center"> 
-		{events.map(({ title, content, location }) => (
-		<Card className={classes.card}>
-			<CardActionArea>
-				<CardMedia>
-				</CardMedia>
-				<CardContent>
-					<Typography i
-						variant="h4" 
-						color="primary"
-						gutterBottom
-					>
-						{ title }
-					</Typography>
-					<Typography variant="subtitle1" gutterBottom>
-						{ content }
-					</Typography>
-					<div>
-						<LocationOn 
-							className={classes.icon} 
-							fontSize="small"
+	expand: {
+		float: 'right',
+		transform: 'rotate(0deg)',
+		transition: theme.transitions.create('transform', {
+			duration: theme.transitions.duration.shortest,
+		}),
+		marginLeft: 'auto',
+	},
+	expandOpen: {
+		transform: 'rotate(180deg)',
+	},
+	container: {
+		// TO DO:
+		// When width of screen is desktop, do not center cards
+		// When width of screen is more mobile-esque, center (media queries)
+
+		// direction: "row",
+		// justify: "flex-start",
+		// alignItems: "baseline",
+	},
+}))(class extends Component { 
+	state = { expanded: false }
+	handleExpandClick = () => {
+		this.setState(state => ({ expanded: !state.expanded }))
+	}
+
+	render() {
+		const { classes } = this.props
+		return (
+		<Grid container className={classes.container} justify="center"> 
+			{events.map(({ title, content, location }) => (
+			<Card className={classes.card}>
+				<CardActionArea>
+					<CardMedia>
+					</CardMedia>
+					<CardContent>
+						<Typography i
+							variant="h4" 
+							color="primary"
 							gutterBottom
-						/>
-						<Typography 
-							variant="overline" 
-							className={classes.location}
 						>
-							Location : { location }
+							{ title }
 						</Typography>
-					</div>
-				</CardContent>
-			</CardActionArea>
-		</Card>
-		))}
-	</Grid>
-	// <Grid container> 
-	// 	<Grid item sm>
-	// 		<Grid container className={classes.gridcontainer}> 
-	// 			{events.map((num) => (
-				
-	// 			<Grid item xs>
-	// 				<Paper className={classes.paper}>{`${num}`}</Paper>
-	// 			</Grid>
-				
-	// 			))}
-	// 		</Grid>
-	// 	</Grid>
-	// </Grid>
-))
+						<Typography variant="subtitle1" gutterBottom>
+							{ content }
+						</Typography>
+						<div>
+							<LocationOn 
+								className={classes.icon} 
+								fontSize="small"
+								gutterBottom
+							/>
+							<Typography 
+								variant="overline" 
+								className={classes.location}
+							>
+								Location : { location }
+							</Typography>
+							<IconButton 
+								className={classnames(classes.expand, {
+									[classes.expandOpen]: this.state.expanded,
+								})}
+								onClick={this.handleExpandClick}
+								>
+								<ExpandMoreIcon />
+							</IconButton>
+						</div>
+					</CardContent>
+				</CardActionArea>
+				<Collapse 
+					in={this.state.expanded}
+					timeout="auto"
+					unmountOnExit
+				>
+					me
+				</Collapse>
+			</Card>
+			))}
+		</Grid>
+	)
+	}
+})
