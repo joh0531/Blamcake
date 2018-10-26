@@ -2,7 +2,6 @@ import React, { Fragment } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { CssBaseline } from '@material-ui/core'
 import Navbar from './navbar'
-import Display from './display'
 
 export default withStyles(theme => ({
     content: {
