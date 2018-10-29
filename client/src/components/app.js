@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Layout from './Layout'
-import Home from './home'
+import Home from './Home'
 import { Stage1, Stage2 } from './Stages'
 
 export default () => (
