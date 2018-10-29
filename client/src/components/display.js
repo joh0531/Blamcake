@@ -48,17 +48,31 @@ export default withStyles(theme => ({
 		// alignItems: "baseline",
 	},
 }))(class extends Component { 
-	state = { expanded: false }
-	handleExpandClick = () => {
-		this.setState(state => ({ expanded: !state.expanded }))
+	// add events map here too!
+
+	state = (function(){
+		var s = {}; 
+		for (const index of events.keys()){
+			s.expanded[index] = false
+		}
+		return s;
+	})
+
+	//	state = { expanded: false }
+	handleExpandClick = (i) => {
+		// this.setState(state => ())
+		let newState = Object.assign({}, this.state);
+		console.log(newState);
+		newState.expanded[i] = !newState.expanded[i];
+		this.setState(newState);
 	}
 
 	render() {
 		const { classes } = this.props
 		return (
 		<Grid container className={classes.container} justify="center"> 
-			{events.map(({ title, content, location }) => (
-			<Card className={classes.card}>
+			{events.map(({ title, content, location }, i) => (
+			<Card className={classes.card} key={i}>
 				<CardActionArea>
 					<CardMedia>
 					</CardMedia>
@@ -86,7 +100,7 @@ export default withStyles(theme => ({
 								className={classnames(classes.expand, {
 									[classes.expandOpen]: this.state.expanded,
 								})}
-								onClick={this.handleExpandClick}
+								onClick={this.handleExpandClick(i)}
 								>
 								<ExpandMoreIcon />
 							</IconButton>
