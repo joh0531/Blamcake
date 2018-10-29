@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { AppBar, Grid, Tab, Tabs, Typography } from '@material-ui/core'
 import SvgIcon from '@material-ui/core/SvgIcon'
 import BuildIcon from '@material-ui/icons/Build'
+import EventIcon from '@material-ui/icons/Event'
 
 export default withStyles(theme => ({
     title: {
@@ -33,7 +34,7 @@ export default withStyles(theme => ({
                     <Grid item>
                         <Tabs value={value} onChange={this.handleChange}>
 							<Tab component={Link} label="Home" to="/"
-								
+								icon={ <EventIcon color="inherit"/> }
 							/>
 							<Tab component={Link} label="Stage 1" to="/stage1" 
 								icon={ <BuildIcon color="inherit"/> }

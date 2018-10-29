@@ -6,25 +6,16 @@ import EventCard from './EventCard'
 
 export default withStyles(theme => ({
 	container: {
-		// TO DO list:
-		// When width of screen is desktop, do not center cards
-		// When width of screen is more mobile-esque, center (media queries)
-
-		// direction: "row", justify: "flex-start", alignItems: "baseline",
+		justifyContent: "flex-start",
 	},
-}))(({ classes }) => { 
-
-// 	render() {
-		return (
-			<Grid container className={classes.container} justify="center"> 
-				{events.map(({ title, content, location }) => (
-					<EventCard 
-						title={title}
-						content={content}
-						location={location}
-					/>			
-				))}
-			</Grid>
-		)
-	// }
-})
+}))(({ classes }) => (
+	<Grid container className={classes.container}> 
+		{events.map(({ title, content, location }) => (
+			<EventCard 
+				title={title}
+				content={content}
+				location={location}
+			/>			
+		))}
+	</Grid>
+))
