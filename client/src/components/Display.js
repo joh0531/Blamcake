@@ -6,16 +6,21 @@ import EventCard from './EventCard'
 
 export default withStyles(theme => ({
 	container: {
-		justifyContent: "flex-start",
+		[theme.breakpoints.down('sm')]: {
+			justifyContent: "center",
+		},
+		[theme.breakpoints.up('md')]: {
+			justifyContent: "flex-start",
+		},
 	},
 }))(({ classes }) => (
-	<Grid container className={classes.container}> 
+	<Grid container className={classes.container}>
 		{events.map(({ title, content, location }) => (
-			<EventCard 
+			<EventCard
 				title={title}
 				content={content}
 				location={location}
-			/>			
+			/>
 		))}
 	</Grid>
 ))
