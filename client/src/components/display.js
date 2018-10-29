@@ -12,10 +12,9 @@ export default withStyles(theme => ({
 
 		// direction: "row", justify: "flex-start", alignItems: "baseline",
 	},
-}))(class extends Component { 
+}))(({ classes }) => { 
 
-	render() {
-		const { classes } = this.props
+// 	render() {
 		return (
 			<Grid container className={classes.container} justify="center"> 
 				{events.map(({ title, content, location }) => (
@@ -27,5 +26,5 @@ export default withStyles(theme => ({
 				))}
 			</Grid>
 		)
-	}
+	// }
 })
