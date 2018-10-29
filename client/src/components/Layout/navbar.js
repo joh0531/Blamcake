@@ -32,11 +32,8 @@ export default withStyles(theme => ({
 					</Grid>
                     <Grid item>
                         <Tabs value={value} onChange={this.handleChange}>
-							<Tab component={Link} label="Home" to="/" icon={ 
-								<SvgIcon color="inherit">
-									<path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-								</SvgIcon> 
-								}
+							<Tab component={Link} label="Home" to="/"
+								
 							/>
 							<Tab component={Link} label="Stage 1" to="/stage1" 
 								icon={ <BuildIcon color="inherit"/> }
