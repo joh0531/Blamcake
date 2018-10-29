@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
-import { AppBar, Grid, Tab, Tabs, Typography } from '@material-ui/core'
+import { AppBar, Grid, Tab, Tabs, Typography, Menu, MenuItem, Button } from '@material-ui/core'
 
 export default withStyles(theme => ({
     title: {
@@ -9,14 +9,21 @@ export default withStyles(theme => ({
     }
 }))(class extends Component {
     state = {
-        value: 0
+        value: 0,
+        anchorEl: null
     }
     handleChange = (e, value) => {
         this.setState({ value })
     }
+    handleClick = event => {
+        this.setState({ anchorEl: event.currentTarget })
+    }
+    handleClose = () => {
+        this.setState({ anchorEl: null })
+    }
     render() {
         const { classes } = this.props
-        const { value } = this.state
+        const { value, anchorEl } = this.state
         return (
             <AppBar position="static">
                 <Grid alignItems="center" container justify="space-around">
@@ -34,6 +41,24 @@ export default withStyles(theme => ({
                             <Tab component={Link} label="Stage 1" to="/stage1" />
                             <Tab component={Link} label="Stage 2" to="/stage2"/>
                         </Tabs>
+                    </Grid> 
+                    <Grid item>
+                        <Button
+                            className={classes.title}
+                            variant="title"
+                            onClick={this.handleClick}
+                        > 
+                            My Events
+                        </Button>
+                        <Menu
+                            id="eventmenu"
+                            anchorEl={anchorEl}
+                            open={Boolean(anchorEl)}
+                            onClose={this.handleClose}
+                        >
+                            <MenuItem onClick={this.handleClose} component={Link} to="/add">Add</MenuItem>
+                            <MenuItem onClick={this.handleClose}>Edit</MenuItem>
+                        </Menu>
                     </Grid>
                 </Grid>
             </AppBar>
