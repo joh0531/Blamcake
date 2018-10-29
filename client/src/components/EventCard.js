@@ -7,7 +7,7 @@ import { CardContent, CardMedia, CardActionArea } from '@material-ui/core'
 import { purple } from '@material-ui/core/colors'
 import LocationOn from '@material-ui/icons/LocationOn'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-
+//import { nd1, nd2, nd3 } from '../images'
 
 export default withStyles(theme => ({
 	card: {
@@ -38,6 +38,9 @@ export default withStyles(theme => ({
 	expandOpen: {
 		transform: 'rotate(180deg)',
 	},
+	media: {
+		height: 200,
+	},
 }))(class extends Component {
 	state = { expanded: false }
 	
@@ -51,8 +54,12 @@ export default withStyles(theme => ({
 		return (
 			<Card className={classes.card}>
 				<CardActionArea>
-					<CardMedia>
-					</CardMedia>
+					<CardMedia 
+						className={classes.media}
+						image={require("../images/nd1.png")}
+						title="Standard Event Background, ND Campus"
+						alt="Standard Event Background, ND Campus"
+					/>
 					<CardContent>
 						<Typography i
 							variant="h4" 
