@@ -5,9 +5,6 @@ import Interest from './interest'
 import { Consumer } from './context'
 
 export default withStyles(theme => ({
-	display: {
-
-	},
 }))(({ classes }) => (
 	<Fragment>
 		<Consumer>

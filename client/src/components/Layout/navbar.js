@@ -24,13 +24,13 @@ export default withStyles(theme => ({
             <AppBar position="static">
                 <Grid alignItems="center" container justify="space-around">
                     <Grid item>
-                        <Typography
+						<Typography
                             className={classes.title}
                             variant="title"
                         >
                             Blamcake
                         </Typography>
-					</Grid>
+                    </Grid>
                     <Grid item>
                         <Tabs value={value} onChange={this.handleChange}>
 							<Tab component={Link} label="Home" to="/"
