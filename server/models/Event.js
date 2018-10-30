@@ -42,6 +42,10 @@ const EventSchema = new mongoose.Schema({
     category: {
         required: true,
         type: String
+    },
+    user: {
+        default: undefined,
+        type: String
     }
 })
 

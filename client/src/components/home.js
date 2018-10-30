@@ -1,3 +1,19 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import Display from './display'
+import Interest from './interest'
+import { Consumer } from './context'
 
-export default () => <h1>HOME!</h1>
+export default withStyles(theme => ({
+}))(({ classes }) => (
+	<Fragment>
+		<Consumer>
+			{({ state: { interestFormComplete }}) => {
+				if (interestFormComplete) {
+					return <Display className={classes.display}/>
+				}
+				return <Interest />
+			}}
+		</Consumer>
+	</Fragment>
+))
