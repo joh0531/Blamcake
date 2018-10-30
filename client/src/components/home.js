@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import Display from './Display'
-import Interest from './Interest'
+import Display from './display'
+import Interest from './interest'
 import { Consumer } from './context'
 
 export default withStyles(theme => ({

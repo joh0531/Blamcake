@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Provider } from './context'
 import Layout from './Layout'
-import Home from './Home'
+import Home from './home'
 import { Stage1, Stage2 } from './Stages'
 
 export default class extends Component {
