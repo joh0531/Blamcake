@@ -11,6 +11,8 @@ export default () => (
                 <Route exact component={Home} path="/" />
                 <Route component={Stage1} path="/stage1" />
                 <Route component={Stage2} path="/stage2" />
+                <Route component={Add} path="/add" />
+                <Route component={Edit} path="/edit" />
             </Switch>
         </Layout>
     </BrowserRouter>
