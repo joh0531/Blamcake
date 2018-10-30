@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import { Button } from '@material-ui/core'
+import { Consumer } from './context'
 
 export default withStyles(theme => ({
 	button: {
@@ -20,9 +22,17 @@ export default withStyles(theme => ({
 	
 		return (
 			<div>
-				<Button variant="contained" className={classes.button}>
-					Begin
-				</Button>
+				<Consumer>
+					{({ interestFormComplete }) => (
+						<Button 
+							variant="contained" 
+							className={classes.button}
+							onClick={e => this.onClick()}
+						>
+							Begin
+						</Button>
+					)}
+				</Consumer>
 			</div>
 		)
 	}
