@@ -6,6 +6,7 @@ const test = require('./routes/test')
 const update = require('./routes/update')
 const allEvents = require('./routes/allEvents')
 const deleteAll = require('./routes/deleteAll')
+const userAdd = require('./routes/userAdd')
 
 const port = process.env.PORT || 5000
 
@@ -25,4 +26,5 @@ app.use('/test', test)
 app.use('/update', update)
 app.use('/allEvents', allEvents)
 app.use('/deleteAll', deleteAll)
+app.use('/userAdd', userAdd)
 app.listen(port, () => console.log(`server running on port ${port}`))

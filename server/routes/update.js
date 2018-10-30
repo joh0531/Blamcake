@@ -41,14 +41,8 @@ router.post('/', jsonParser, (req, res) => {
 	const options = { json: true }; // Automatically parses the JSON string in the response
 	const { interests } = req.body; // destructuring obj -> directly get interests prop from req
 	const events = [];
-	// Delete old events from db first
-	// db.collection.deleteMany(){
-	// 	{ "Event.end_at": { $lt: today } },
-	// 	{
-	//
-	// 	}
-	// }
-	// Not sure how this will work actually
+
+	// Delete interests first, to update events with new current date
 	Event.deleteMany({ category: { $in: interests }}).then(
 		new Promise((resolve, reject) => {
 			// req.body.interests - array of strings
