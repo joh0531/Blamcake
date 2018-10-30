@@ -4,12 +4,14 @@ const mongoose = require('mongoose')
 const path = require('path')
 const test = require('./routes/test')
 const update = require('./routes/update')
+const allEvents = require('./routes/allEvents')
+const deleteAll = require('./routes/deleteAll')
 
 const port = process.env.PORT || 5000
 
 mongoose.connect(
-    'mongodb://blamcake:blamcake@167.99.226.23:27017/blamcake',
-    { auth: { authdb: 'admin' }, useNewUrlParser: true }
+    'mongodb://167.99.226.23:27017/blamcake',
+    { useNewUrlParser: true }
 )
 mongoose.set('useCreateIndex', true)
 const db = mongoose.connection;
@@ -21,4 +23,6 @@ if (process.env.NODE_ENV === 'production')
 
 app.use('/test', test)
 app.use('/update', update)
+app.use('/allEvents', allEvents)
+app.use('/deleteAll', deleteAll)
 app.listen(port, () => console.log(`server running on port ${port}`))
