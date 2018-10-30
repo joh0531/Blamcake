@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Layout from './Layout'
 import Home from './home'
 import { Stage1, Stage2 } from './Stages'
+import { Add, Edit } from './Manage'
 
 export default () => (
     <BrowserRouter>
@@ -11,6 +12,8 @@ export default () => (
                 <Route exact component={Home} path="/" />
                 <Route component={Stage1} path="/stage1" />
                 <Route component={Stage2} path="/stage2" />
+                <Route component={Add} path="/add" />
+                <Route component={Edit} path="/edit" />
             </Switch>
         </Layout>
     </BrowserRouter>
