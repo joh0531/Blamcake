@@ -6,7 +6,7 @@ import EventCard from './EventCard'
 
 export default withStyles(theme => ({
 	container: {
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			justifyContent: "center",
 		},
 		[theme.breakpoints.up('md')]: {

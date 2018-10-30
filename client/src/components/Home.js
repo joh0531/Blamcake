@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import Display from './Display'
+import Interest from './Interest'
+import { Consumer } from './context'
 
 export default withStyles(theme => ({
 	display: {
@@ -8,6 +10,13 @@ export default withStyles(theme => ({
 	},
 }))(({ classes }) => (
 	<Fragment>
-		<Display className={classes.display}/>
+		<Consumer>
+			{({ state: { interestFormComplete }}) => {
+				if (interestFormComplete) {
+					return <Display className={classes.display}/>
+				}
+				return <Interest />
+			}}
+		</Consumer>
 	</Fragment>
 ))
