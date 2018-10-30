@@ -56,7 +56,7 @@ export default withStyles(theme => ({
                             open={Boolean(anchorEl)}
                             onClose={this.handleClose}
                         >
-                            <MenuItem onClick={this.handleClose} component={Link} to="/add">Add</MenuItem>
+                            <MenuItem onClick={this.handleClose} component={Link} label="Add" to="/add">Add</MenuItem>
                             <MenuItem onClick={this.handleClose}>Edit</MenuItem>
                         </Menu>
                     </Grid>
