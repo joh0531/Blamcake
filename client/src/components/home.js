@@ -8,8 +8,8 @@ export default withStyles(theme => ({
 }))(({ classes }) => (
 	<Fragment>
 		<Consumer>
-			{({ state: { interestFormComplete }}) => {
-				if (interestFormComplete) {
+			{({ state: { interests }}) => {
+				if (interests.length) {
 					return <Display className={classes.display}/>
 				}
 				return <Interest />

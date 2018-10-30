@@ -7,10 +7,16 @@ import { Stage1, Stage2 } from './Stages'
 
 export default class extends Component {
 	state = {
-		interestFormComplete: false,
+		interests: [],
 	}
-	setInterests = () => {
-		this.setState({ interestFormComplete: true })
+	setInterests = (formState) => {
+		let interests = []
+		Object.entries(formState).forEach(([interest, selected]) => {
+			if (selected){
+				interests.push(interest)
+			}
+		})
+		this.setState({ interests })
 	}
 	render() {
 		return (
