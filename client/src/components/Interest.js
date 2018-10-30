@@ -14,7 +14,9 @@ export default withStyles(theme => ({
 		this.setState({ interestFormComplete: true })
 	}
 	render() {
-	
+		const { classes } = this.props
+		const { interestFormComplete } = this.state
+		if (interestFormComplete) return <Redirect to={'/'}/>
 	
 		return (
 			<div>
