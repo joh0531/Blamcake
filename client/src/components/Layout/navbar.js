@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
+import SvgIcon from '@material-ui/core/SvgIcon'
+import BuildIcon from '@material-ui/icons/Build'
+import EventIcon from '@material-ui/icons/Event'
 import { AppBar, Grid, Tab, Tabs, Typography, Menu, MenuItem, Button } from '@material-ui/core'
 
 export default withStyles(theme => ({
@@ -28,7 +31,7 @@ export default withStyles(theme => ({
             <AppBar position="static">
                 <Grid alignItems="center" container justify="space-around">
                     <Grid item>
-                        <Typography
+						<Typography
                             className={classes.title}
                             variant="title"
                         >
@@ -37,9 +40,15 @@ export default withStyles(theme => ({
                     </Grid>
                     <Grid item>
                         <Tabs value={value} onChange={this.handleChange}>
-                            <Tab component={Link} label="Home" to="/" />
-                            <Tab component={Link} label="Stage 1" to="/stage1" />
-                            <Tab component={Link} label="Stage 2" to="/stage2"/>
+							<Tab component={Link} label="Home" to="/"
+								icon={ <EventIcon color="inherit"/> }
+							/>
+							<Tab component={Link} label="Stage 1" to="/stage1" 
+								icon={ <BuildIcon color="inherit"/> }
+							/>
+							<Tab component={Link} label="Stage 2" to="/stage2"
+								icon={ <BuildIcon color="inherit"/> }
+							/>
                         </Tabs>
                     </Grid> 
                     <Grid item>

@@ -30,7 +30,8 @@ export default withStyles(theme => ({
 		start:"",
 		end:"",
 		url:"",
-		img:""
+		img:"",
+		category:""
 	}
 
 	handleChangeTitle = (e, title) => {
@@ -65,9 +66,13 @@ export default withStyles(theme => ({
 		this.setState({ img })
 	}
 
+	handleChangeCat = (e, category) => {
+		this.setState({ category })
+	}
+
 	render() {
 		const{ classes } = this.props
-		const{ title, desc, loc, allday, start, end } = this.state
+		const{ title, desc, loc, allday, start, end, url, img, category } = this.state
 
 		return(
 			<div className={classes.general}>
@@ -165,8 +170,9 @@ export default withStyles(theme => ({
 								id="category"
 								anchorEl={category}
 								open={Boolean(category)}
-								onClose={this.handleOnClose}
+								onClose={this.handleCloseCat}
 							>
+
 							</Menu>
 						</div>
 					</form>
