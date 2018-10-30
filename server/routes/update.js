@@ -41,7 +41,6 @@ router.post('/', jsonParser, (req, res) => {
 	const options = { json: true }; // Automatically parses the JSON string in the response
 	const { interests } = req.body; // destructuring obj -> directly get interests prop from req
 	const events = [];
-	let today = new Date();
 	// Delete old events from db first
 	// db.collection.deleteMany(){
 	// 	{ "Event.end_at": { $lt: today } },
@@ -50,55 +49,38 @@ router.post('/', jsonParser, (req, res) => {
 	// 	}
 	// }
 	// Not sure how this will work actually
+	Event.deleteMany({ category: { $in: interests }}).then(
+		new Promise((resolve, reject) => {
+			// req.body.interests - array of strings
+			interests.forEach((element, i) => {
+				options.uri = `https://events.nd.edu/events/calendar/${element}.json?upcoming`;
+				/*
+				TODO: from this, add ones that are further in future.
+				delete past events that aren't in DB
+				findOne() - after request, it gives us a list of upcoming events (PROMISE BTW)
+				findOne on the list (based on the schema),
+				if it exists ignore
+				else, create new obj with event and add to db
+				*/
+				// delete past events
 
-	new Promise((resolve, reject) => {
-		// req.body.interests - array of strings
-		interests.forEach((element, i) => {
-			options.uri = `https://events.nd.edu/events/calendar/${element}.json?upcoming`;
-			/*
-			TODO: from this, add ones that are further in future.
-			delete past events that aren't in DB
-			findOne() - after request, it gives us a list of upcoming events (PROMISE BTW)
-			findOne on the list (based on the schema),
-			if it exists ignore
-			else, create new obj with event and add to db
-			*/
-			// delete past events
+				rp(options)
+				// ({}) obj destructuring - picking from api obj - elements array
+			    	.then(({ elements }) => {
+						elements.forEach((el, j) => {
+							const {
+								start_at,
+								end_at,
+								location,
+								created_at,
+								updated_at,
+								title,
+								all_day,
+								url,
+								content,
+								featured_image_url
+							} = el;
 
-			rp(options)
-			// ({}) obj destructuring - picking from api obj - elements array
-		    	.then(({ elements }) => {
-					elements.forEach((el, j) => {
-						const {
-							start_at,
-							end_at,
-							location,
-							created_at,
-							updated_at,
-							title,
-							all_day,
-							url,
-							content,
-							featured_image_url
-						} = el;
-
-						var isExistingEvent = Event.findOne({
-							start_at,
-							end_at,
-							location,
-							created_at,
-							updated_at,
-							title,
-							all_day,
-							url,
-							content,
-							featured_image_url,
-							category: element,
-							user: ''
-						})
-						console.log(isExistingEvent);
-						// and check what it returns when it doesn't find one
-						if(isExistingEvent == null) {
 							Event.create({
 								start_at,
 								end_at,
@@ -114,6 +96,8 @@ router.post('/', jsonParser, (req, res) => {
 								user: ''
 							}).then(event => {
 								events.push(event);
+								return Promise.resolve();
+							}).then(() => {
 								if (
 									i === interests.length - 1
 									&& j === elements.length - 1
@@ -121,27 +105,60 @@ router.post('/', jsonParser, (req, res) => {
 									resolve();
 								}
 							});
-						} else {
-							// no need for break statement?
-							// break itself doesn't work, so just go straight to then.
-							if (
-								i === interests.length - 1
-								&& j === elements.length - 1
-							) {
-								resolve();
-							}
-							console.log('ignored');
-							console.log("j: " + j);
-							console.log("i: " + i);
-							console.log("interests.length: " + interests.length);
-						}
-
-					})
-		    	});
+							/*
+							Event.findOne({
+								start_at,
+								end_at,
+								location,
+								created_at,
+								updated_at,
+								title,
+								all_day,
+								url,
+								content,
+								featured_image_url,
+								category: element,
+								user: ''
+							}).then((findObj) => {
+								// console.log(findObj);
+								if(!findObj) {
+									// console.log('null obj');
+									Event.create({
+										start_at,
+										end_at,
+										location,
+										created_at,
+										updated_at,
+										title,
+										all_day,
+										url,
+										content,
+										featured_image_url,
+										category: element,
+										user: ''
+									}).then(event => {
+										events.push(event);
+										return Promise.resolve();
+									});
+								} else {
+									return Promise.resolve();
+								}
+							}).then(() => {
+								if (
+									i === interests.length - 1
+									&& j === elements.length - 1
+								) {
+									resolve();
+								}
+							})
+							*/
+						})
+			    	});
+			})
+		}).then(() => {
+			res.send(events);
 		})
-	}).then(() => {
-		res.send(events);
-	})
+	)
 })
 
 module.exports = router
