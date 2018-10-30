@@ -6,21 +6,7 @@ import Home from './home'
 import { Stage1, Stage2 } from './Stages'
 import { Add, Edit } from './Manage'
 
-<<<<<<< HEAD
-export default () => (
-    <BrowserRouter>
-        <Layout>
-            <Switch>
-                <Route exact component={Home} path="/" />
-                <Route component={Stage1} path="/stage1" />
-                <Route component={Stage2} path="/stage2" />
-                <Route component={Add} path="/add" />
-                <Route component={Edit} path="/edit" />
-            </Switch>
-        </Layout>
-    </BrowserRouter>
-)
-=======
+
 export default class extends Component {
 	state = {
 		interestFormComplete: false,
@@ -42,6 +28,8 @@ export default class extends Component {
 							<Route exact component={Home} path="/" />
 							<Route component={Stage1} path="/stage1" />
 							<Route component={Stage2} path="/stage2" />
+							<Route component={Add} path="/add" />
+               				<Route component={Edit} path="/edit" />
 						</Switch>
 					</Layout>
 				</Provider>
@@ -49,6 +37,3 @@ export default class extends Component {
 		)
 	}
 }
-// Previously this was the first route:
-// <Route exact component={Home} path="/" />
->>>>>>> 06156d2abaec46591e96797351b7137856204e72
