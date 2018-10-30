@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Provider } from './context'
+import PrivateRoute from './privateRoute'
 import Layout from './Layout'
 import Home from './Home'
 import { Stage1, Stage2 } from './Stages'

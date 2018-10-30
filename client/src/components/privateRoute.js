@@ -8,7 +8,7 @@ export default ({ component: Component, ...rest }) => (
 			<Route {...rest} render={props => (
 				interestFormComplete ? <Component {...props}/>
 				: <Redirect to={{ pathname: '/interest' }} />
-			)}
+			)} />
 		)}
 	</Consumer>
 )
