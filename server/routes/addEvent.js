@@ -15,9 +15,7 @@ router.post('/', jsonParser, (req, res) => {
 	Event.create(req.body)
 		.then((event) => {
 			console.log(event);
-			Event.insertOne({
-				event
-			})
+			Event.insertOne({event})
 		})
 		.then((record) => res.send({record}))
 		.catch((error) => res.send({error}))

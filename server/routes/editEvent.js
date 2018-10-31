@@ -9,22 +9,11 @@ router.use((req, res, next) => {
     next()
 })
 
-// netid, title
-// {netid: "", title: ""}
 router.post('/', jsonParser, (req, res) => {
-	let today = new Date();
-	const query = req.body.query;
-	console.log(query);
-	const update = req.body.update;
-	console.log(query);
-	// console.log(req.body);
-	Event.update({
-		query,
-		update
-	})
+	const { query, update } = req.body;
+	Event.updateOne(query, update)
 	.then((record) => res.send({record}))
 	.catch((error) => res.send({error}))
-
 })
 
 module.exports = router
