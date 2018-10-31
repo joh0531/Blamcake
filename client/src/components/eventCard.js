@@ -57,7 +57,10 @@ export default withStyles(theme => ({
 	handleExpandClick = () => {
 		this.setState({ expanded: !this.state.expanded })
 	}
-	
+	componentDidMount(){
+		const { getAllEvents } = this.props
+		getAllEvents()
+	}
 	render() {
 		const { classes, title, content, location } = this.props
 

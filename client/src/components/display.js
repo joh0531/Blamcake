@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { Grid } from '@material-ui/core'
 import events from './mockevents'
 import EventCard from './eventCard'
+import { Consumer } from './context'
 
 export default withStyles(theme => ({
 	container: {
@@ -14,14 +15,19 @@ export default withStyles(theme => ({
 		},
 	},
 }))(({ classes }) => (
-	<Grid container className={classes.container}>
-		{events.map(({ title, content, location }) => (
-			<EventCard
-				key={title}
-				title={title}
-				content={content}
-				location={location}
-			/>
-		))}
-	</Grid>
+	<Consumer>
+		{({ getAllEvents }) => (
+			<Grid container className={classes.container}>
+				{events.map(({ title, content, location }) => (
+					<EventCard
+						getAllEvents={getAllEvents}
+						key={title}
+						title={title}
+						content={content}
+						location={location}
+					/>
+				))}
+			</Grid>
+		)}
+	</Consumer>
 ))

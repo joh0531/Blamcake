@@ -5,6 +5,7 @@ import Layout from './Layout'
 import Home from './home'
 import { Stage1, Stage2 } from './Stages'
 import { Add, Myevents } from './Manage'
+import axios from 'axios'
 
 export default class extends Component {
 	state = {
