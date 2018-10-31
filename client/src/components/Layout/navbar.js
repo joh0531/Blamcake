@@ -54,7 +54,7 @@ export default withStyles(theme => ({
                     <Grid item>
                         <Button
                             className={classes.title}
-                            variant="title"
+                            variant="text"
                             onClick={this.handleClick}
                         > 
                             My Events

@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { Menu, MenuItem, Grid, Card, Switch, Paper, FormControlLabel, TextField, Typography } from '@material-ui/core'
+import { Button, Select, Menu, MenuItem, Grid, Card, Switch, Paper, FormControlLabel, TextField, Typography } from '@material-ui/core'
+import axios from 'axios'
 
 export default withStyles(theme => ({
 	general:{
 		marginTop: theme.spacing.unit * 10,
-		marginLeft: theme.spacing.unit * 20,
-		marginRight: theme.spacing.unit * 20,
+		marginLeft: theme.spacing.unit * 25,
+		marginRight: theme.spacing.unit * 25,
 		marginBottom: theme.spacing.unit * 10
 	},
 	paper:{
@@ -19,165 +20,237 @@ export default withStyles(theme => ({
 
 	},
 	card:{
-		padding: theme.spacing.unit * 5
+		padding: theme.spacing.unit * 3
 	}
 }))(class extends Component {
 	state = {
 		title: "",
-		desc: "",
-		loc: "",
-		allday: false,
-		start:"",
-		end:"",
+		user: "",
+		content: "",
+		location: "",
+		all_day: false,
+		start_at:"",
+		end_at:"",
 		url:"",
 		img:"",
-		category:""
+		category:"",
+		anchorEl:null
 	}
 
-	handleChangeTitle = (e, title) => {
-		this.setState({ title })
+	handleChange = e => {
+		this.setState({ [e.target.name]: e.target.value })
 	}
 
-	handleChangeDesc = (e, desc) => {
-		this.setState({ desc })
+	handleChangeAllDay = (e) => {
+		this.setState({ all_day: !this.state.all_day })
 	}
 
-	handleChangeLoc = (e, loc) => {
-		this.setState({ loc })
-	}
+	handleCloseCat = () => {
+        this.setState({ anchorEl: null })
+    }
 
-	handleChangeAllDay = (e, allday) => {
-		this.setState({ allday: !this.state.allday })
-	}
+    handleClickCat = event => {
+    	this.setState({ anchorEl: event.currentTarget })
+    }
 
-	handleChangeStart = (e, start) => {
-		this.setState({ start })
-	}
-
-	handleChangeEnd = (e, end) => {
-		this.setState({ end })
-	}
-
-	handleChangeUrl = (e, url) => {
-		this.setState({ url })
-	}
-
-	handleChangeImg = (e, img) => {
-		this.setState({ img })
-	}
-
-	handleChangeCat = (e, category) => {
+	handleChangeCat = category => {
 		this.setState({ category })
+	}
+
+	handleClickSubmit = () => {
+		console.log(this.state)
+		const{ title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category } = this.state
+		axios.post('/addEvent', {
+			start_at,
+			end_at,
+			location,
+			title,
+			all_day,
+			url,
+			content,
+			featured_image_url,
+			category,
+			user
+		}).then(() => console.log("Posted")
+		).catch(error => console.log(error))
 	}
 
 	render() {
 		const{ classes } = this.props
-		const{ title, desc, loc, allday, start, end, url, img, category } = this.state
+		const{ title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category, anchorEl } = this.state
 
 		return(
 			<div className={classes.general}>
 				<Paper className={classes.paper}>
 					<form autoComplete="off">
 						<Typography align="center" variant="display2">Add Event</Typography>
-						<div><TextField
-							id="title"
-							label="Title"
-							className={classes.textField}
-							value={this.state.title}
-							onChange={this.handleChangeTitle}
-							margin="normal"
-						/></div>
-
-						<div><TextField
-							id="desc"
-							label="Description"
-							className={classes.textField}
-							value={this.state.desc}
-							onChange={this.handleChangeDesc}
-							margin="normal"
-						/></div>
-
-						<div><TextField
-							id="loc"
-							label="Location"
-							className={classes.textField}
-							value={this.state.loc}
-							onChange={this.handleChangeLoc}
-							margin="normal"
-						/></div>
-
-						<div>
-							<Typography align="center" variant="title">Time</Typography>
-
-							<FormControlLabel
-								control={
-									<Switch
-									id="allday"
-									label="All Day"
-									value={this.state.allday}
-									onChange={this.handleChangeAllDay}
-									checked={this.state.allday}
-									color="primary"
+						<Grid>
+							<Grid item>
+								<div>
+									<TextField
+										name="title"
+										label="Title"
+										className={classes.textField}
+										value={this.state.title}
+										onChange={this.handleChange}
+										margin="normal"
 									/>
-								}
-								label="All Day"
+								</div>
+								<div>
+									<TextField
+										name="user"
+										label="Netid"
+										className={classes.textField}
+										value={this.state.user}
+										onChange={this.handleChange}
+										margin="normal"
+									/>
+								</div>
+								<div>
+									<TextField
+										name="content"
+										label="Description"
+										className={classes.textField}
+										value={this.state.content}
+										onChange={this.handleChange}
+										margin="normal"
+										variant="outlined"
+										multiline
+										rows="5"
+									/>
+								</div>
+
+								<div>
+									<TextField
+										name="location"
+										label="Location"
+										className={classes.textField}
+										value={this.state.location}
+										onChange={this.handleChange}
+										margin="normal"
+									/>
+								</div>
+							</Grid>
+							<Grid item>
+								<div>
+									<Card
+										className={classes.card}
+									>
+
+									<FormControlLabel
+										control={
+											<Switch
+											name="allday"
+											label="All Day"
+											value={this.state.all_day}
+											onChange={this.handleChangeAllDay}
+											checked={this.state.allday}
+											color="primary"
+											/>
+										}
+										label="All Day"
+									/>
+									<div>
+										<TextField
+										name="start_at"
+										className={classes.textField}
+										value={this.state.start_at}
+										onChange={this.handleChange}
+										margin="normal"
+										helperText="Start"
+										type="datetime-local"
+										/>
+									</div>
+
+										<div>
+											<TextField
+											name="end_at"
+											className={classes.textField}
+											value={this.state.end_at}
+											onChange={this.handleChange}
+											margin="normal"
+											helperText="End"
+											type="datetime-local"
+											/>
+										</div>
+									</Card>
+								</div>
+							</Grid>
+						</Grid>
+						<div>
+							<TextField
+							name="url"
+							label="Event URL"
+							className={classes.textField}
+							value={this.state.url}
+							onChange={this.handleChange}
+							margin="normal"
 							/>
-							<div><TextField
-							id="start"
-							label="Start"
-							className={classes.textField}
-							value={this.state.start}
-							onChange={this.handleChangeStart}
-							margin="normal"
-							helperText="mmddyyhhmmss"
-							/></div>
-
-							<div><TextField
-							id="end"
-							label="End"
-							className={classes.textField}
-							value={this.state.end}
-							onChange={this.handleChangeEnd}
-							margin="normal"
-							align="left"
-							helperText="mmddyyhhmmss"
-							/></div>
-
-						</div>
-
-						<div><TextField
-						id="url"
-						label="Event URL"
-						className={classes.textField}
-						value={this.state.url}
-						onChange={this.handleChangeUrl}
-						margin="normal"
-						/>
-						</div>
-
-						<div><TextField
-						id="img"
-						label="Image URL"
-						className={classes.textField}
-						value={this.state.img}
-						onChange={this.handleChangeImg}
-						margin="normal"
-						/>
 						</div>
 
 						<div>
-							<Menu
-								id="category"
-								anchorEl={category}
-								open={Boolean(category)}
-								onClose={this.handleCloseCat}
-							>
+							<TextField
+							name="featured_image_url"
+							label="Image URL"
+							className={classes.textField}
+							value={this.state.featured_image_url}
+							onChange={this.handleChange}
+							margin="normal"
+							/>
+						</div>
+						<div>
+							<Select
+								value={this.state.category}
+								name="category"
+								onChange={this.handleChange}
+							>						
+							{[
+								'architecture',
+								'arts-and-entertainment',
+								'arts-and-letters',
+								'athletics',
+								'business',
+								'centers-and-institutes',
+								'engineering',
+								'global-affairs',
+								'graduate-school',
+								'health-and-recreation',
+								'hesburgh-libraries',
+								'law',
+								'lectures-and-conferences',
+								'research',
+								'official-academic-calendar',
+								'ongoing',
+								'open-to-the-public',
+								'privately-sponsored-events',
+								'religious-and-spiritual',
+								'science',
+								'service',
+								'student-life'
+							].map(cat => (
+								<MenuItem
+									key={cat}
+									value={cat}
+								>
+									{cat}
+								</MenuItem>
+							))}
 
-							</Menu>
+							</Select>
+						</div>
+
+						<div>
+							<Button
+                            	onClick={this.handleClickSubmit}
+                            	color="primary"
+                            	variant="outlined"
+	                        > 
+	                            Submit
+	                        </Button>
 						</div>
 					</form>
 				</Paper>
 			</div>
-			)
+		)
 	} 
 })
