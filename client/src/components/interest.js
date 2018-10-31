@@ -14,7 +14,8 @@ export default withStyles(theme => ({
 		'arts-and-letters': false,
 		'athletics': false,
 		'business': false,
-
+		'centers-and-institutes': false,
+		'engineering':
 	}
 	handleChange = name => event => {
 		this.setState({ [name]: event.target.checked })
