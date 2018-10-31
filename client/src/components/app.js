@@ -10,6 +10,7 @@ export default class extends Component {
 	state = {
 		interests: [],
 		user: '',
+		events: [],
 	}
 	setInterests = (formState) => {
 		let interests = []
@@ -21,13 +22,20 @@ export default class extends Component {
 		let { user } = formState
 		this.setState({ interests,user }, () => console.log(this.state))
 	}
+	// Communication with server:
+	getAllEvents = () => {
+		let res = axios.get('/allEvents').then(() => 
+			console.log(res)
+		).catch(error => console.error(error))
+	}
 	render() {
 		return (
 		    <BrowserRouter>
 		    	<Provider
 		    		value={{
 		    			state: this.state,
-		    			setInterests: this.setInterests
+		    			setInterests: this.setInterests,
+						getAllEvents: this.getAllEvents,
 		    		}}
 		    	>
 			        <Layout>
