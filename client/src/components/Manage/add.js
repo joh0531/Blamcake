@@ -14,13 +14,19 @@ export default withStyles(theme => ({
 		padding: theme.spacing.unit * 8
 	},
 	textField:{
-		width: 250,
+		width: 300,
+	},
+	descField:{
+		width: 700
 	},
 	title:{
 
 	},
 	card:{
-		padding: theme.spacing.unit * 3
+		padding: theme.spacing.unit * 2
+	},
+	time:{
+		padding: theme.spacing.unit * 2
 	}
 }))(class extends Component {
 	state = {
@@ -32,7 +38,6 @@ export default withStyles(theme => ({
 		start_at:"",
 		end_at:"",
 		url:"",
-		img:"",
 		category:"",
 		anchorEl:null
 	}
@@ -71,7 +76,7 @@ export default withStyles(theme => ({
 			featured_image_url,
 			category,
 			user
-		}).then(() => console.log("Posted")
+		}).then(res => console.log(res)
 		).catch(error => console.log(error))
 	}
 
@@ -84,7 +89,7 @@ export default withStyles(theme => ({
 				<Paper className={classes.paper}>
 					<form autoComplete="off">
 						<Typography align="center" variant="display2">Add Event</Typography>
-						<Grid>
+						<Grid container justify="space-around">
 							<Grid item>
 								<div>
 									<TextField
@@ -108,20 +113,6 @@ export default withStyles(theme => ({
 								</div>
 								<div>
 									<TextField
-										name="content"
-										label="Description"
-										className={classes.textField}
-										value={this.state.content}
-										onChange={this.handleChange}
-										margin="normal"
-										variant="outlined"
-										multiline
-										rows="5"
-									/>
-								</div>
-
-								<div>
-									<TextField
 										name="location"
 										label="Location"
 										className={classes.textField}
@@ -132,7 +123,7 @@ export default withStyles(theme => ({
 								</div>
 							</Grid>
 							<Grid item>
-								<div>
+								<div className={classes.time}>
 									<Card
 										className={classes.card}
 									>
@@ -140,11 +131,11 @@ export default withStyles(theme => ({
 									<FormControlLabel
 										control={
 											<Switch
-											name="allday"
+											name="all_day"
 											label="All Day"
 											value={this.state.all_day}
 											onChange={this.handleChangeAllDay}
-											checked={this.state.allday}
+											checked={this.state.all_day}
 											color="primary"
 											/>
 										}
@@ -177,7 +168,20 @@ export default withStyles(theme => ({
 								</div>
 							</Grid>
 						</Grid>
-						<div>
+						<div align="center">
+							<TextField
+								name="content"
+								label="Description"
+								className={classes.descField}
+								value={this.state.content}
+								onChange={this.handleChange}
+								margin="normal"
+								variant="outlined"
+								multiline
+								rows="10"
+							/>
+						</div>	
+						<div align="center">
 							<TextField
 							name="url"
 							label="Event URL"
@@ -188,7 +192,7 @@ export default withStyles(theme => ({
 							/>
 						</div>
 
-						<div>
+						<div align="center">
 							<TextField
 							name="featured_image_url"
 							label="Image URL"
@@ -198,7 +202,7 @@ export default withStyles(theme => ({
 							margin="normal"
 							/>
 						</div>
-						<div>
+						<div align="center">
 							<Select
 								value={this.state.category}
 								name="category"

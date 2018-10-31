@@ -10,18 +10,10 @@ router.use((req, res, next) => {
 })
 
 router.post('/', jsonParser, (req, res) => {
-	let today = new Date();
-	console.log(req.body);
 	Event.create(req.body)
-		.then((event) => {
-			console.log(event);
-			Event.insertOne({
-				event
-			})
-		})
-		.then((record) => res.send({record}))
-		.catch((error) => res.send({error}))
-
+		.then(event => Event.insertOne({ event }))
+		.then(record => res.send({ record }))
+		.catch(error => res.send({ error }))
 })
 
 module.exports = router
