@@ -9,24 +9,18 @@ router.use((req, res, next) => {
     next()
 })
 
+// netid, title
+// {netid: "", title: ""}
 router.post('/', jsonParser, (req, res) => {
 	let today = new Date();
-	Event.insertOne({
-		start_at: today,
-		// end_at,
-		// location,
-		// created_at,
-		// updated_at,
-		// title,
-		// all_day,
-		// url,
-		// content,
-		// featured_image_url,
-		category: req.interest,
-		user: ''
+	const delEvent = req.body
+	console.log(delEvent);
+	Event.deleteOne({
+		delEvent
 	})
 	.then((record) => res.send({record}))
 	.catch((error) => res.send({error}))
+
 })
 
 module.exports = router
