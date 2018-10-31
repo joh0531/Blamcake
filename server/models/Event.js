@@ -13,14 +13,6 @@ const EventSchema = new mongoose.Schema({
         required: true,
         type: String
     },
-    created_at: {
-        required: true,
-        type: Date
-    },
-    updated_at: {
-        required: true,
-        type: Date
-    },
     title: {
         required: true,
         type: String
@@ -44,7 +36,6 @@ const EventSchema = new mongoose.Schema({
         type: String
     },
     user: {
-        default: undefined,
         type: String
     }
 })
