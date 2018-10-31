@@ -14,13 +14,19 @@ export default withStyles(theme => ({
 			justifyContent: "flex-start",
 		},
 	},
-}))(({ classes }) => (
-	<Consumer>
-		{({ getAllEvents }) => (
+}))(class extends Component {
+	componentDidMount(){
+		const { getAllEvents } = this.props
+		getAllEvents()
+	}
+
+	render() {
+		const { classes } = this.props
+
+		return (
 			<Grid container className={classes.container}>
 				{events.map(({ title, content, location }) => (
 					<EventCard
-						getAllEvents={getAllEvents}
 						key={title}
 						title={title}
 						content={content}
@@ -28,6 +34,6 @@ export default withStyles(theme => ({
 					/>
 				))}
 			</Grid>
-		)}
-	</Consumer>
-))
+		)
+	}
+})

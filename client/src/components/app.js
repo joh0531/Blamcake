@@ -24,10 +24,9 @@ export default class extends Component {
 		this.setState({ interests,user }, () => console.log(this.state))
 	}
 	// Communication with server:
-	getAllEvents = () => {
-		let res = axios.get('/allEvents').then(() => 
-			console.log(res)
-		).catch(error => console.error(error))
+	getAllEvents = async () => {
+		let res = await axios.get('/allEvents')
+		console.log(...res.data.events)
 	}
 	render() {
 		return (
