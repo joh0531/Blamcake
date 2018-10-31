@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from 'react'
 import classnames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
-import { Card, CardActions, Button, Typography } from '@material-ui/core'
+import { Card, CardActions, Typography } from '@material-ui/core'
 import { Collapse, Grid, IconButton } from '@material-ui/core'
 import { CardContent, CardMedia, CardActionArea } from '@material-ui/core'
 import { purple } from '@material-ui/core/colors'
@@ -61,10 +61,9 @@ export default withStyles(theme => ({
 						alt="Standard Event Background, ND Campus"
 					/>
 					<CardContent>
-						<Typography i
+						<Typography 
 							variant="h4" 
 							color="primary"
-							gutterBottom
 						>
 							{ title }
 						</Typography>
@@ -72,7 +71,6 @@ export default withStyles(theme => ({
 							<LocationOn 
 								className={classes.icon} 
 								fontSize="small"
-								gutterBottom
 							/>
 							<Typography 
 								variant="overline" 

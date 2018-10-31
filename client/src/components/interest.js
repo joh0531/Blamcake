@@ -9,17 +9,25 @@ export default withStyles(theme => ({
 	},
 }))(class extends Component {
 	state = {
-		checked_ArtsAndEntertainment: false,
-		checked_ArtsAndLetters: false,
-		checked_Athletics: false,
-		checked_Business: false,
+		'architecture': false,
+		'arts-and-entertainment': false,
+		'arts-and-letters': false,
+		'athletics': false,
+		'business': false,
+
 	}
 	handleChange = name => event => {
 		this.setState({ [name]: event.target.checked })
 	}
 	render() {
 		const { classes } = this.props
-	
+		const categories = [
+			'arts-and-entertainment',
+			'arts-and-letters',
+			'athletics',
+			'business',
+		
+		]	
 		return (
 			<Consumer>
 				{({ interestFormComplete, setInterests }) => (
@@ -28,9 +36,9 @@ export default withStyles(theme => ({
 							<FormControlLabel 
 								control={
 									<Switch
-										checked={this.state.checked_ArtsAndEntertainment}
-										onChange={this.handleChange('checked_ArtsAndEntertainment')}
-										value="checked_ArtsAndEntertainment"
+										checked={this.state['arts-and-entertainment']}
+										onChange={this.handleChange('arts-and-entertainment')}
+										value="arts-and-entertainment"
 									/>
 								}
 								label="Arts & Entertainment"
@@ -38,9 +46,9 @@ export default withStyles(theme => ({
 							<FormControlLabel 
 								control={
 									<Switch
-										checked={this.state.checked_ArtsAndLetters}
-										onChange={this.handleChange('checked_ArtsAndLetters')}
-										value="checked_ArtsAndLetters"
+										checked={this.state['arts-and-letters']}
+										onChange={this.handleChange('arts-and-letters')}
+										value="arts-and-letters"
 									/>
 								}
 								label="Arts & Letters"
@@ -48,9 +56,9 @@ export default withStyles(theme => ({
 							<FormControlLabel 
 								control={
 									<Switch
-										checked={this.state.checked_Athletics}
-										onChange={this.handleChange('checked_Athletics')}
-										value="checked_Athletics"
+										checked={this.state['athletics']}
+										onChange={this.handleChange('athletics')}
+										value="athletics"
 									/>
 								}
 								label="Athletics"
@@ -58,9 +66,9 @@ export default withStyles(theme => ({
 							<FormControlLabel 
 								control={
 									<Switch
-										checked={this.state.checked_Business}
-										onChange={this.handleChange('checked_Business')}
-										value="checked_Business"
+										checked={this.state['business']}
+										onChange={this.handleChange('business')}
+										value="business"
 									/>
 								}
 								label="Business"

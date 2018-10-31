@@ -17,6 +17,7 @@ export default class extends Component {
 			}
 		})
 		this.setState({ interests })
+		console.log(interests)
 	}
 	render() {
 		return (
