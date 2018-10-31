@@ -44,7 +44,6 @@ const EventSchema = new mongoose.Schema({
         type: String
     },
     user: {
-        default: undefined,
         type: String
     }
 })
