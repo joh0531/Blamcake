@@ -43,8 +43,6 @@ export default withStyles(theme => ({
 	}
 	handleUserChange = event => {
 		this.setState({ user: event.target.value })
-		//console.log(event)
-		console.log(this.state)
 	}
 	render() {
 		const { classes } = this.props

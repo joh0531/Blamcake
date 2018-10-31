@@ -8,8 +8,9 @@ export default withStyles(theme => ({
 }))(({ classes }) => (
 	<Fragment>
 		<Consumer>
-			{({ state: { interests }}) => {
-				if (interests.length) {
+			{({ state: { interests, user }}) => {
+				// might eliminate the need to enter user
+				if (interests.length && user != "") {
 					return <Display className={classes.display}/>
 				}
 				return <Interest />
