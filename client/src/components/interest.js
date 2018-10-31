@@ -75,8 +75,9 @@ export default withStyles(theme => ({
 				{({ setInterests }) => (
 					<Fragment>
 						<FormGroup row>
-							{categories.map(category =>
+							{categories.map((category, i) =>
 								<FormControlLabel 
+									key={i}
 									control={
 										<Switch
 											checked={this.state.interests[category]}
