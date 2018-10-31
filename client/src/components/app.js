@@ -4,6 +4,7 @@ import { Provider } from './context'
 import Layout from './Layout'
 import Home from './home'
 import { Stage1, Stage2 } from './Stages'
+import { Add, Myevents } from './Manage'
 
 export default class extends Component {
 	state = {
@@ -22,23 +23,24 @@ export default class extends Component {
 	}
 	render() {
 		return (
-			<BrowserRouter>
-				<Provider 
-					value={{ 
-						state: this.state, 
-						setInterests: this.setInterests 
-					}}
-				>
-					<Layout>
-						<Switch>
-							<Route exact component={Home} path="/" />
-							<Route component={Stage1} path="/stage1" />
-							<Route component={Stage2} path="/stage2" />
-						</Switch>
-					</Layout>
-				</Provider>
-			</BrowserRouter>
+		    <BrowserRouter>
+		    	<Provider
+		    		value={{
+		    			state: this.state,
+		    			setInterests: this.setInterests
+		    		}}
+		    	>
+			        <Layout>
+			            <Switch>
+			                <Route exact component={Home} path="/" />
+			                <Route component={Stage1} path="/stage1" />
+			                <Route component={Stage2} path="/stage2" />
+			                <Route component={Add} path="/add" />
+			               	<Route component={Myevents} path="/myevents" />
+			            </Switch>
+			        </Layout>
+			    </Provider>
+		    </BrowserRouter>
 		)
 	}
 }
-
