@@ -8,16 +8,20 @@ import { Stage1, Stage2 } from './Stages'
 export default class extends Component {
 	state = {
 		interests: [],
+		user: '',
 	}
 	setInterests = (formState) => {
+		console.log(formState)
 		let interests = []
-		Object.entries(formState).forEach(([interest, selected]) => {
+		Object.entries(formState.interests).forEach(([interest, selected]) => {
 			if (selected){
 				interests.push(interest)
 			}
 		})
+		let user = formState.user
 		this.setState({ interests })
-		console.log(interests)
+		this.setState({ user })
+		console.log(this.state)
 	}
 	render() {
 		return (
@@ -40,5 +44,4 @@ export default class extends Component {
 		)
 	}
 }
-// Previously this was the first route:
-// <Route exact component={Home} path="/" />
+

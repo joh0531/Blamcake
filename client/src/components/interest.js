@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { Button, FormControlLabel, FormGroup, Switch } from '@material-ui/core'
+import { FormControl, InputLabel, Input } from '@material-ui/core'
 import { Consumer } from './context'
 
 export default withStyles(theme => ({
@@ -9,73 +10,93 @@ export default withStyles(theme => ({
 	},
 }))(class extends Component {
 	state = {
-		'architecture': false,
-		'arts-and-entertainment': false,
-		'arts-and-letters': false,
-		'athletics': false,
-		'business': false,
-		'centers-and-institutes': false,
-		'engineering':
+		interests: {
+			'architecture': false,
+			'arts-and-entertainment': false,
+			'arts-and-letters': false,
+			'athletics': false,
+			'business': false,
+			'centers-and-institutes': false,
+			'engineering': false,
+			'global-affairs': false,
+			'graduate-school': false,
+			'health-and-recreation': false,
+			'hesburgh-libraries': false,
+			'law': false,
+			'lectures-and-conferences': false,
+			'research': false,
+			'official-academic-calendar': false,
+			'ongoing': false,
+			'open-to-the-public': false,
+			'privately-sponsored-events': false,
+			'religious-and-spiritual': false,
+			'science': false,
+			'service': false,
+			'student-life': false,
+		},
+		user: '',
 	}
-	handleChange = name => event => {
-		this.setState({ [name]: event.target.checked })
+	handleInterestChange = name => event => {
+		let newState = Object.assign({}, this.state)
+		newState.interests[name] = event.target.checked
+		this.setState(newState)
+	}
+	handleUserChange = event => {
+		this.setState({ user: event.target.value })
+		//console.log(event)
+		console.log(this.state)
 	}
 	render() {
 		const { classes } = this.props
 		const categories = [
+			'architecture',
 			'arts-and-entertainment',
 			'arts-and-letters',
 			'athletics',
 			'business',
-		
+			'centers-and-institutes',
+			'engineering',
+			'global-affairs',
+			'graduate-school',
+			'health-and-recreation',
+			'hesburgh-libraries',
+			'law',
+			'lectures-and-conferences',
+			'research',
+			'official-academic-calendar',
+			'ongoing',
+			'open-to-the-public',
+			'privately-sponsored-events',
+			'religious-and-spiritual',
+			'science',
+			'service',
+			'student-life',
 		]	
 		return (
 			<Consumer>
-				{({ interestFormComplete, setInterests }) => (
+				{({ setInterests }) => (
 					<Fragment>
 						<FormGroup row>
-							<FormControlLabel 
-								control={
-									<Switch
-										checked={this.state['arts-and-entertainment']}
-										onChange={this.handleChange('arts-and-entertainment')}
-										value="arts-and-entertainment"
-									/>
-								}
-								label="Arts & Entertainment"
-							/>
-							<FormControlLabel 
-								control={
-									<Switch
-										checked={this.state['arts-and-letters']}
-										onChange={this.handleChange('arts-and-letters')}
-										value="arts-and-letters"
-									/>
-								}
-								label="Arts & Letters"
-							/>
-							<FormControlLabel 
-								control={
-									<Switch
-										checked={this.state['athletics']}
-										onChange={this.handleChange('athletics')}
-										value="athletics"
-									/>
-								}
-								label="Athletics"
-							/>
-							<FormControlLabel 
-								control={
-									<Switch
-										checked={this.state['business']}
-										onChange={this.handleChange('business')}
-										value="business"
-									/>
-								}
-								label="Business"
-							/>
-
+							{categories.map(category =>
+								<FormControlLabel 
+									control={
+										<Switch
+											checked={this.state.interests[category]}
+											onChange={this.handleInterestChange(category)}
+											value={category}
+										/>
+									}
+									label={category}
+								/>
+							)}
 						</FormGroup>
+						<FormControl>
+							<InputLabel>User</InputLabel>
+							<Input 
+								value={this.state.user}
+								onChange={this.handleUserChange}
+							/>
+						</FormControl>
 						<Button 
 							variant="contained" 
 							className={classes.button}
