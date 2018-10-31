@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
-import SvgIcon from '@material-ui/core/SvgIcon'
 import BuildIcon from '@material-ui/icons/Build'
 import EventIcon from '@material-ui/icons/Event'
 import { AppBar, Grid, Tab, Tabs, Typography, Menu, MenuItem, Button } from '@material-ui/core'

@@ -1,19 +1,17 @@
 import React, { Fragment, Component } from 'react'
 import classnames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
-import { Card, CardActions, Button, Typography } from '@material-ui/core'
+import { Card, CardActions, Typography } from '@material-ui/core'
 import { Collapse, Grid, IconButton } from '@material-ui/core'
 import { CardContent, CardMedia, CardActionArea } from '@material-ui/core'
 import { purple } from '@material-ui/core/colors'
 import LocationOn from '@material-ui/icons/LocationOn'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-//import { nd1, nd2, nd3 } from '../images'
 
 export default withStyles(theme => ({
 	card: {
-		margin: theme.spacing.unit * 2,
-		minWidth: theme.spacing.unit * 60,
-		padding: theme.spacing.unit * 1.5,
+		margin: theme.spacing.unit * 1.5,
+		minWidth: theme.spacing.unit * 50,
 	},
 	location: {
 		color: purple[300],
@@ -22,8 +20,7 @@ export default withStyles(theme => ({
 	},
 	icon: {
 		color: purple[400],
-		marginRight: theme.spacing.unit * 1.5,
-		marginTop: theme.spacing.unit * 1.5,
+		marginLeft: theme.spacing.unit,
 		fontSize: 18,
 		float: "left",
 	},
@@ -38,8 +35,21 @@ export default withStyles(theme => ({
 	expandOpen: {
 		transform: 'rotate(180deg)',
 	},
+	action: {
+		paddingLeft: theme.spacing.unit * 2,
+		paddingTop: theme.spacing.unit * 0.5,
+	},
 	media: {
-		height: 200,
+		height: 165,
+	},
+	title: {
+		paddingBottom: theme.spacing.unit * 0.5,
+	},
+	content: {
+		paddingLeft: theme.spacing.unit * 4,
+		paddingRight: theme.spacing.unit * 4,
+		paddingBottom: 0,
+		paddingTop: 0,
 	},
 }))(class extends Component {
 	state = { expanded: false }
@@ -53,50 +63,46 @@ export default withStyles(theme => ({
 
 		return (
 			<Card className={classes.card}>
-				<CardActionArea>
-					<CardMedia 
-						className={classes.media}
-						image={require("../images/nd1.png")}
-						title="Standard Event Background, ND Campus"
-						alt="Standard Event Background, ND Campus"
+				<CardMedia 
+					className={classes.media}
+					image={require("../images/nd1.png")}
+					title="Standard Event Background, ND Campus"
+					alt="Standard Event Background, ND Campus"
+				/>
+				<CardContent className={classes.title}>
+					<Typography 
+						variant="h5" 
+						color="primary"
+					>
+						{ title }
+					</Typography>
+				</CardContent>
+				<CardActions className={classes.action}>
+					<LocationOn 
+						className={classes.icon} 
+						fontSize="small"
 					/>
-					<CardContent>
-						<Typography i
-							variant="h4" 
-							color="primary"
-							gutterBottom
+					<Typography 
+						variant="overline" 
+						className={classes.location}
+					>
+						Location : { location }
+					</Typography>
+					<IconButton 
+						className={classnames(classes.expand, {
+							[classes.expandOpen]: this.state.expanded,
+						})}
+						onClick={this.handleExpandClick}
 						>
-							{ title }
-						</Typography>
-						<div>
-							<LocationOn 
-								className={classes.icon} 
-								fontSize="small"
-								gutterBottom
-							/>
-							<Typography 
-								variant="overline" 
-								className={classes.location}
-							>
-								Location : { location }
-							</Typography>
-							<IconButton 
-								className={classnames(classes.expand, {
-									[classes.expandOpen]: this.state.expanded,
-								})}
-								onClick={this.handleExpandClick}
-								>
-								<ExpandMoreIcon />
-							</IconButton>
-						</div>
-					</CardContent>
-				</CardActionArea>
+						<ExpandMoreIcon />
+					</IconButton>
+				</CardActions>
 				<Collapse 
 					in={this.state.expanded}
 					timeout="auto"
 					unmountOnExit
 				>
-					<CardContent>
+					<CardContent className={classes.content}>
 						<Typography variant="body1">
 							{ content }
 						</Typography>

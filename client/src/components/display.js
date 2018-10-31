@@ -17,6 +17,7 @@ export default withStyles(theme => ({
 	<Grid container className={classes.container}>
 		{events.map(({ title, content, location }) => (
 			<EventCard
+				key={title}
 				title={title}
 				content={content}
 				location={location}

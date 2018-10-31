@@ -8,10 +8,18 @@ import { Add, Myevents } from './Manage'
 
 export default class extends Component {
 	state = {
-		interestFormComplete: false
+		interests: [],
+		user: '',
 	}
-	setInterests = () => {
-		this.setState({ interestFormComplete: true })
+	setInterests = (formState) => {
+		let interests = []
+		Object.entries(formState.interests).forEach(([interest, selected]) => {
+			if (selected){
+				interests.push(interest)
+			}
+		})
+		let { user } = formState
+		this.setState({ interests,user }, () => console.log(this.state))
 	}
 	render() {
 		return (
@@ -35,5 +43,4 @@ export default class extends Component {
 		    </BrowserRouter>
 		)
 	}
-} 
-
+}
