@@ -29,9 +29,9 @@ export default class extends Component {
 			.then(({ data }) =>
 				this.setState({ 
 					events: data.map(event => ({
-						location: event.location,
-						title: event.title,
 						category: event.category,
+						title: event.title,
+						location: event.location,
 					}))
 				})
 			).then(() => console.log(this.state)
