@@ -15,7 +15,10 @@ export default withStyles(theme => ({
 				// might eliminate the need to enter user
 				if (interests.length && user != "") {
 					return (
-						<Display updateEvents={updateEvents}/>
+						<Display 
+							updateEvents={updateEvents}
+							interests={interests}
+						/>
 					)
 				}
 				return <Interest />

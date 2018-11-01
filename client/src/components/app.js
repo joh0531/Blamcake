@@ -24,9 +24,10 @@ export default class extends Component {
 		this.setState({ interests, user }, () => console.log(this.state))
 	}
 	// Communication with server:
-	updateEvents = async () => {
-		let res = await axios.get('/update')
-		console.log(res)
+	updateEvents = interests => {
+		return axios.post('/update', { interests })
+			.then(({ events }) => console.log('Events: ',events)
+			).catch(error => console.error(error))
 	}
 	render() {
 		return (

@@ -16,8 +16,8 @@ export default withStyles(theme => ({
 	},
 }))(class extends Component {
 	componentDidMount(){
-		const { updateEvents } = this.props
-		updateEvents()
+		const { updateEvents, interests } = this.props
+		updateEvents(interests)
 	}
 
 	render() {
