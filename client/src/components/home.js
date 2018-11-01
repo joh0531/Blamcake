@@ -12,8 +12,8 @@ export default withStyles(theme => ({
 				state: { interests, user },
 				updateEvents 
 			}) => {
-				// might eliminate the need to enter user
-				if (interests.length && user != "") {
+				// both user and interests required in form
+				if (interests.length && user !== "") {
 					return (
 						<Display 
 							updateEvents={updateEvents}

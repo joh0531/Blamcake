@@ -23,7 +23,7 @@ export default class extends Component {
 		let { user } = formState
 		this.setState({ interests, user }, () => console.log(this.state))
 	}
-	// Communication with server:
+	// server request for events pertaining to interests
 	updateEvents = interests => {
 		return axios.post('/update', { interests })
 			.then(({ data }) =>
@@ -54,7 +54,7 @@ export default class extends Component {
 			                <Route component={Stage1} path="/stage1" />
 			                <Route component={Stage2} path="/stage2" />
 			                <Route component={Add} path="/add" />
-			               	<Route component={Myevents} path="/myevents" />
+							<Route component={Myevents} path="/myevents" />
 			            </Switch>
 			        </Layout>
 			    </Provider>

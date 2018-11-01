@@ -46,7 +46,7 @@ export default withStyles(theme => ({
 								Categories chosen: 
 							</Typography>
 							{interests.map((interest, i) =>
-								<Grid item xs className={classes.item}>
+								<Grid item xs className={classes.item} key={i}>
 									<Paper className={classes.paper}>
 										<Typography variant="h5" color="primary">
 											{ interest }

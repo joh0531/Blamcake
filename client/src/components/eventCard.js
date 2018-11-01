@@ -1,9 +1,9 @@
-import React, { Fragment, Component } from 'react'
+import React, { Component } from 'react'
 import classnames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
 import { Card, CardActions, Typography } from '@material-ui/core'
-import { Collapse, Grid, IconButton } from '@material-ui/core'
-import { CardContent, CardMedia, CardActionArea } from '@material-ui/core'
+import { Collapse, IconButton } from '@material-ui/core'
+import { CardContent, CardMedia } from '@material-ui/core'
 import { purple } from '@material-ui/core/colors'
 import LocationOn from '@material-ui/icons/LocationOn'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -57,6 +57,7 @@ export default withStyles(theme => ({
 	handleExpandClick = () => {
 		this.setState({ expanded: !this.state.expanded })
 	}
+
 	render() {
 		const { classes, title, content, location, category } = this.props
 

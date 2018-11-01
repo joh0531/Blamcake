@@ -19,9 +19,6 @@ export default withStyles(theme => ({
 	descField:{
 		width: 700
 	},
-	title:{
-
-	},
 	card:{
 		padding: theme.spacing.unit * 2
 	},
