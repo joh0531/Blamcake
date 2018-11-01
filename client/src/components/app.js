@@ -26,7 +26,15 @@ export default class extends Component {
 	// Communication with server:
 	updateEvents = interests => {
 		return axios.post('/update', { interests })
-			.then(({ events }) => console.log('Events: ',events)
+			.then(({ data }) =>
+				this.setState({ 
+					events: data.map(event => ({
+						location: event.location,
+						title: event.title,
+						category: event.category,
+					}))
+				})
+			).then(() => console.log(this.state)
 			).catch(error => console.error(error))
 	}
 	render() {
