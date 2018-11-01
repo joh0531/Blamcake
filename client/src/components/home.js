@@ -10,12 +10,12 @@ export default withStyles(theme => ({
 		<Consumer>
 			{({ 
 				state: { interests, user },
-				getAllEvents 
+				updateEvents 
 			}) => {
 				// might eliminate the need to enter user
 				if (interests.length && user != "") {
 					return (
-						<Display getAllEvents={getAllEvents}/>
+						<Display updateEvents={updateEvents}/>
 					)
 				}
 				return <Interest />

@@ -21,12 +21,12 @@ export default class extends Component {
 			}
 		})
 		let { user } = formState
-		this.setState({ interests,user }, () => console.log(this.state))
+		this.setState({ interests, user }, () => console.log(this.state))
 	}
 	// Communication with server:
-	getAllEvents = async () => {
-		let res = await axios.get('/allEvents')
-		console.log(...res.data.events)
+	updateEvents = async () => {
+		let res = await axios.get('/update')
+		console.log(res)
 	}
 	render() {
 		return (
@@ -35,7 +35,7 @@ export default class extends Component {
 		    		value={{
 		    			state: this.state,
 		    			setInterests: this.setInterests,
-						getAllEvents: this.getAllEvents,
+						updateEvents: this.updateEvents,
 		    		}}
 		    	>
 			        <Layout>
