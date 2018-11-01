@@ -32,6 +32,7 @@ export default class extends Component {
 						category: event.category,
 						title: event.title,
 						location: event.location,
+						content: event.content,
 					}))
 				})
 			).then(() => console.log(this.state)
