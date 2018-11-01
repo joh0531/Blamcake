@@ -58,7 +58,7 @@ export default withStyles(theme => ({
 		this.setState({ expanded: !this.state.expanded })
 	}
 	render() {
-		const { classes, title, content, location } = this.props
+		const { classes, title, content, location, category } = this.props
 
 		return (
 			<Card className={classes.card}>
