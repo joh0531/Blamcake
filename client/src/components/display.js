@@ -37,10 +37,10 @@ export default withStyles(theme => ({
 			<Consumer>
 				{({ state: { events } }) => (
 					<Fragment>
-						<Grid container lg>
+						<Grid container>
 							<Typography 
 								variant="h5" 
-								color="Secondary"
+								color="secondary"
 								className={classes.prompt}
 							>
 								Categories chosen: 
@@ -48,7 +48,7 @@ export default withStyles(theme => ({
 							{interests.map((interest, i) =>
 								<Grid item xs className={classes.item}>
 									<Paper className={classes.paper}>
-										<Typography variant="h5" color="Primary">
+										<Typography variant="h5" color="primary">
 											{ interest }
 										</Typography>
 									</Paper>
