@@ -58,6 +58,11 @@ export default withStyles(theme => ({
 		this.setState({ expanded: !this.state.expanded })
 	}
 
+	refCallback = element => {
+		if (element) {
+			this.props.getSize(element.getBoundingClientRect());
+		}
+	}
 	render() {
 		const { classes, title, content, location, category } = this.props
 
@@ -103,9 +108,12 @@ export default withStyles(theme => ({
 					unmountOnExit
 				>
 					<CardContent className={classes.content}>
-						<Typography variant="body1">
-							{ content }
-						</Typography>
+						<div
+							style = {{ maxWidth: 250 }}
+							dangerouslySetInnerHTML={
+								{__html: content }	
+							}
+						/>
 					</CardContent>
 				</Collapse>
 			</Card>
