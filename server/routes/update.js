@@ -35,6 +35,27 @@ router.post('/', jsonParser, (req, res) => {
 								content,
 								featured_image_url
 							} = el
+							// maybe here cal/
+							/*
+							Event.update({
+								start_at,
+								end_at,
+								location,
+								title,
+								all_day,
+								url,
+								content,
+								featured_image_url,
+								category: element,
+								user: ''
+							},{
+								// body of updated info here?
+							}, {
+								upsert: <boolean>,
+								multi: <boolean>,
+								writeConcern: <document>
+							})
+							*/
 							Event.create({
 								start_at,
 								end_at,
