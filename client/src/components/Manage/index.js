@@ -1,5 +1,16 @@
-import Add from './add'
-import Edit from './edit'
+import React from 'react'
 import Myevents from './myevents'
+import { Consumer } from '../context'
 
-export { Add, Edit, Myevents }
+export default () => {
+		return(
+			<Consumer>
+				{({ state: { user } }) => (
+					<Myevents
+						user = { user }
+					/>
+				)}
+			</Consumer> 
+	)
+	
+}
