@@ -20,9 +20,6 @@ export default withStyles(theme => ({
     handleClick = event => {
         this.setState({ anchorEl: event.currentTarget })
     }
-    handleClose = () => {
-        this.setState({ anchorEl: null })
-    }
     render() {
         const { classes } = this.props
         const { value, anchorEl } = this.state
@@ -55,18 +52,11 @@ export default withStyles(theme => ({
                             className={classes.title}
                             variant="text"
                             onClick={this.handleClick}
+                            component={Link}
+                            to="/myevents"
                         > 
                             My Events
                         </Button>
-                        <Menu
-                            id="eventmenu"
-                            anchorEl={anchorEl}
-                            open={Boolean(anchorEl)}
-                            onClose={this.handleClose}
-                        >
-                            <MenuItem onClick={this.handleClose} component={Link} label="Add" to="/add">Add</MenuItem>
-                            <MenuItem onClick={this.handleClose}>Edit</MenuItem>
-                        </Menu>
                     </Grid>
                 </Grid>
             </AppBar>
