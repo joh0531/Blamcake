@@ -3,6 +3,7 @@
 # server
 /server/node_modules
 /server/package-lock.json
+/server/keys.js
 
 # dependencies
 /client/node_modules
