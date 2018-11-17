@@ -43,7 +43,7 @@ export default withStyles(theme => ({
 		this.setState({ [e.target.name]: e.target.value })
 	}
 
-	handleChangeAllDay = (e) => {
+	handleChangeAllDay = e => {
 		this.setState({ all_day: !this.state.all_day })
 	}
 
@@ -54,10 +54,6 @@ export default withStyles(theme => ({
     handleClickCat = event => {
     	this.setState({ anchorEl: event.currentTarget })
     }
-
-	handleChangeCat = category => {
-		this.setState({ category })
-	}
 
 	handleClickSubmit = () => {
 		console.log(this.state)
@@ -80,7 +76,6 @@ export default withStyles(theme => ({
 	render() {
 		const{ classes } = this.props
 		const{ title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category, anchorEl } = this.state
-
 		return(
 			<div className={classes.general}>
 				<Paper className={classes.paper}>
