@@ -62,14 +62,27 @@ export default withStyles(theme => ({
 	handleExpandClick = () => {
 		this.setState({ expanded: !this.state.expanded })
 	}
-	handleCheck = (updateEventAttendees, index) => {
-		this.setState({ checked: !this.state.checked })
-		//updateEventAttendees(index)		
+	handleCheck = (updateEventAttendees, index, attending, user) => {
+		console.log('attending',attending)
+		updateEventAttendees(index, attending)
+		// this.setState(
+		// 	{ checked: !this.state.checked }, 
+		// 	() => { 
+		// 		console.log(this.state)
+				
+		// 		if (this.state.checked && !attending.includes(user)){
+		// 			return updateEventAttendees(index, attending.push(user))
+		// 		} else if (!this.state.checked && attending.includes(user)){
+		// 			return updateEventAttendees(index, attending.filter(attendee => attendee != user))
+		// 		}
+		// 		return Promise.resolve()
+		// 	}
+		// )
 	}
 
 	// Setting collapsable to container width
 	render(){
-		const { classes, title, content, location, category, index } = this.props
+		const { classes, title, content, location, category, attending, index } = this.props
 
 		return (
 			<Card 
@@ -130,11 +143,11 @@ export default withStyles(theme => ({
 						<ExpandMoreIcon />
 					</IconButton>
 					<Consumer>
-						{({ updateEventAttendees }) => (
+						{({ updateEventAttendees, state: { user } }) => (
 							<FormControlLabel control={
 								<Checkbox
 									checked={this.state.checked}
-									onChange={() => this.handleCheck(updateEventAttendees, index)}
+									onChange={() => this.handleCheck(updateEventAttendees, index, attending, user)}
 									value="checked"
 								/>
 							}
