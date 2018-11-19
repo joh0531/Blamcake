@@ -56,6 +56,29 @@ router.post('/', jsonParser, (req, res) => {
 								writeConcern: <document>
 							})
 							*/
+							Event.updateMany({
+								start_at,
+								end_at,
+								location,
+								title,
+								all_day,
+								url,
+								content,
+								featured_image_url,
+								category: element,
+								user: ''
+							}, {
+								// updated data goes here
+							}, {
+								upsert: true,
+     							multi: true,
+							}).then(() => {
+								if (
+									i === interests.length - 1
+									&& j === elements.length - 1
+								) resolve();
+							})
+							/*
 							Event.create({
 								start_at,
 								end_at,
@@ -73,6 +96,7 @@ router.post('/', jsonParser, (req, res) => {
 									&& j === elements.length - 1
 								) resolve();
 							})
+							*/
 						})
 			    	})
 			})
