@@ -76,6 +76,7 @@ export default withStyles(theme => ({
 	handleClickSubmit = () => {
 		console.log('submit', this.state)
 		const{ _id, title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category } = this.state
+		const{ history } = this.props
 		axios.post(`/editEvent`, {
 			_id,
 			user,
@@ -88,14 +89,15 @@ export default withStyles(theme => ({
 			content,
 			featured_image_url,
 			category
-		}).then(res => console.log(res)
-		).catch(error => console.log(error))
+		}).then(function(res) {
+			console.log(res)
+			history.goBack()
+		}).catch(error => console.log(error))
 	}
 
 	render() {
 		const { classes } = this.props
 		const { _id, title, content, location, start_at, end_at, all_day, url, featured_image_url, category, user } = this.state
-		console.log('editState', this.state)
 		return (
 			<div className={classes.general}>
 				<Paper className={classes.paper}>

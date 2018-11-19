@@ -58,6 +58,7 @@ export default withStyles(theme => ({
 	handleClickSubmit = () => {
 		console.log(this.state)
 		const{ title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category } = this.state
+		const{ history } = this.props
 		axios.post('/addEvent', {
 			start_at,
 			end_at,
@@ -69,8 +70,13 @@ export default withStyles(theme => ({
 			featured_image_url,
 			category,
 			user
-		}).then(res => console.log(res)
-		).catch(error => console.log(error))
+		}).then(function(res) {
+			console.log(res)
+			history.goBack()
+		}).catch(function(error){
+			console.log(error)
+			window.alert("Error! ", error)
+		})
 	}
 
 	render() {

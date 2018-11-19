@@ -27,7 +27,7 @@ export default withStyles(theme => ({
     		this.setState({ userEvents: res.data, classes: classes, user:user })
   		})
   		.catch(error => {
-    		console.log(error);
+    		console.log(error)
   		})
 	}
 	render() {
