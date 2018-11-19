@@ -42,6 +42,9 @@ export default class extends Component {
 			).then(() => console.log(this.state)
 			).catch(error => console.error(error))
 	}
+	// TODO:
+	// update local event with correct attendees, THEN post to axios
+	// or other way around
 	updateEventAttendees = (index, attending) => {
 		console.log(this.state.events[index])
 		console.log('attending',attending)
