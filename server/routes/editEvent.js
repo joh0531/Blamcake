@@ -10,10 +10,9 @@ router.use((req, res, next) => {
 })
 
 router.post('/', jsonParser, (req, res) => {
-	const { query, update } = req.body;
-	Event.updateOne(query, update)
-	.then((record) => res.send({record}))
-	.catch((error) => res.send({error}))
+	Event.findByIdAndUpdate(req.body._id, req.body)
+	   .then(result => res.send(result))
+	   .catch(error => res.send(error))
 })
 
 module.exports = router
