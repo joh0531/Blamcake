@@ -59,6 +59,7 @@ export default withStyles(theme => ({
 							{events.map(({ title, content, location, category }, i) => (
 								<EventCard
 									key={i}
+									index={i}
 									title={title}
 									content={content}
 									location={location}

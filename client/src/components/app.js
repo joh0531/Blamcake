@@ -38,6 +38,9 @@ export default class extends Component {
 			).then(() => console.log(this.state)
 			).catch(error => console.error(error))
 	}
+	updateEventAttendees = index => {
+		
+	}
 	render() {
 		return (
 		    <BrowserRouter>
@@ -46,6 +49,7 @@ export default class extends Component {
 		    			state: this.state,
 		    			setInterests: this.setInterests,
 						updateEvents: this.updateEvents,
+						updateEventAttendees: this.updateEventAttendees,
 		    		}}
 		    	>
 			        <Layout>

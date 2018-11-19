@@ -4,14 +4,16 @@ import { withStyles } from '@material-ui/core/styles'
 import { Card, CardActions, Typography } from '@material-ui/core'
 import { Collapse, IconButton } from '@material-ui/core'
 import { CardContent, CardMedia } from '@material-ui/core'
+import { FormControlLabel, Checkbox } from '@material-ui/core'
 import { purple } from '@material-ui/core/colors'
 import LocationOn from '@material-ui/icons/LocationOn'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import { Consumer } from './context'
 
 export default withStyles(theme => ({
 	card: {
 		margin: theme.spacing.unit * 1.5,
-		minWidth: theme.spacing.unit * 50,
+		maxWidth: 600,
 	},
 	location: {
 		color: purple[300],
@@ -52,22 +54,27 @@ export default withStyles(theme => ({
 		paddingTop: 0,
 	},
 }))(class extends Component {
-	state = { expanded: false }
+	state = { 
+		expanded: false,
+		checked: false,
+	}
 	
 	handleExpandClick = () => {
 		this.setState({ expanded: !this.state.expanded })
 	}
-
-	refCallback = element => {
-		if (element) {
-			this.props.getSize(element.getBoundingClientRect());
-		}
+	handleCheck = (updateEventAttendees, index) => {
+		this.setState({ checked: !this.state.checked })
+		//updateEventAttendees(index)		
 	}
-	render() {
-		const { classes, title, content, location, category } = this.props
+
+	// Setting collapsable to container width
+	render(){
+		const { classes, title, content, location, category, index } = this.props
 
 		return (
-			<Card className={classes.card}>
+			<Card 
+				className={classes.card}
+			>
 				<CardMedia 
 					className={classes.media}
 					image={require("../images/nd1.png")}
@@ -93,14 +100,6 @@ export default withStyles(theme => ({
 					>
 						Location : { location }
 					</Typography>
-					<IconButton 
-						className={classnames(classes.expand, {
-							[classes.expandOpen]: this.state.expanded,
-						})}
-						onClick={this.handleExpandClick}
-						>
-						<ExpandMoreIcon />
-					</IconButton>
 				</CardActions>
 				<Collapse 
 					in={this.state.expanded}
@@ -109,14 +108,44 @@ export default withStyles(theme => ({
 				>
 					<CardContent className={classes.content}>
 						<div
-							style = {{ maxWidth: 250 }}
+							style = {{ 
+								display: "inline-block",
+								maxWidth: 500,
+								maxHeight: 200,
+								overflow: "auto"
+							}}
 							dangerouslySetInnerHTML={
 								{__html: content }	
 							}
 						/>
 					</CardContent>
 				</Collapse>
+				<CardActions className={classes.action}>
+					<IconButton 
+						className={classnames(classes.expand, {
+							[classes.expandOpen]: this.state.expanded,
+						})}
+						onClick={this.handleExpandClick}
+						>
+						<ExpandMoreIcon />
+					</IconButton>
+					<Consumer>
+						{({ updateEventAttendees }) => (
+							<FormControlLabel control={
+								<Checkbox
+									checked={this.state.checked}
+									onChange={() => this.handleCheck(updateEventAttendees, index)}
+									value="checked"
+								/>
+							}
+							label="Attending?"
+							/>
+						)}
+					</Consumer>
+				</CardActions>
 			</Card>
-		)
+		);
 	}
+
+	
 })
