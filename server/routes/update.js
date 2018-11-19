@@ -56,17 +56,10 @@ router.post('/', jsonParser, (req, res) => {
 								writeConcern: <document>
 							})
 							*/
-							Event.updateMany({
-								start_at,
-								end_at,
-								location,
-								title,
-								all_day,
-								url,
-								content,
-								featured_image_url,
-								category: element,
-								user: ''
+							Event.updateMany(
+							{
+								title: { $lt: new Date() },
+								content:
 							}, {
 								// updated data goes here
 							}, {
