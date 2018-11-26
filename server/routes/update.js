@@ -17,7 +17,7 @@ router.post('/', jsonParser, (req, res) => {
 
 	// Delete interests first, to update events with new current date
 	// Event.deleteMany({ category: { $in: interests }, user: '' })
-	Event.deleteMany({ end_at: { $lt: new Date() } , user: '' })
+	Event.deleteMany({ end_at: { $lt: new Date() }, user: '' })
         .then(new Promise((resolve, reject) => {
 			// req.body.interests - array of strings
 			interests.forEach((element, i) => {
@@ -35,66 +35,62 @@ router.post('/', jsonParser, (req, res) => {
 								content,
 								featured_image_url
 							} = el
-							// maybe here cal/
 							/*
-							Event.update({
-								start_at,
-								end_at,
-								location,
-								title,
-								all_day,
-								url,
-								content,
-								featured_image_url,
-								category: element,
-								user: ''
-							},{
-								// body of updated info here?
+							Event.updateOne({
+								//filter
+								title: {$eq: el.title},
+								content: {$eq: el.content}
 							}, {
-								upsert: <boolean>,
-								multi: <boolean>,
-								writeConcern: <document>
-							})
-							*/
-							Event.updateMany({
-								start_at,
-								end_at,
-								location,
-								title,
-								all_day,
-								url,
-								content,
-								featured_image_url
-							}, {
-								// updated data goes here
+								//update
+								$set: {
+									start_at: el.start_at,
+									end_at: el.end_at,
+									location: el.location,
+									title: el.title,
+									all_day: el.all_day,
+									url: el.url,
+									content: el.content,
+									featured_image_url: el.featured_image_url
+								}
 							}, {
 								upsert: true,
-     							multi: true,
 							}).then(() => {
-								if (
-									i === interests.length - 1
-									&& j === elements.length - 1
-								) resolve();
-							})
-							/*
-							Event.create({
-								start_at,
-								end_at,
-								location,
-								title,
-								all_day,
-								url,
-								content,
-								featured_image_url,
-								category: element,
-								user: ''
-							}).then(() => {
+								console.log('HIII');
 								if (
 									i === interests.length - 1
 									&& j === elements.length - 1
 								) resolve();
 							})
 							*/
+							console.log(el.title);
+							Event.findOne({
+								title: {$eq: el.title},
+								content: {$eq: el.content}
+							}).then( existObj => {
+								if(!existObj) {
+									Event.create({
+										start_at,
+										end_at,
+										location,
+										title,
+										all_day,
+										url,
+										content,
+										featured_image_url,
+										category: element,
+										user: ''
+									}).then(() => {
+										if (
+											i === interests.length - 1
+											&& j === elements.length - 1
+										) resolve();
+									})
+								} else {
+									reject();
+								}
+							})
+
+
 						})
 			    	})
 			})
