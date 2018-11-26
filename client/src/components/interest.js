@@ -1,12 +1,21 @@
 import React, { Component, Fragment } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { Button, FormControlLabel, FormGroup, Switch } from '@material-ui/core'
-import { FormControl, InputLabel, Input } from '@material-ui/core'
+import { FormControl, InputLabel, Input, Paper } from '@material-ui/core'
 import { Consumer } from './context'
 
 export default withStyles(theme => ({
 	button: {
 		margin: theme.spacing.unit,
+	},
+	submit: {
+		float: "none",
+		display: "flex",
+		justifyContent: "center",
+		padding: theme.spacing.unit * 3,
+	},
+	paper: {
+		padding: theme.spacing.unit * 3,
 	},
 }))(class extends Component {
 	state = {
@@ -69,6 +78,30 @@ export default withStyles(theme => ({
 			'science',
 			'service',
 			'student-life',
+		]
+		const category_Displays = [
+			'Architecture',
+			'Arts & Entertainment',
+			'Arts & Letters',
+			'Athletics',
+			'Business',
+			'Centers & Institutes',
+			'Engineering',
+			'Global Affairs',
+			'Graduate School',
+			'Health & Recreation',
+			'Hesburgh Libraries',
+			'Law School',
+			'Lectures & Conferences',
+			'Research',
+			'Official Academic Calendar',
+			'Ongoing Events',
+			'Open to the Public',
+			'Privately Sponsored Events',
+			'Religious & Spiritual',
+			'Science',
+			'Service',
+			'Student Life',
 		]	
 		return (
 			<Consumer>
@@ -89,20 +122,24 @@ export default withStyles(theme => ({
 								/>
 							)}
 						</FormGroup>
-						<FormControl>
-							<InputLabel>User</InputLabel>
-							<Input 
-								value={this.state.user}
-								onChange={this.handleUserChange}
-							/>
-						</FormControl>
-						<Button 
-							variant="contained" 
-							className={classes.button}
-							onClick={() => setInterests(this.state)}
-						>
-							Begin
-						</Button>
+						<div className={classes.submit}>
+							<Paper className={classes.paper}>
+								<FormControl>
+									<InputLabel>User</InputLabel>
+									<Input 
+										value={this.state.user}
+										onChange={this.handleUserChange}
+									/>
+								</FormControl>
+								<Button 
+									variant="contained" 
+									className={classes.button}
+									onClick={() => setInterests(this.state)}
+								>
+									Begin
+								</Button>
+							</Paper>
+						</div>
 					</Fragment>
 				)}
 			</Consumer>
