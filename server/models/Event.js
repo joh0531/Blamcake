@@ -37,6 +37,10 @@ const EventSchema = new mongoose.Schema({
     },
     user: {
         type: String
+    },
+    attending: {
+        default: [],
+        type: Array
     }
 })
 

@@ -1,3 +1,5 @@
+// TODO: refactor into not just deleting every time update is called, but by date.
+// TODO: refactor update to update data.
 const router = require('express').Router()
 const jsonParser = require('body-parser').json()
 const rp = require('request-promise')
@@ -14,7 +16,8 @@ router.post('/', jsonParser, (req, res) => {
 	const { interests } = req.body // destructuring obj -> directly get interests prop from req
 
 	// Delete interests first, to update events with new current date
-	Event.deleteMany({ category: { $in: interests }, user: '' })
+	// Event.deleteMany({ category: { $in: interests }, user: '' })
+	Event.deleteMany({ end_at: { $lt: new Date() }, user: '' })
         .then(new Promise((resolve, reject) => {
 			// req.body.interests - array of strings
 			interests.forEach((element, i) => {
@@ -32,22 +35,32 @@ router.post('/', jsonParser, (req, res) => {
 								content,
 								featured_image_url
 							} = el
-							Event.create({
-								start_at,
-								end_at,
-								location,
-								title,
-								all_day,
-								url,
-								content,
-								featured_image_url,
-								category: element,
-								user: ''
-							}).then(() => {
-								if (
-									i === interests.length - 1
-									&& j === elements.length - 1
-								) resolve();
+
+							Event.findOne({
+								title: {$eq: el.title},
+								content: {$eq: el.content}
+							}).then( existObj => {
+								if(!existObj) {
+									Event.create({
+										start_at,
+										end_at,
+										location,
+										title,
+										all_day,
+										url,
+										content,
+										featured_image_url,
+										category: element,
+										user: ''
+									}).then(() => {
+										if (
+											i === interests.length - 1
+											&& j === elements.length - 1
+										) resolve();
+									})
+								} else {
+									reject();
+								}
 							})
 						})
 			    	})
