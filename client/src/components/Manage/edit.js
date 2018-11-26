@@ -115,7 +115,6 @@ export default withStyles(theme => ({
 	render() {
 		const { classes } = this.props
 		const { _id, title, content, location, start_at, end_at, all_day, url, featured_image_url, category, user } = this.state
-		
 		return (
 			<div className={classes.general}>
 				<Paper className={classes.paper}>
