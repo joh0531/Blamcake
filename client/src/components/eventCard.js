@@ -39,7 +39,8 @@ export default withStyles(theme => ({
 	},
 	action: {
 		paddingLeft: theme.spacing.unit * 2,
-		paddingTop: theme.spacing.unit * 0.5,
+		margin: 0,
+
 	},
 	media: {
 		height: 165,
@@ -63,7 +64,8 @@ export default withStyles(theme => ({
 		this.setState({ expanded: !this.state.expanded })
 	}
 	handleCheck = (updateEventAttendees, index, attending, user) => {
-		console.log('attending',attending)
+		this.setState({ checked: !this.state.checked })
+		console.log('attending: ',attending)
 		updateEventAttendees(index, attending)
 		// this.setState(
 		// 	{ checked: !this.state.checked }, 
