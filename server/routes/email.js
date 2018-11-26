@@ -19,7 +19,7 @@ router.use((req, res, next) => {
 router.get('/:user', jsonParser, (req, res) => {
     client.transmissions.send({
         content: {
-            from: 'blamcake@example.com',
+            from: 'blamcake@emailblamcake.me',
             subject: 'blamcake test',
             text: 'hi from blamcake!'
         },
