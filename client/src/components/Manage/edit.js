@@ -41,18 +41,25 @@ export default withStyles(theme => ({
 	}
 	componentDidMount() {
 		const { _id, title, content, location, start_at, end_at, all_day, url, featured_image_url, category, user } = this.props.location.state
+		var start_dt = new Date(start_at)
+		var end_dt = new Date(end_at)
+		var newstart = new Date(start_dt.getTime() - start_dt.getTimezoneOffset()*60000)
+		newstart = newstart.toISOString().substring(0, newstart.toISOString().length - 1)
+		var newend = new Date(end_dt.getTime() - end_dt.getTimezoneOffset()*60000);
+		newend = newend.toISOString().substring(0, newend.toISOString().length - 1)
+		
 		this.setState({
-			_id:_id,
-			title:title,
-			content:content,
-			location:location,
-			start_at:start_at,
-			end_at:end_at,
-			all_day:all_day,
-			url:url,
-			featured_image_url:featured_image_url,
-			category:category,
-			user:user
+			_id,
+			title,
+			content,
+			location,
+			start_at:newstart,
+			end_at:newend,
+			all_day,
+			url,
+			featured_image_url,
+			category,
+			user
 		})
 	}
 	handleChange = e => {
@@ -77,27 +84,38 @@ export default withStyles(theme => ({
 		console.log('submit', this.state)
 		const{ _id, title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category } = this.state
 		const{ history } = this.props
-		axios.post(`/editEvent`, {
-			_id,
-			user,
-			start_at,
-			end_at,
-			location,
-			title,
-			all_day,
-			url,
-			content,
-			featured_image_url,
-			category
-		}).then(function(res) {
-			console.log(res)
-			history.goBack()
-		}).catch(error => console.log(error))
+		if( title==="" |
+			user==="" |
+			content==="" |
+			location==="" |
+			all_day==="" |
+			start_at==="" |
+			end_at==="" |
+			category==="" ) {
+			window.alert("Error: Required Fields Not Filled Out!")
+		} else {
+			axios.post('/editEvent', {
+				_id,
+				user,
+				start_at,
+				end_at,
+				location,
+				title,
+				all_day,
+				url,
+				content,
+				featured_image_url,
+				category
+			}).then(function(res) {
+				console.log(res)
+				history.goBack()
+			}).catch(error => console.log(error))
+		}
 	}
-
 	render() {
 		const { classes } = this.props
 		const { _id, title, content, location, start_at, end_at, all_day, url, featured_image_url, category, user } = this.state
+		
 		return (
 			<div className={classes.general}>
 				<Paper className={classes.paper}>

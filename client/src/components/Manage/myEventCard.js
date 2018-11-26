@@ -61,6 +61,7 @@ export default withStyles(theme => ({
 
 	render() {
 		const { classes, title, content, location, start_at, end_at, all_day, url, featured_image_url, category, user, _id } = this.props
+		console.log(start_at)
 		return (
 			<Card className={classes.card}>
 				<CardMedia 

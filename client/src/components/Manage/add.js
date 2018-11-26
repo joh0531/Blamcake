@@ -59,24 +59,37 @@ export default withStyles(theme => ({
 		console.log(this.state)
 		const{ title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category } = this.state
 		const{ history } = this.props
-		axios.post('/addEvent', {
-			start_at,
-			end_at,
-			location,
-			title,
-			all_day,
-			url,
-			content,
-			featured_image_url,
-			category,
-			user
-		}).then(function(res) {
-			console.log(res)
-			history.goBack()
-		}).catch(function(error){
-			console.log(error)
-			window.alert("Error! ", error)
-		})
+		var start_dt = new Date(start_at);
+		var end_dt = new Date(end_at);
+		if( title=="" |
+			user=="" |
+			content=="" |
+			location=="" |
+			all_day=="" |
+			start_at=="" |
+			end_at=="" |
+			category=="" ) {
+			window.alert("Error: Required Fields Not Filled Out!")
+		} else {
+			axios.post('/addEvent', {
+				start_at: start_dt,
+				end_at: end_dt,
+				location,
+				title,
+				all_day,
+				url,
+				content,
+				featured_image_url,
+				category,
+				user
+			}).then(function(res) {
+				console.log(res)
+				history.goBack()
+			}).catch(function(error){
+				console.log(error)
+				window.alert("Error! ", error)
+			})
+		}
 	}
 
 	render() {
@@ -92,7 +105,7 @@ export default withStyles(theme => ({
 								<div>
 									<TextField
 										name="title"
-										label="Title"
+										label="Title: required *"
 										className={classes.textField}
 										value={this.state.title}
 										onChange={this.handleChange}
@@ -102,7 +115,7 @@ export default withStyles(theme => ({
 								<div>
 									<TextField
 										name="user"
-										label="Netid"
+										label="Netid: required *"
 										className={classes.textField}
 										value={this.state.user}
 										onChange={this.handleChange}
@@ -112,7 +125,7 @@ export default withStyles(theme => ({
 								<div>
 									<TextField
 										name="location"
-										label="Location"
+										label="Location: required *"
 										className={classes.textField}
 										value={this.state.location}
 										onChange={this.handleChange}
@@ -146,7 +159,7 @@ export default withStyles(theme => ({
 										value={this.state.start_at}
 										onChange={this.handleChange}
 										margin="normal"
-										helperText="Start"
+										helperText="Starts At: required *"
 										type="datetime-local"
 										/>
 									</div>
@@ -158,7 +171,7 @@ export default withStyles(theme => ({
 											value={this.state.end_at}
 											onChange={this.handleChange}
 											margin="normal"
-											helperText="End"
+											helperText="Ends At: required *"
 											type="datetime-local"
 											/>
 										</div>
@@ -169,7 +182,7 @@ export default withStyles(theme => ({
 						<div align="center">
 							<TextField
 								name="content"
-								label="Description"
+								label="Description: required *"
 								className={classes.descField}
 								value={this.state.content}
 								onChange={this.handleChange}
