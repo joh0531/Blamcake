@@ -118,7 +118,7 @@ export default withStyles(theme => ({
 											value={category}
 										/>
 									}
-									label={category}
+									label={category_Displays[i]}
 								/>
 							)}
 						</FormGroup>
