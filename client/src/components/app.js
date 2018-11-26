@@ -45,6 +45,17 @@ export default class extends Component {
 	// TODO:
 	// update local event with correct attendees, THEN post to axios
 	// or other way around
+	//
+	// send to editevent... the new attending list for that particular id
+	// id , attending
+	//
+	// for each id in state attending ..... send a post adding this user
+	// to the list of attendees
+	//
+	// {
+	// 	_id: id,
+	// 	attending: []
+	// }
 	updateEventAttendees = (index, attending) => {
 		console.log(this.state.events[index])
 		console.log('attending in update event attendees:',attending)
