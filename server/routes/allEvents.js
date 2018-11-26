@@ -12,7 +12,6 @@ router.get('/', (req, res) => {
 	Event.find()
 		.then(events => res.send({ events }))
 		.catch(error => res.send({ error }));
-		// {} for just sending as object
 })
 
 module.exports = router

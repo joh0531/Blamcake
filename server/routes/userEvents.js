@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const jsonParser = require('body-parser').json()
+const rp = require('request-promise')
 const Event = require('../models/Event')
 
 router.use((req, res, next) => {
@@ -8,10 +9,10 @@ router.use((req, res, next) => {
     next()
 })
 
-router.post('/', jsonParser, (req, res) => {
-	Event.findByIdAndUpdate(req.body._id, req.body)
-	   .then(result => res.send(result))
-	   .catch(error => res.send(error))
+router.get('/:user', jsonParser, (req, res) => {
+    Event.find({ user: { $in: req.params.user } })
+        .then(events => res.send(events))
+        .catch(error => res.send(error))
 })
 
 module.exports = router
