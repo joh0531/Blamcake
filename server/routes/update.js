@@ -58,8 +58,6 @@ router.post('/', jsonParser, (req, res) => {
 											&& j === elements.length - 1
 										) resolve();
 									})
-								} else {
-									reject();
 								}
 							})
 						})
