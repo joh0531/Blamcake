@@ -47,7 +47,7 @@ export default class extends Component {
 	// or other way around
 	updateEventAttendees = (index, attending) => {
 		console.log(this.state.events[index])
-		console.log('attending',attending)
+		console.log('attending in update event attendees:',attending)
 
 	}
 	render() {
