@@ -35,34 +35,7 @@ router.post('/', jsonParser, (req, res) => {
 								content,
 								featured_image_url
 							} = el
-							/*
-							Event.updateOne({
-								//filter
-								title: {$eq: el.title},
-								content: {$eq: el.content}
-							}, {
-								//update
-								$set: {
-									start_at: el.start_at,
-									end_at: el.end_at,
-									location: el.location,
-									title: el.title,
-									all_day: el.all_day,
-									url: el.url,
-									content: el.content,
-									featured_image_url: el.featured_image_url
-								}
-							}, {
-								upsert: true,
-							}).then(() => {
-								console.log('HIII');
-								if (
-									i === interests.length - 1
-									&& j === elements.length - 1
-								) resolve();
-							})
-							*/
-							console.log(el.title);
+
 							Event.findOne({
 								title: {$eq: el.title},
 								content: {$eq: el.content}
@@ -89,8 +62,6 @@ router.post('/', jsonParser, (req, res) => {
 									reject();
 								}
 							})
-
-
 						})
 			    	})
 			})
