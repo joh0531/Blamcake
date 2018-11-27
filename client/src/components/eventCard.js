@@ -17,13 +17,14 @@ export default withStyles(theme => ({
 	},
 	location: {
 		color: purple[300],
-		fontSize: 16,
+		fontSize: 14,
 		float: 'left',
+		padding: 0,
 	},
 	icon: {
 		color: purple[400],
 		marginLeft: theme.spacing.unit,
-		fontSize: 18,
+		fontSize: 14,
 		float: "left",
 	},
 	expand: {
@@ -38,9 +39,9 @@ export default withStyles(theme => ({
 		transform: 'rotate(180deg)',
 	},
 	action: {
-		paddingLeft: theme.spacing.unit * 2,
+		//paddingLeft: theme.spacing.unit * 2,
 		margin: 0,
-
+		padding: 0,
 	},
 	media: {
 		height: 165,
@@ -60,9 +61,10 @@ export default withStyles(theme => ({
 		overflow: "auto"
 	},
 	time: {
-		marginLeft: theme.spacing.unit * 4,
-		color: purple[400],
-		fontSize: 16,
+		color: '#f76292',
+		fontSize: 14,
+		paddingLeft: theme.spacing.unit * 2,
+		padding: 0,
 	},
 }))(class extends Component {
 	state = { 
@@ -95,8 +97,19 @@ export default withStyles(theme => ({
 	render(){
 		const { classes, title, content, location, start_at, end_at,
 			category, attending, index } = this.props
-		var start = new Date(start_at).toString()
-		var end = new Date(end_at).toString()
+		
+		// Time formatting
+		let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+			"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+		let datestart = new Date(start_at)
+		let dateend = new Date(end_at)
+		let dateperiod = monthNames[datestart.getMonth()] + ' '
+			+ datestart.getDate() + ', '
+			+ (parseInt(datestart.getHours())%12 == 0 ? '12' : datestart.getHours()%12) + ' '
+			+ (parseInt(datestart.getHours())/11 > 0 ? 'PM' : 'AM') + ' - '
+			+ (parseInt(dateend.getHours())%12 == 0 ? '12' : dateend.getHours()%12) + ' '
+			+ (parseInt(dateend.getHours())/11 > 0 ? 'PM' : 'AM') + ' '
+			+ datestart.getFullYear()
 
 		return (
 			<Card 
@@ -117,25 +130,14 @@ export default withStyles(theme => ({
 					</Typography>
 				</CardContent>
 				<CardActions className={classes.action}>
-					<LocationOn 
-						className={classes.icon} 
-						fontSize="small"
-					/>
-					<Typography 
-						variant="overline" 
-						className={classes.location}
-					>
+					<LocationOn className={classes.icon} fontSize="small"/>
+					<Typography variant="overline" className={classes.location}>
 						Location : { location }
 					</Typography>
 				</CardActions>
-				<CardActions>
-					<Typography className={classes.time}>
-						Start: { start }
-					</Typography>
-				</CardActions>
-				<CardActions>
-					<Typography className={classes.time}>
-						End: { end }
+				<CardActions className={classes.time}>
+					<Typography variant="overline">
+						Time: { dateperiod }
 					</Typography>
 				</CardActions>
 				<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
