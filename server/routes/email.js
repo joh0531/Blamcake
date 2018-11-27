@@ -12,29 +12,43 @@ router.use((req, res, next) => {
     next()
 })
 
-// const today = new Date();
-// const week = 7 * 24 * 60 * 60 * 1000;
-// const nextWeek = new Date(today.getTime() + week);
+const today = new Date();
+const minute = 60 * 1000;
+const week = 7 * 24 * 60 * 60 * 1000;
+const nextMinute = new Date(today.getTime() + minute);
+const nextWeek = new Date(today.getTime() + week);
 
 router.get('/:user', jsonParser, (req, res) => {
-    client.transmissions.send({
-        content: {
-            from: 'blamcake@emailblamcake.me',
-            subject: 'blamcake test',
-            text: 'hi from blamcake!'
-        },
-        recipients: [
-            {
-                address: 'joh4@nd.edu'
-            }
-        ]
-    }).then(data => {
-        console.log(data)
-        res.send('EMAIL SENT! :)')
-    }).catch(error => {
-        console.log(error)
-        res.send('ERROR! :(')
-    })
+    Promise.all([
+        client.transmissions.send({
+            content: {
+                from: 'blamcake@emailblamcake.me',
+                subject: 'Welcome to Blamcake!',
+                text: 'hi from blamcake!'
+            },
+            recipients: [
+                {
+                    address: `${req.params.user}@nd.edu`
+                }
+            ]
+        }),
+        client.transmissions.send({
+            content: {
+                from: 'blamcake@emailblamcake.me',
+                subject: 'Blamcake Events!',
+                text: 'hi again from blamcake!'
+            },
+            options: {
+                start_time: nextMinute
+            },
+            recipients: [
+                {
+                    address: `${req.params.user}@nd.edu`
+                }
+            ]
+        })
+    ]).then(data => res.send(data))
+    .catch(error => res.send(error))
 })
 
 module.exports = router
