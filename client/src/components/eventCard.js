@@ -93,7 +93,6 @@ export default withStyles(theme => ({
 		// )
 	}
 
-	// Setting collapsable to container width
 	render(){
 		const { classes, title, content, location, start_at, end_at,
 			category, attending, index } = this.props

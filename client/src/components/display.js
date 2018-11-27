@@ -57,6 +57,7 @@ export default withStyles(theme => ({
 						</Grid>
 						<Grid container className={classes.eventsdisplay}>
 							{events.map(({ 
+								_id,
 								title, 
 								content, 
 								location, 
@@ -67,6 +68,7 @@ export default withStyles(theme => ({
 								<EventCard
 									key={i}
 									index={i}
+									_id={_id}
 									title={title}
 									content={content}
 									location={location}
