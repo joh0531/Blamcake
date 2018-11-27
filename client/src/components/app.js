@@ -47,19 +47,26 @@ export default class extends Component {
 	// or other way around
 	//
 	// send to editevent... the new attending list for that particular id
-	// id , attending
+	// id , attending)
 	//
 	// for each id in state attending ..... send a post adding this user
 	// to the list of attendees
-	//
+	// }
 	// {
 	// 	_id: id,
 	// 	attending: []
 	// }
-	updateEventAttendees = (index, attending) => {
-		console.log(this.state.events[index])
-		console.log('attending in update event attendees:',attending)
+	updateEventAttendees = (index, _id, attending) => {
+		console.log('event selected:',this.state.events[index])
+		console.log('type of attending',typeof attending)
+		console.log('new attending list in update event attendees:',attending[0])
 
+		// const events = Object.assign({}, this.state.events)
+		// events[index].attending = attending
+		// console.log('events',events)
+		// this.setState({ events }, () => {
+		// 	console.log(this.state)
+		// })
 	}
 	render() {
 		return (

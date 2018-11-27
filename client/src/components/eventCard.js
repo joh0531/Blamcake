@@ -74,27 +74,33 @@ export default withStyles(theme => ({
 	handleExpandClick = () => {
 		this.setState({ expanded: !this.state.expanded })
 	}
-	handleCheck = (updateEventAttendees, index, attending, user) => {
-		this.setState({ checked: !this.state.checked })
-		console.log('attending in handle check: ',attending)
-		updateEventAttendees(index, attending)
-		// this.setState(
-		// 	{ checked: !this.state.checked }, 
-		// 	() => { 
-		// 		console.log(this.state)
-				
-		// 		if (this.state.checked && !attending.includes(user)){
-		// 			return updateEventAttendees(index, attending.push(user))
-		// 		} else if (!this.state.checked && attending.includes(user)){
-		// 			return updateEventAttendees(index, attending.filter(attendee => attendee != user))
-		// 		}
-		// 		return Promise.resolve()
-		// 	}
-		// )
+	handleCheck = (updateEventAttendees, index, _id, attending, user) => {
+		//this.setState({ checked: !this.state.checked }).then
+		//console.log('attending in handle check: ',attending)
+		//updateEventAttendees(index, attending)
+		this.setState(
+			{ checked: !this.state.checked }, 
+			() => { 
+				// console.log('prev. attending list in handle check:',attending)
+
+				// If user not added yet
+				if (this.state.checked && !attending.includes(user)){
+					attending.push(user)
+					console.log('after addition:',attending)
+					return updateEventAttendees(index, _id, attending)
+				// If user needs to be removed
+				} else if (!this.state.checked && attending.includes(user)){
+					attending = attending.filter(attendee => attendee != user)
+					console.log('after removal:',attending)
+					return updateEventAttendees(index, _id, attending)
+				}
+				return Promise.resolve()
+			}
+		)
 	}
 
 	render(){
-		const { classes, title, content, location, start_at, end_at,
+		const { classes, _id, title, content, location, start_at, end_at,
 			category, attending, index } = this.props
 		
 		// Time formatting
@@ -111,9 +117,7 @@ export default withStyles(theme => ({
 			+ datestart.getFullYear()
 
 		return (
-			<Card 
-				className={classes.card}
-			>
+			<Card className={classes.card}>
 				<CardMedia 
 					className={classes.media}
 					image={require("../images/nd1.png")}
@@ -121,10 +125,7 @@ export default withStyles(theme => ({
 					alt="Standard Event Background, ND Campus"
 				/>
 				<CardContent className={classes.title}>
-					<Typography 
-						variant="h5" 
-						color="primary"
-					>
+					<Typography variant="h5" color="primary">
 						{ title }
 					</Typography>
 				</CardContent>
@@ -162,10 +163,11 @@ export default withStyles(theme => ({
 							<FormControlLabel control={
 								<Checkbox
 									checked={this.state.checked}
-									onChange={() => this.handleCheck(updateEventAttendees, index, attending, user)}
+									onChange={() => this.handleCheck(updateEventAttendees, 
+										index, _id, attending, user)}
 									value="checked"
 								/>
-							}
+								}
 							label="Attending?"
 							/>
 						)}
@@ -174,6 +176,4 @@ export default withStyles(theme => ({
 			</Card>
 		);
 	}
-
-	
 })
