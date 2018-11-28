@@ -69,7 +69,7 @@ export default withStyles(theme => ({
 }))(class extends Component {
 	state = { 
 		expanded: false,
-		checked: false,
+		checked: this.props.attending.includes(this.props.user) 
 	}
 	handleExpandClick = () => {
 		this.setState({ expanded: !this.state.expanded })
@@ -80,15 +80,9 @@ export default withStyles(theme => ({
 			() => { 
 				// If user not added yet
 				if (this.state.checked && !attending.includes(user)){
-					//attending.push(user)
-					// TODO: 
-
-					//console.log('after addition:',attending)
 					return updateEventAttendees(index, _id, attending, true)
 				// If user needs to be removed
 				} else if (!this.state.checked && attending.includes(user)){
-					//attending = attending.filter(attendee => attendee != user)
-					//console.log('after removal:',attending)
 					return updateEventAttendees(index, _id, attending, false)
 				}
 				return Promise.resolve()
@@ -156,7 +150,7 @@ export default withStyles(theme => ({
 						<ExpandMoreIcon />
 					</IconButton>
 					<Consumer>
-						{({ updateEventAttendees, state: { user } }) => (
+						{({ updateEventAttendees }) => (
 							<FormControlLabel control={
 								<Checkbox
 									checked={this.state.checked}

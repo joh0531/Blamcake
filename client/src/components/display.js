@@ -35,7 +35,7 @@ export default withStyles(theme => ({
 
 		return (
 			<Consumer>
-				{({ state: { events } }) => (
+				{({ user, state: { events } }) => (
 					<Fragment>
 						<Grid container>
 							<Typography 
@@ -66,6 +66,7 @@ export default withStyles(theme => ({
 								category,
 								attending }, i) => (
 								<EventCard
+									user={user}
 									key={i}
 									index={i}
 									_id={_id}
