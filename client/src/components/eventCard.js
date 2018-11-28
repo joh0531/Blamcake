@@ -4,24 +4,27 @@ import { withStyles } from '@material-ui/core/styles'
 import { Card, CardActions, Typography } from '@material-ui/core'
 import { Collapse, IconButton } from '@material-ui/core'
 import { CardContent, CardMedia } from '@material-ui/core'
-import { purple } from '@material-ui/core/colors'
+import { FormControlLabel, Checkbox } from '@material-ui/core'
+import { purple, red } from '@material-ui/core/colors'
 import LocationOn from '@material-ui/icons/LocationOn'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import { Consumer } from './context'
 
 export default withStyles(theme => ({
 	card: {
 		margin: theme.spacing.unit * 1.5,
-		minWidth: theme.spacing.unit * 50,
+		maxWidth: 600,
 	},
 	location: {
 		color: purple[300],
-		fontSize: 16,
+		fontSize: 14,
 		float: 'left',
+		padding: 0,
 	},
 	icon: {
 		color: purple[400],
 		marginLeft: theme.spacing.unit,
-		fontSize: 18,
+		fontSize: 14,
 		float: "left",
 	},
 	expand: {
@@ -36,8 +39,9 @@ export default withStyles(theme => ({
 		transform: 'rotate(180deg)',
 	},
 	action: {
-		paddingLeft: theme.spacing.unit * 2,
-		paddingTop: theme.spacing.unit * 0.5,
+		//paddingLeft: theme.spacing.unit * 2,
+		margin: 0,
+		padding: 0,
 	},
 	media: {
 		height: 165,
@@ -50,16 +54,60 @@ export default withStyles(theme => ({
 		paddingRight: theme.spacing.unit * 4,
 		paddingBottom: 0,
 		paddingTop: 0,
+		// For limiting rendered HTML of event collapse details
+		display: "inline-block",
+		maxWidth: 600, // any better way to do this?
+		maxHeight: 200,
+		overflow: "auto"
+	},
+	time: {
+		color: '#f76292',
+		fontSize: 14,
+		paddingLeft: theme.spacing.unit * 2,
+		padding: 0,
 	},
 }))(class extends Component {
-	state = { expanded: false }
-	
+	state = { 
+		expanded: false,
+		checked: this.props.attending.includes(this.props.user) 
+	}
 	handleExpandClick = () => {
 		this.setState({ expanded: !this.state.expanded })
 	}
+	handleCheck = (updateEventAttendees, index, _id, attending, user) => {
+		this.setState(
+			{ checked: !this.state.checked }, 
+			() => updateEventAttendees(index, _id, attending, this.state.checked)
+				// If user not added yet
+				// if (this.state.checked && !attending.includes(user)){
+				// 	return updateEventAttendees(index, _id, attending, true)
+				// // If user needs to be removed
+				// } else if (!this.state.checked && attending.includes(user)){
+				// 	console.log(this.state)
+				// 	return updateEventAttendees(index, _id, attending, false)
+				// }
+		)
+	}
+	componentDidMount(){
+		console.log(this.state, this.props.attending, this.props.user)
+	}
 
-	render() {
-		const { classes, title, content, location, category } = this.props
+	render(){
+		const { classes, _id, title, content, location, start_at, end_at,
+			category, attending, index } = this.props
+		
+		// Time formatting
+		let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+			"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+		let datestart = new Date(start_at)
+		let dateend = new Date(end_at)
+		let dateperiod = monthNames[datestart.getMonth()] + ' '
+			+ datestart.getDate() + ', '
+			+ (parseInt(datestart.getHours())%12 == 0 ? '12' : datestart.getHours()%12) + ' '
+			+ (parseInt(datestart.getHours())/11 > 0 ? 'PM' : 'AM') + ' - '
+			+ (parseInt(dateend.getHours())%12 == 0 ? '12' : dateend.getHours()%12) + ' '
+			+ (parseInt(dateend.getHours())/11 > 0 ? 'PM' : 'AM') + ' '
+			+ datestart.getFullYear()
 
 		return (
 			<Card className={classes.card}>
@@ -70,24 +118,31 @@ export default withStyles(theme => ({
 					alt="Standard Event Background, ND Campus"
 				/>
 				<CardContent className={classes.title}>
-					<Typography 
-						variant="h5" 
-						color="primary"
-					>
+					<Typography variant="h5" color="primary">
 						{ title }
 					</Typography>
 				</CardContent>
 				<CardActions className={classes.action}>
-					<LocationOn 
-						className={classes.icon} 
-						fontSize="small"
-					/>
-					<Typography 
-						variant="overline" 
-						className={classes.location}
-					>
+					<LocationOn className={classes.icon} fontSize="small"/>
+					<Typography variant="overline" className={classes.location}>
 						Location : { location }
 					</Typography>
+				</CardActions>
+				<CardActions className={classes.time}>
+					<Typography variant="overline">
+						Time: { dateperiod }
+					</Typography>
+				</CardActions>
+				<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+					<CardContent>
+						<div className={classes.content}
+							dangerouslySetInnerHTML={
+								{__html: content }	
+							}
+						/>
+					</CardContent>
+				</Collapse>
+				<CardActions className={classes.action}>
 					<IconButton 
 						className={classnames(classes.expand, {
 							[classes.expandOpen]: this.state.expanded,
@@ -96,19 +151,22 @@ export default withStyles(theme => ({
 						>
 						<ExpandMoreIcon />
 					</IconButton>
+					<Consumer>
+						{({ updateEventAttendees, user }) => (
+							<FormControlLabel control={
+								<Checkbox
+									checked={this.state.checked}
+									onChange={() => this.handleCheck(updateEventAttendees, 
+										index, _id, attending, user)}
+									value="checked"
+								/>
+								}
+							label="Attending?"
+							/>
+						)}
+					</Consumer>
 				</CardActions>
-				<Collapse 
-					in={this.state.expanded}
-					timeout="auto"
-					unmountOnExit
-				>
-					<CardContent className={classes.content}>
-						<Typography variant="body1">
-							{ content }
-						</Typography>
-					</CardContent>
-				</Collapse>
 			</Card>
-		)
+		);
 	}
 })
