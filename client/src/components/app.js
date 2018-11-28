@@ -29,44 +29,23 @@ export default class extends Component {
 			.then(({ data }) =>
 				this.setState({ 
 					events: data 
-					
-					// data.map(event => ({
-					// 	data
-					// }))
-						// category: event.category,
-						// title: event.title,
-						// location: event.location,
-						// content: event.content,
-						// attending: event.attending,
 				})
 			).then(() => console.log(this.state)
 			).catch(error => console.error(error))
 	}
-	// TODO:
-	// update local event with correct attendees, THEN post to axios
-	// or other way around
-	//
-	// send to editevent... the new attending list for that particular id
-	// id , attending)
-	//
-	// for each id in state attending ..... send a post adding this user
-	// to the list of attendees
-	// }
-	// {
-	// 	_id: id,
-	// 	attending: []
-	// }
-	updateEventAttendees = (index, _id, attending) => {
-		console.log('event selected:',this.state.events[index])
-		console.log('type of attending',typeof attending)
-		console.log('new attending list in update event attendees:',attending[0])
+	updateEventAttendees = (index, _id, attending, doAddUser) => {
+		const { events, user } = this.state
 
-		// const events = Object.assign({}, this.state.events)
-		// events[index].attending = attending
-		// console.log('events',events)
-		// this.setState({ events }, () => {
-		// 	console.log(this.state)
-		// })
+		if (doAddUser){
+			attending.push(user)
+		} else {
+			attending = attending.filter(attendee => attendee !== user)
+		}
+		events[index].attending = attending
+		axios.post('/editEvent', { _id, attending })
+			.then(() => 
+				this.setState({ events })
+			)
 	}
 	render() {
 		return (

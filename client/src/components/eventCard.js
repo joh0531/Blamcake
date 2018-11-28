@@ -75,24 +75,21 @@ export default withStyles(theme => ({
 		this.setState({ expanded: !this.state.expanded })
 	}
 	handleCheck = (updateEventAttendees, index, _id, attending, user) => {
-		//this.setState({ checked: !this.state.checked }).then
-		//console.log('attending in handle check: ',attending)
-		//updateEventAttendees(index, attending)
 		this.setState(
 			{ checked: !this.state.checked }, 
 			() => { 
-				// console.log('prev. attending list in handle check:',attending)
-
 				// If user not added yet
 				if (this.state.checked && !attending.includes(user)){
-					attending.push(user)
-					console.log('after addition:',attending)
-					return updateEventAttendees(index, _id, attending)
+					//attending.push(user)
+					// TODO: 
+
+					//console.log('after addition:',attending)
+					return updateEventAttendees(index, _id, attending, true)
 				// If user needs to be removed
 				} else if (!this.state.checked && attending.includes(user)){
-					attending = attending.filter(attendee => attendee != user)
-					console.log('after removal:',attending)
-					return updateEventAttendees(index, _id, attending)
+					//attending = attending.filter(attendee => attendee != user)
+					//console.log('after removal:',attending)
+					return updateEventAttendees(index, _id, attending, false)
 				}
 				return Promise.resolve()
 			}
