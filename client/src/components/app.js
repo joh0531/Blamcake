@@ -30,15 +30,25 @@ export default class extends Component {
 		return axios.post('/update', { interests })
 			.then(({ data }) =>
 				this.setState({ 
-					events: data.map(event => ({
-						category: event.category,
-						title: event.title,
-						location: event.location,
-						content: event.content,
-					}))
+					events: data 
 				})
 			).then(() => console.log(this.state)
 			).catch(error => console.error(error))
+	}
+	updateEventAttendees = (index, _id, attending, doAddUser) => {
+		const { events, user } = this.state
+
+		if (doAddUser){
+			attending.push(user)
+		} else {
+			attending = attending.filter(attendee => attendee !== user)
+			console.log(attending)
+		}
+		events[index].attending = attending
+		axios.post('/editEvent', { _id, attending })
+			.then(() => 
+				this.setState({ events })
+			)
 	}
 	render() {
 		return (
@@ -48,6 +58,7 @@ export default class extends Component {
 		    			state: this.state,
 		    			setInterests: this.setInterests,
 						updateEvents: this.updateEvents,
+						updateEventAttendees: this.updateEventAttendees,
 		    		}}
 		    	>
 			        <Layout>
