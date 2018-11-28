@@ -49,7 +49,7 @@ export default withStyles(theme => ({
 	content: {
 		paddingLeft: theme.spacing.unit * 4,
 		paddingRight: theme.spacing.unit * 4,
-		paddingBottom: 0,
+		paddingBottom: theme.spacing.unit * 4,
 		paddingTop: 0,
 	},
 }))(class extends Component {
@@ -57,6 +57,28 @@ export default withStyles(theme => ({
 	
 	handleExpandClick = () => {
 		this.setState({ expanded: !this.state.expanded })
+	}
+
+	handleDelete = () => {
+		const { _id } = this.props
+		//to be implemented backend//
+		axios.delete(`/delete/${_id}`, {
+				start_at: start_dt,
+				end_at: end_dt,
+				location,
+				title,
+				all_day,
+				url,
+				content,
+				featured_image_url,
+				category,
+				user
+			}).then(function(res) {
+				console.log(res)
+			}).catch(function(error){
+				console.log(error)
+				window.alert("Error! ", error)
+			})
 	}
 
 	render() {
@@ -123,7 +145,16 @@ export default withStyles(theme => ({
 						<Typography variant="body1">
 							{ content }
 						</Typography>
+						<Button
+						variant="contained"
+						color="secondary"
+						className={classes.delete}
+						onClick={this.handleDelete}
+						>
+							Delete
+						</Button>
 					</CardContent>
+					
 				</Collapse>
 			</Card>
 		)

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
 import { Button, Select, Menu, MenuItem, Grid, Card, Switch, Paper, FormControlLabel, TextField, Typography } from '@material-ui/core'
 import axios from 'axios'
 
@@ -56,18 +57,17 @@ export default withStyles(theme => ({
     }
 
 	handleClickSubmit = () => {
-		console.log(this.state)
 		const{ title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category } = this.state
-		const{ history } = this.props
 		var start_dt = new Date(start_at);
 		var end_dt = new Date(end_at);
-		if( title=="" |
-			user=="" |
-			content=="" |
-			location=="" |
-			all_day=="" |
-			start_at=="" |
-			end_at=="" |
+
+		if( title=="" ||
+			user=="" ||
+			content=="" ||
+			location=="" ||
+			all_day=="" ||
+			start_at=="" ||
+			end_at=="" ||
 			category=="" ) {
 			window.alert("Error: Required Fields Not Filled Out!")
 		} else {
@@ -84,7 +84,6 @@ export default withStyles(theme => ({
 				user
 			}).then(function(res) {
 				console.log(res)
-				history.goBack()
 			}).catch(function(error){
 				console.log(error)
 				window.alert("Error! ", error)
@@ -257,6 +256,8 @@ export default withStyles(theme => ({
 						<div>
 							<Button
                             	onClick={this.handleClickSubmit}
+                            	component={Link}
+		               			to="/myevents"
                             	color="primary"
                             	variant="outlined"
 	                        > 

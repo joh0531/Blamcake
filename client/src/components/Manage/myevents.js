@@ -20,7 +20,6 @@ export default withStyles(theme => ({
 	}
 	componentDidMount() {
 		const{ user, classes } = this.props
-		console.log('user', user)
 		axios.get(`/userEvents/${user}`)
 		.then(res => {
 			console.log(res.data)
@@ -35,15 +34,6 @@ export default withStyles(theme => ({
 		if (!userEvents.length) return null
 		return (
 			<Fragment>
-				<div>
-					<Button
-						variant="outlined"
-						component={Link}
-		               	to="/add"
-		               >
-		               	Add
-					</Button>
-				</div>
 				<div className={classes.general}>
 					<Typography align="center" variant="display2">My Events</Typography>
 					<br />
@@ -66,6 +56,13 @@ export default withStyles(theme => ({
 						))}
 					</Grid>
 					<br />
+					<Button
+						variant="outlined"
+						component={Link}
+		               	to="/add"
+		               >
+		               	Add
+					</Button>
 				</div>
 			</Fragment>
 		)

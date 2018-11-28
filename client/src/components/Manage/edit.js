@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
 import { Button, Select, Menu, MenuItem, Grid, Card, Switch, Paper, FormControlLabel, TextField, Typography } from '@material-ui/core'
 import axios from 'axios'
 
@@ -43,8 +44,11 @@ export default withStyles(theme => ({
 		const { _id, title, content, location, start_at, end_at, all_day, url, featured_image_url, category, user } = this.props.location.state
 		var start_dt = new Date(start_at)
 		var end_dt = new Date(end_at)
+
+
 		var newstart = new Date(start_dt.getTime() - start_dt.getTimezoneOffset()*60000)
 		newstart = newstart.toISOString().substring(0, newstart.toISOString().length - 1)
+
 		var newend = new Date(end_dt.getTime() - end_dt.getTimezoneOffset()*60000);
 		newend = newend.toISOString().substring(0, newend.toISOString().length - 1)
 		
@@ -81,9 +85,7 @@ export default withStyles(theme => ({
 		this.setState({ category })
 	}
 	handleClickSubmit = () => {
-		console.log('submit', this.state)
 		const{ _id, title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category } = this.state
-		const{ history } = this.props
 		if( title==="" |
 			user==="" |
 			content==="" |
@@ -108,7 +110,6 @@ export default withStyles(theme => ({
 				category
 			}).then(function(res) {
 				console.log(res)
-				history.goBack()
 			}).catch(error => console.log(error))
 		}
 	}
@@ -277,6 +278,8 @@ export default withStyles(theme => ({
 						<div>
 							<Button
                             	onClick={this.handleClickSubmit}
+                            	component={Link}
+		               			to="/myevents"
                             	color="primary"
                             	variant="outlined"
 	                        > 
