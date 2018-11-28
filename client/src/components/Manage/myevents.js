@@ -31,11 +31,24 @@ export default withStyles(theme => ({
 	}
 	render() {
 		const { userEvents, classes, user } = this.state
-		if (!userEvents.length) return null
+
+		if ( user === '' ) {
+			return (
+				<div className={classes.general}>
+					<br />
+					<Typography 
+					align="center" 
+					>
+						Please go back to the homepage and update your user information.
+					</Typography>
+				</div>
+			)
+		}
 		return (
 			<Fragment>
 				<div className={classes.general}>
 					<Typography align="center" variant="display2">My Events</Typography>
+
 					<br />
 					<Grid container>
 						{userEvents.map(({ title, content, location, start_at, end_at, all_day, url, featured_image_url, category, user, _id }, i) => (
@@ -56,13 +69,16 @@ export default withStyles(theme => ({
 						))}
 					</Grid>
 					<br />
-					<Button
-						variant="outlined"
-						component={Link}
-		               	to="/add"
-		               >
-		               	Add
-					</Button>
+					<div>
+						<Button
+							variant="outlined"
+							component={Link}
+				              	to="/add"
+				              	align="center"
+				              >
+				              	Add
+						</Button>
+					</div>	
 				</div>
 			</Fragment>
 		)

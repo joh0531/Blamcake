@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { Button, Select, Menu, MenuItem, Grid, Card, Switch, Paper, FormControlLabel, TextField, Typography } from '@material-ui/core'
 import axios from 'axios'
 
@@ -38,7 +38,8 @@ export default withStyles(theme => ({
 		end_at:"",
 		url:"",
 		category:"",
-		anchorEl:null
+		anchorEl:null,
+		redirect:false
 	}
 	componentDidMount() {
 		const { _id, title, content, location, start_at, end_at, all_day, url, featured_image_url, category, user } = this.props.location.state
@@ -63,7 +64,7 @@ export default withStyles(theme => ({
 			url,
 			featured_image_url,
 			category,
-			user
+			user,
 		})
 	}
 	handleChange = e => {
@@ -85,7 +86,7 @@ export default withStyles(theme => ({
 		this.setState({ category })
 	}
 	handleClickSubmit = () => {
-		const{ _id, title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category } = this.state
+		const{ redirect, _id, title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category } = this.state
 		if( title==="" |
 			user==="" |
 			content==="" |
@@ -96,6 +97,7 @@ export default withStyles(theme => ({
 			category==="" ) {
 			window.alert("Error: Required Fields Not Filled Out!")
 		} else {
+			this.setState({ redirect:true })
 			axios.post('/editEvent', {
 				_id,
 				user,
@@ -115,7 +117,10 @@ export default withStyles(theme => ({
 	}
 	render() {
 		const { classes } = this.props
-		const { _id, title, content, location, start_at, end_at, all_day, url, featured_image_url, category, user } = this.state
+		const { redirect, _id, title, content, location, start_at, end_at, all_day, url, featured_image_url, category, user } = this.state
+		if ( redirect ) {
+			return <Redirect to='/myevents'/>;
+		}
 		return (
 			<div className={classes.general}>
 				<Paper className={classes.paper}>
@@ -278,8 +283,6 @@ export default withStyles(theme => ({
 						<div>
 							<Button
                             	onClick={this.handleClickSubmit}
-                            	component={Link}
-		               			to="/myevents"
                             	color="primary"
                             	variant="outlined"
 	                        > 

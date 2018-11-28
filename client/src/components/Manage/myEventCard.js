@@ -8,6 +8,7 @@ import { CardContent, CardMedia, Button } from '@material-ui/core'
 import { purple } from '@material-ui/core/colors'
 import LocationOn from '@material-ui/icons/LocationOn'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import axios from 'axios'
 
 export default withStyles(theme => ({
 	card: {
@@ -62,23 +63,16 @@ export default withStyles(theme => ({
 	handleDelete = () => {
 		const { _id } = this.props
 		//to be implemented backend//
+		/*
 		axios.delete(`/delete/${_id}`, {
-				start_at: start_dt,
-				end_at: end_dt,
-				location,
-				title,
-				all_day,
-				url,
-				content,
-				featured_image_url,
-				category,
-				user
+				_id
 			}).then(function(res) {
 				console.log(res)
 			}).catch(function(error){
 				console.log(error)
 				window.alert("Error! ", error)
 			})
+		*/
 	}
 
 	render() {
