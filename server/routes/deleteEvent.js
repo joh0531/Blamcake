@@ -9,11 +9,10 @@ router.use((req, res, next) => {
     next()
 })
 
-router.post('/', jsonParser, (req, res) => {
-	console.log(req.body)
-	Event.deleteOne(req.body)
-	.then((record) => res.send({record}))
-	.catch((error) => res.send({error}))
+router.delete('/', jsonParser, (req, res) => {
+	Event.findByIdAndDelete(req.body.id)
+    	.then(event => res.send({ event }))
+    	.catch(error => res.send({ error }))
 })
 
 module.exports = router
