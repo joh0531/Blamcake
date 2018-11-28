@@ -11,6 +11,11 @@ router.use((req, res, next) => {
     next()
 })
 
+function getDate(date) {
+    const dateObj = new Date(date);
+    return new Date(dateObj.getTime() - dateObj.getTimezoneOffset() * 60000)
+}
+
 router.post('/', jsonParser, (req, res) => {
 	const options = { json: true } // Automatically parses the JSON string in the response
 	const { interests } = req.body // destructuring obj -> directly get interests prop from req
@@ -35,21 +40,20 @@ router.post('/', jsonParser, (req, res) => {
 								content,
 								featured_image_url
 							} = el
-
 							Event.findOne({
 								title: {$eq: el.title},
 								content: {$eq: el.content}
 							}).then( existObj => {
 								if(!existObj) {
 									Event.create({
-										start_at,
-										end_at,
 										location,
 										title,
 										all_day,
 										url,
 										content,
 										featured_image_url,
+                                        start_at: getDate(start_at),
+										end_at: getDate(end_at),
 										category: element,
 										user: ''
 									}).then(() => {
@@ -58,8 +62,6 @@ router.post('/', jsonParser, (req, res) => {
 											&& j === elements.length - 1
 										) resolve();
 									})
-								} else {
-									reject();
 								}
 							})
 						})
