@@ -40,6 +40,7 @@ export default class extends Component {
 			attending.push(user)
 		} else {
 			attending = attending.filter(attendee => attendee !== user)
+			console.log(attending)
 		}
 		events[index].attending = attending
 		axios.post('/editEvent', { _id, attending })

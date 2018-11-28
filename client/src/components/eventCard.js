@@ -77,17 +77,19 @@ export default withStyles(theme => ({
 	handleCheck = (updateEventAttendees, index, _id, attending, user) => {
 		this.setState(
 			{ checked: !this.state.checked }, 
-			() => { 
+			() => updateEventAttendees(index, _id, attending, this.state.checked)
 				// If user not added yet
-				if (this.state.checked && !attending.includes(user)){
-					return updateEventAttendees(index, _id, attending, true)
-				// If user needs to be removed
-				} else if (!this.state.checked && attending.includes(user)){
-					return updateEventAttendees(index, _id, attending, false)
-				}
-				return Promise.resolve()
-			}
+				// if (this.state.checked && !attending.includes(user)){
+				// 	return updateEventAttendees(index, _id, attending, true)
+				// // If user needs to be removed
+				// } else if (!this.state.checked && attending.includes(user)){
+				// 	console.log(this.state)
+				// 	return updateEventAttendees(index, _id, attending, false)
+				// }
 		)
+	}
+	componentDidMount(){
+		console.log(this.state, this.props.attending, this.props.user)
 	}
 
 	render(){
@@ -150,7 +152,7 @@ export default withStyles(theme => ({
 						<ExpandMoreIcon />
 					</IconButton>
 					<Consumer>
-						{({ updateEventAttendees }) => (
+						{({ updateEventAttendees, user }) => (
 							<FormControlLabel control={
 								<Checkbox
 									checked={this.state.checked}

@@ -35,7 +35,7 @@ export default withStyles(theme => ({
 
 		return (
 			<Consumer>
-				{({ user, state: { events } }) => (
+				{({ state: { events, user } }) => (
 					<Fragment>
 						<Grid container>
 							<Typography 
