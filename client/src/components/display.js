@@ -35,7 +35,7 @@ export default withStyles(theme => ({
 
 		return (
 			<Consumer>
-				{({ state: { events } }) => (
+				{({ state: { events, user } }) => (
 					<Fragment>
 						<Grid container>
 							<Typography 
@@ -56,13 +56,27 @@ export default withStyles(theme => ({
 							)}
 						</Grid>
 						<Grid container className={classes.eventsdisplay}>
-							{events.map(({ title, content, location, category }, i) => (
+							{events.map(({ 
+								_id,
+								title, 
+								content, 
+								location, 
+								start_at,
+								end_at,
+								category,
+								attending }, i) => (
 								<EventCard
+									user={user}
 									key={i}
+									index={i}
+									_id={_id}
 									title={title}
 									content={content}
 									location={location}
+									start_at={start_at}
+									end_at={end_at}
 									category={category}
+									attending={attending}
 								/>
 							))}
 						</Grid>
