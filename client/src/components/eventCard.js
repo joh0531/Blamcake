@@ -8,6 +8,7 @@ import { FormControlLabel, Checkbox } from '@material-ui/core'
 import { purple } from '@material-ui/core/colors'
 import LocationOn from '@material-ui/icons/LocationOn'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import AvTimer from '@material-ui/icons/AvTimer'
 import { Consumer } from './context'
 
 export default withStyles(theme => ({
@@ -20,27 +21,29 @@ export default withStyles(theme => ({
 		fontSize: 14,
 		float: 'left',
 		paddingRight: 30,
-		paddingLeft: 20,
+		paddingLeft: 10,
 	},
 	icon: {
-		color: purple[400],
-		marginLeft: theme.spacing.unit,
-		fontSize: 14,
-		float: "left",
+		color: purple[300],
+		marginLeft: theme.spacing.unit * 4,
+		fontSize: 16,
+		float: 'left',
+		padding: 0,
 	},
 	expand: {
+		display: 'flex',
 		float: 'right',
 		transform: 'rotate(0deg)',
 		transition: theme.transitions.create('transform', {
 			duration: theme.transitions.duration.shortest,
 		}),
-		marginLeft: 'auto',
+		// marginLeft: 'auto',
+		marginLeft: 16,
 	},
 	expandOpen: {
 		transform: 'rotate(180deg)',
 	},
 	action: {
-		//paddingLeft: theme.spacing.unit * 2,
 		margin: 0,
 		padding: 0,
 	},
@@ -62,10 +65,26 @@ export default withStyles(theme => ({
 		overflow: "auto"
 	},
 	time: {
-		color: '#f76292',
+		color: purple[300],
 		fontSize: 14,
-		paddingLeft: theme.spacing.unit * 2,
+		margin: 0,
 		padding: 0,
+		paddingLeft: 10,
+	},
+	timewrapper: {
+		color: purple[300],
+		padding: 0,
+	},
+	timeicon: {
+		marginLeft: theme.spacing.unit * 4,
+		padding: 0,
+		fontSize: 16,
+	},
+	footer: {
+		padding: 0,
+		margin: 0,
+		display: 'flex',
+		justifyContent: 'space-between',
 	},
 }))(class extends Component {
 	state = { 
@@ -116,18 +135,19 @@ export default withStyles(theme => ({
 					</Typography>
 				</CardContent>
 				<CardActions className={classes.action}>
-					<LocationOn className={classes.icon} fontSize="small"/>
+					<LocationOn className={classes.icon}/>
 					<Typography variant="overline" className={classes.location}>
-						Location : { location }
+						{ location }
 					</Typography>
 				</CardActions>
-				<CardActions className={classes.time}>
-					<Typography variant="overline">
-						Time: { this.getCorrectTimeFormat() }
+				<CardActions className={classes.timewrapper}>
+					<AvTimer className={classes.timeicon}/>
+					<Typography variant="overline" className={classes.time}>
+						{ this.getCorrectTimeFormat() }
 					</Typography>
 				</CardActions>
 				<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-					<CardContent>
+					<CardContent style={{ padding: 0 }}>
 						<div className={classes.content}
 							dangerouslySetInnerHTML={
 								{__html: content }	
@@ -135,7 +155,7 @@ export default withStyles(theme => ({
 						/>
 					</CardContent>
 				</Collapse>
-				<CardActions className={classes.action}>
+				<CardActions className={classes.footer}>
 					<IconButton 
 						className={classnames(classes.expand, {
 							[classes.expandOpen]: this.state.expanded,
@@ -146,7 +166,8 @@ export default withStyles(theme => ({
 					</IconButton>
 					<Consumer>
 						{({ updateEventAttendees, user }) => (
-							<FormControlLabel control={
+							<FormControlLabel 
+								control={
 								<Checkbox
 									checked={this.state.checked}
 									onChange={() => this.handleCheck(updateEventAttendees, 
