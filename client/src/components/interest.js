@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { Button, FormControlLabel, FormGroup, Switch } from '@material-ui/core'
-import { FormControl, InputLabel, Input, Paper, Typography } from '@material-ui/core'
+import { Checkbox, FormControl, InputLabel, Input, Paper, Typography } from '@material-ui/core'
 import { Consumer } from './context'
+import axios from 'axios'
 
 export default withStyles(theme => ({
 	content: {
@@ -57,6 +58,7 @@ export default withStyles(theme => ({
 			'student-life': false,
 		},
 		user: '',
+		sub:false
 	}
 	handleInterestChange = name => event => {
 		let newState = Object.assign({}, this.state)
@@ -65,6 +67,17 @@ export default withStyles(theme => ({
 	}
 	handleUserChange = event => {
 		this.setState({ user: event.target.value })
+	}
+	handleOnClick = event => {
+		this.setState({ sub:!this.state.sub })
+		const { user, sub } = this.state
+		if (sub) {
+			axios.post('/email', {
+				user
+			}).then(function(res) {
+				console.log(res)
+			}).catch(error => console.log(error))
+		}
 	}
 	render() {
 		const { classes } = this.props
@@ -114,6 +127,16 @@ export default withStyles(theme => ({
 						</FormGroup>
 						<div className={classes.submit}>
 							<Paper className={classes.paper}>
+								<FormControlLabel
+									control={
+										<Checkbox
+											checked={this.state.sub}
+											onClick={this.handleOnClick}
+										/>
+									}
+									label="Receive emails about the selected categories"
+								/>
+								<br />
 								<FormControl>
 									<InputLabel>User</InputLabel>
 									<Input 

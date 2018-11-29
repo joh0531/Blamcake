@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { Button, Select, MenuItem, Grid, Card, 
-	Switch, Paper, FormControlLabel, TextField, Typography } from '@material-ui/core'
+import { Link, Redirect } from 'react-router-dom'
+import { Button, Select, Menu, MenuItem, Grid, Card, Switch, Paper, FormControlLabel, TextField, Typography } from '@material-ui/core'
 import axios from 'axios'
 
 export default withStyles(theme => ({
@@ -37,14 +37,15 @@ export default withStyles(theme => ({
 		end_at:"",
 		url:"",
 		category:"",
-		anchorEl:null
+		anchorEl:null,
+		redirect:false
 	}
 
 	handleChange = e => {
 		this.setState({ [e.target.name]: e.target.value })
 	}
 
-	handleChangeAllDay = (e) => {
+	handleChangeAllDay = e => {
 		this.setState({ all_day: !this.state.all_day })
 	}
 
@@ -56,26 +57,41 @@ export default withStyles(theme => ({
     	this.setState({ anchorEl: event.currentTarget })
     }
 
-	handleChangeCat = category => {
-		this.setState({ category })
-	}
-
 	handleClickSubmit = () => {
-		console.log(this.state)
-		const{ title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category } = this.state
-		axios.post('/addEvent', {
-			start_at,
-			end_at,
-			location,
-			title,
-			all_day,
-			url,
-			content,
-			featured_image_url,
-			category,
-			user
-		}).then(res => console.log(res)
-		).catch(error => console.log(error))
+		const{ redirect, title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category } = this.state
+		var start_dt = new Date(start_at);
+		var end_dt = new Date(end_at);
+
+		if( title==="" ||
+			user==="" ||
+			content==="" ||
+			location==="" ||
+			start_at==="" ||
+			end_at==="" ||
+			category==="" ) {
+			console.log(this.state)
+			window.alert("Error: Required Fields Not Filled Out!")
+		} else {
+			// change redirect to true
+			this.setState({ redirect:true })
+			axios.post('/addEvent', {
+				start_at: start_dt,
+				end_at: end_dt,
+				location,
+				title,
+				all_day,
+				url,
+				content,
+				featured_image_url,
+				category,
+				user
+			}).then(function(res) {
+				console.log(res)
+			}).catch(function(error){
+				console.log(error)
+				window.alert("Error! ", error)
+			})
+		}
 	}
 
 	render() {
@@ -91,7 +107,7 @@ export default withStyles(theme => ({
 								<div>
 									<TextField
 										name="title"
-										label="Title"
+										label="Title: required *"
 										className={classes.textField}
 										value={this.state.title}
 										onChange={this.handleChange}
@@ -101,7 +117,7 @@ export default withStyles(theme => ({
 								<div>
 									<TextField
 										name="user"
-										label="Netid"
+										label="Netid: required *"
 										className={classes.textField}
 										value={this.state.user}
 										onChange={this.handleChange}
@@ -111,7 +127,7 @@ export default withStyles(theme => ({
 								<div>
 									<TextField
 										name="location"
-										label="Location"
+										label="Location: required *"
 										className={classes.textField}
 										value={this.state.location}
 										onChange={this.handleChange}
@@ -145,7 +161,7 @@ export default withStyles(theme => ({
 										value={this.state.start_at}
 										onChange={this.handleChange}
 										margin="normal"
-										helperText="Start"
+										helperText="Starts At: required *"
 										type="datetime-local"
 										/>
 									</div>
@@ -157,7 +173,7 @@ export default withStyles(theme => ({
 											value={this.state.end_at}
 											onChange={this.handleChange}
 											margin="normal"
-											helperText="End"
+											helperText="Ends At: required *"
 											type="datetime-local"
 											/>
 										</div>
@@ -168,7 +184,7 @@ export default withStyles(theme => ({
 						<div align="center">
 							<TextField
 								name="content"
-								label="Description"
+								label="Description: required *"
 								className={classes.descField}
 								value={this.state.content}
 								onChange={this.handleChange}
