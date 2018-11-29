@@ -203,9 +203,10 @@ export default withStyles(theme => ({
 									horizontal: 'center',
 								}}
 							>
-							<Typography variant="h6" style={{ padding: 4 }}>
-								{ attending.join(' ') }
-							</Typography>
+								{ attending.length === 0 
+									? <Typography variant="caption" style={{ padding:4 }}> None yet </Typography>
+									: <Typography variant="h6" style={{ padding: 4 }}>{ attending.join(' ') }</Typography>
+								}
 							</Popover>
 						</div>
 						<Consumer>
