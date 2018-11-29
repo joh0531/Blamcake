@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { Button, FormControlLabel, FormGroup, Switch } from '@material-ui/core'
-import { FormControl, InputLabel, Input, Paper, Typography } from '@material-ui/core'
+import { Checkbox, FormControl, InputLabel, Input, Paper, Typography } from '@material-ui/core'
 import { Consumer } from './context'
 
 export default withStyles(theme => ({
@@ -57,6 +57,7 @@ export default withStyles(theme => ({
 			'student-life': false,
 		},
 		user: '',
+		sub:true
 	}
 	handleInterestChange = name => event => {
 		let newState = Object.assign({}, this.state)
@@ -114,6 +115,16 @@ export default withStyles(theme => ({
 						</FormGroup>
 						<div className={classes.submit}>
 							<Paper className={classes.paper}>
+								<FormControlLabel
+									control={
+										<Checkbox
+											checked={this.state.sub}
+											onClick={() => this.setState({ sub:!this.state.sub })}
+										/>
+									}
+									label="Receive emails about the selected categories"
+								/>
+								<br />
 								<FormControl>
 									<InputLabel>User</InputLabel>
 									<Input 
