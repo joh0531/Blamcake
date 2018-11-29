@@ -8,7 +8,7 @@ import { FormControlLabel, Checkbox } from '@material-ui/core'
 import { purple } from '@material-ui/core/colors'
 import LocationOn from '@material-ui/icons/LocationOn'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import AvTimer from '@material-ui/icons/AvTimer'
+import AccessTime from '@material-ui/icons/AccessTime'
 import { Consumer } from './context'
 
 export default withStyles(theme => ({
@@ -26,7 +26,7 @@ export default withStyles(theme => ({
 	icon: {
 		color: purple[300],
 		marginLeft: theme.spacing.unit * 4,
-		fontSize: 16,
+		fontSize: 20,
 		float: 'left',
 		padding: 0,
 	},
@@ -78,7 +78,7 @@ export default withStyles(theme => ({
 	timeicon: {
 		marginLeft: theme.spacing.unit * 4,
 		padding: 0,
-		fontSize: 16,
+		fontSize: 20,
 	},
 	footer: {
 		padding: 0,
@@ -141,7 +141,7 @@ export default withStyles(theme => ({
 					</Typography>
 				</CardActions>
 				<CardActions className={classes.timewrapper}>
-					<AvTimer className={classes.timeicon}/>
+					<AccessTime className={classes.timeicon}/>
 					<Typography variant="overline" className={classes.time}>
 						{ this.getCorrectTimeFormat() }
 					</Typography>
