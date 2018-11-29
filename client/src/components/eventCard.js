@@ -5,7 +5,7 @@ import { Card, CardActions, Typography } from '@material-ui/core'
 import { Collapse, IconButton } from '@material-ui/core'
 import { CardContent, CardMedia } from '@material-ui/core'
 import { FormControlLabel, Checkbox } from '@material-ui/core'
-import { purple, red } from '@material-ui/core/colors'
+import { purple } from '@material-ui/core/colors'
 import LocationOn from '@material-ui/icons/LocationOn'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { Consumer } from './context'
@@ -76,39 +76,31 @@ export default withStyles(theme => ({
 	}
 	handleCheck = (updateEventAttendees, index, _id, attending, user) => {
 		this.setState(
-			{ checked: !this.state.checked }, 
-			() => updateEventAttendees(index, _id, attending, this.state.checked)
-				// If user not added yet
-				// if (this.state.checked && !attending.includes(user)){
-				// 	return updateEventAttendees(index, _id, attending, true)
-				// // If user needs to be removed
-				// } else if (!this.state.checked && attending.includes(user)){
-				// 	console.log(this.state)
-				// 	return updateEventAttendees(index, _id, attending, false)
-				// }
+			{ checked: !this.state.checked }, () => 
+			updateEventAttendees(index, _id, attending, this.state.checked)
 		)
 	}
-	componentDidMount(){
-		console.log(this.state, this.props.attending, this.props.user)
-	}
+	getCorrectTimeFormat = () => {
+		const { start_at, end_at } = this.props
 
-	render(){
-		const { classes, _id, title, content, location, start_at, end_at,
-			category, attending, index } = this.props
-		
-		// Time formatting
 		let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
 			"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 		let datestart = new Date(start_at)
 		let dateend = new Date(end_at)
 		let dateperiod = monthNames[datestart.getMonth()] + ' '
 			+ datestart.getDate() + ', '
-			+ (parseInt(datestart.getHours())%12 == 0 ? '12' : datestart.getHours()%12) + ' '
-			+ (parseInt(datestart.getHours())/11 > 0 ? 'PM' : 'AM') + ' - '
-			+ (parseInt(dateend.getHours())%12 == 0 ? '12' : dateend.getHours()%12) + ' '
-			+ (parseInt(dateend.getHours())/11 > 0 ? 'PM' : 'AM') + ' '
+			+ (parseInt(datestart.getHours(),10)%12 === 0 ? '12' : datestart.getHours()%12) + ' '
+			+ (parseInt(datestart.getHours(),10)/11 > 0 ? 'PM' : 'AM') + ' - '
+			+ (parseInt(dateend.getHours(),10)%12 === 0 ? '12' : dateend.getHours()%12) + ' '
+			+ (parseInt(dateend.getHours(),10)/11 > 0 ? 'PM' : 'AM') + ' '
 			+ datestart.getFullYear()
 
+		return dateperiod
+	}
+	render(){
+		const { classes, _id, title, content, location, 
+			attending, index } = this.props
+		
 		return (
 			<Card className={classes.card}>
 				<CardMedia 
@@ -130,7 +122,7 @@ export default withStyles(theme => ({
 				</CardActions>
 				<CardActions className={classes.time}>
 					<Typography variant="overline">
-						Time: { dateperiod }
+						Time: { this.getCorrectTimeFormat() }
 					</Typography>
 				</CardActions>
 				<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
