@@ -18,7 +18,7 @@ const week = 7 * 24 * 60 * 60 * 1000;
 const nextMinute = new Date(today.getTime() + minute);
 const nextWeek = new Date(today.getTime() + week);
 
-router.get('/:user', jsonParser, (req, res) => {
+router.post('/', jsonParser, (req, res) => {
     Promise.all([
         client.transmissions.send({
             content: {
@@ -28,25 +28,47 @@ router.get('/:user', jsonParser, (req, res) => {
             },
             recipients: [
                 {
-                    address: `${req.params.user}@nd.edu`
+                    address: `${req.body.user}@nd.edu`
                 }
             ]
         }),
-        client.transmissions.send({
-            content: {
-                from: 'blamcake@emailblamcake.me',
-                subject: 'Blamcake Events!',
-                text: 'hi again from blamcake!'
-            },
-            options: {
-                start_time: nextMinute
-            },
-            recipients: [
-                {
-                    address: `${req.params.user}@nd.edu`
-                }
-            ]
-        })
+		// Start new Promise chain here
+		/*
+		get netid's (NOT USER field) interests, and week later date to query
+		then run findOne on that query
+		then pass object with events, into send func below
+		*/
+		Event.find({
+			// need interests from user here
+			// title: {$eq: "Bridgestone NHL Winter Classic: Boston Bruins vs. Chicago Blackhawks"},
+			start_at: {$gte: nextWeek}
+			// have a string that is declared empty, then concat it with multiple events
+		}).then( eventObj => {
+			let titleConcat = "";
+			eventObj.forEach((event) => {
+				titleConcat = titleConcat + "\n" + event.title;
+			})
+			if(titleConcat == "") {
+				titleConcat = "Nothing this week";
+			}
+			return titleConcat;
+		}).then(titleConcat => {
+			return client.transmissions.send({
+	            content: {
+	                from: 'blamcake@emailblamcake.me',
+	                subject: 'Blamcake Events!',
+					text: titleConcat
+	            },
+	            options: {
+	                start_time: nextMinute
+	            },
+	            recipients: [
+	                {
+	                    address: `${req.body.user}@nd.edu`
+	                }
+	            ]
+	        })
+		})
     ]).then(data => res.send(data))
     .catch(error => res.send(error))
 })
