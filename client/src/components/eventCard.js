@@ -3,43 +3,48 @@ import classnames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
 import { Card, CardActions, Typography } from '@material-ui/core'
 import { Collapse, IconButton } from '@material-ui/core'
-import { CardContent, CardMedia } from '@material-ui/core'
-import { FormControlLabel, Checkbox } from '@material-ui/core'
-import { purple, red } from '@material-ui/core/colors'
+import { CardContent, CardMedia, Button } from '@material-ui/core'
+import { FormControlLabel, Checkbox, Popover } from '@material-ui/core'
+import { purple } from '@material-ui/core/colors'
 import LocationOn from '@material-ui/icons/LocationOn'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import AccessTime from '@material-ui/icons/AccessTime'
 import { Consumer } from './context'
 
 export default withStyles(theme => ({
 	card: {
-		margin: theme.spacing.unit * 1.5,
+		margin: theme.spacing.unit * 1.8,
 		maxWidth: 600,
 	},
 	location: {
 		color: purple[300],
 		fontSize: 14,
 		float: 'left',
-		padding: 0,
+		paddingRight: 30,
+		paddingLeft: 10,
 	},
 	icon: {
-		color: purple[400],
-		marginLeft: theme.spacing.unit,
-		fontSize: 14,
-		float: "left",
+		color: purple[300],
+		marginLeft: theme.spacing.unit * 4,
+		fontSize: 20,
+		float: 'left',
+		padding: 0,
 	},
 	expand: {
-		float: 'right',
+		display: 'flex',
+		flexDirection: 'row',
+		float: 'left',
 		transform: 'rotate(0deg)',
 		transition: theme.transitions.create('transform', {
 			duration: theme.transitions.duration.shortest,
 		}),
-		marginLeft: 'auto',
+		// marginLeft: 'auto',
+		marginLeft: 16,
 	},
 	expandOpen: {
 		transform: 'rotate(180deg)',
 	},
 	action: {
-		//paddingLeft: theme.spacing.unit * 2,
 		margin: 0,
 		padding: 0,
 	},
@@ -61,54 +66,72 @@ export default withStyles(theme => ({
 		overflow: "auto"
 	},
 	time: {
-		color: '#f76292',
+		color: purple[300],
 		fontSize: 14,
-		paddingLeft: theme.spacing.unit * 2,
+		margin: 0,
 		padding: 0,
+		paddingLeft: 10,
+	},
+	timewrapper: {
+		color: purple[300],
+		padding: 0,
+	},
+	timeicon: {
+		marginLeft: theme.spacing.unit * 4,
+		padding: 0,
+		fontSize: 20,
+	},
+	footer: {
+		padding: 0,
+		margin: 0,
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
 	},
 }))(class extends Component {
 	state = { 
 		expanded: false,
+		anchorEl: null,
 		checked: this.props.attending.includes(this.props.user) 
 	}
 	handleExpandClick = () => {
 		this.setState({ expanded: !this.state.expanded })
 	}
+	handlePopoverClick = event => {
+		this.setState({ anchorEl: event.currentTarget })
+	}
+	handlePopoverClose = () => {
+		this.setState({ anchorEl: null })
+	}
 	handleCheck = (updateEventAttendees, index, _id, attending, user) => {
 		this.setState(
-			{ checked: !this.state.checked }, 
-			() => updateEventAttendees(index, _id, attending, this.state.checked)
-				// If user not added yet
-				// if (this.state.checked && !attending.includes(user)){
-				// 	return updateEventAttendees(index, _id, attending, true)
-				// // If user needs to be removed
-				// } else if (!this.state.checked && attending.includes(user)){
-				// 	console.log(this.state)
-				// 	return updateEventAttendees(index, _id, attending, false)
-				// }
+			{ checked: !this.state.checked }, () => 
+			updateEventAttendees(index, _id, attending, this.state.checked)
 		)
 	}
-	componentDidMount(){
-		console.log(this.state, this.props.attending, this.props.user)
-	}
+	getCorrectTimeFormat = () => {
+		const { start_at, end_at } = this.props
 
-	render(){
-		const { classes, _id, title, content, location, start_at, end_at,
-			category, attending, index } = this.props
-		
-		// Time formatting
 		let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
 			"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 		let datestart = new Date(start_at)
 		let dateend = new Date(end_at)
 		let dateperiod = monthNames[datestart.getMonth()] + ' '
 			+ datestart.getDate() + ', '
-			+ (parseInt(datestart.getHours())%12 == 0 ? '12' : datestart.getHours()%12) + ' '
-			+ (parseInt(datestart.getHours())/11 > 0 ? 'PM' : 'AM') + ' - '
-			+ (parseInt(dateend.getHours())%12 == 0 ? '12' : dateend.getHours()%12) + ' '
-			+ (parseInt(dateend.getHours())/11 > 0 ? 'PM' : 'AM') + ' '
+			+ (parseInt(datestart.getHours(),10)%12 === 0 ? '12' : datestart.getHours()%12) + ' '
+			+ (parseInt(datestart.getHours(),10)/11 > 0 ? 'PM' : 'AM') + ' - '
+			+ (parseInt(dateend.getHours(),10)%12 === 0 ? '12' : dateend.getHours()%12) + ' '
+			+ (parseInt(dateend.getHours(),10)/11 > 0 ? 'PM' : 'AM') + ' '
 			+ datestart.getFullYear()
 
+		return dateperiod
+	}
+	render(){
+		const { classes, _id, title, content, location, 
+			attending, index } = this.props
+		const { anchorEl } = this.state
+		const open = Boolean(anchorEl)
+		
 		return (
 			<Card className={classes.card}>
 				<CardMedia 
@@ -123,18 +146,19 @@ export default withStyles(theme => ({
 					</Typography>
 				</CardContent>
 				<CardActions className={classes.action}>
-					<LocationOn className={classes.icon} fontSize="small"/>
+					<LocationOn className={classes.icon}/>
 					<Typography variant="overline" className={classes.location}>
-						Location : { location }
+						{ location }
 					</Typography>
 				</CardActions>
-				<CardActions className={classes.time}>
-					<Typography variant="overline">
-						Time: { dateperiod }
+				<CardActions className={classes.timewrapper}>
+					<AccessTime className={classes.timeicon}/>
+					<Typography variant="overline" className={classes.time}>
+						{ this.getCorrectTimeFormat() }
 					</Typography>
 				</CardActions>
 				<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-					<CardContent>
+					<CardContent style={{ padding: 0 }}>
 						<div className={classes.content}
 							dangerouslySetInnerHTML={
 								{__html: content }	
@@ -142,7 +166,7 @@ export default withStyles(theme => ({
 						/>
 					</CardContent>
 				</Collapse>
-				<CardActions className={classes.action}>
+				<CardActions className={classes.footer}>
 					<IconButton 
 						className={classnames(classes.expand, {
 							[classes.expandOpen]: this.state.expanded,
@@ -151,20 +175,57 @@ export default withStyles(theme => ({
 						>
 						<ExpandMoreIcon />
 					</IconButton>
-					<Consumer>
-						{({ updateEventAttendees, user }) => (
-							<FormControlLabel control={
-								<Checkbox
-									checked={this.state.checked}
-									onChange={() => this.handleCheck(updateEventAttendees, 
-										index, _id, attending, user)}
-									value="checked"
-								/>
+					<div style={{display: 'flex',flexDirection: 'row-reverse'}}>
+						<div style={{clear: 'both', display: 'flex', justifyContent: 'space-between'}}>
+							<Button
+								aria-owns={open ? 'whosgoing' : undefined}
+								aria-haspopup="true"
+								variant="contained"
+								onClick={this.handlePopoverClick}
+								style={{ margin: 6,
+									padding: 6,  }}
+							>
+								<Typography color="inherit" variant="caption">
+									Who's Going?
+								</Typography>
+							</Button>
+							<Popover
+								id="whosgoing"
+								open={open}
+								anchorEl={anchorEl}
+								onClose={this.handlePopoverClose}
+								anchorOrigin={{
+									vertical: 'bottom',
+									horizontal: 'center',
+								}}
+								transformOrigin={{
+									vertical: 'top',
+									horizontal: 'center',
+								}}
+							>
+								{ attending.length === 0 
+									? <Typography variant="caption" style={{ padding:4 }}> No one yet </Typography>
+									: <Typography variant="h6" style={{ padding: 4 }}>{ attending.join(' ') }</Typography>
 								}
-							label="Attending?"
-							/>
-						)}
-					</Consumer>
+							</Popover>
+						</div>
+						<Consumer>
+							{({ updateEventAttendees, user }) => (
+								<FormControlLabel 
+									style={{ display: 'flex',float: 'right', }}
+									control={
+									<Checkbox
+										checked={this.state.checked}
+										onChange={() => this.handleCheck(updateEventAttendees, 
+											index, _id, attending, user)}
+										value="checked"
+									/>
+									}
+								label="I'm Going!"
+								/>
+							)}
+						</Consumer>
+					</div>
 				</CardActions>
 			</Card>
 		);

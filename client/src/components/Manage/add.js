@@ -96,10 +96,7 @@ export default withStyles(theme => ({
 
 	render() {
 		const{ classes } = this.props
-		const{ redirect, title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category, anchorEl } = this.state
-		if ( redirect ) {
-			return <Redirect to='/myevents'/>;
-		}
+
 		return(
 			<div className={classes.general}>
 				<Paper className={classes.paper}>

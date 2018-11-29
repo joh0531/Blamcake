@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { Button, FormControlLabel, FormGroup, Switch } from '@material-ui/core'
 import { Checkbox, FormControl, InputLabel, Input, Paper, Typography } from '@material-ui/core'

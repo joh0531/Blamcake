@@ -5,7 +5,7 @@ import EventCard from './eventCard'
 import { Consumer } from './context'
 
 export default withStyles(theme => ({
-	eventdisplay: {
+	eventsdisplay: {
 		[theme.breakpoints.down('md')]: {
 			justifyContent: "center",
 		},
