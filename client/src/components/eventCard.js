@@ -19,7 +19,8 @@ export default withStyles(theme => ({
 		color: purple[300],
 		fontSize: 14,
 		float: 'left',
-		padding: 0,
+		paddingRight: 30,
+		paddingLeft: 20,
 	},
 	icon: {
 		color: purple[400],
