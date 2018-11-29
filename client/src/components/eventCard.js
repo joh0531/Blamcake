@@ -204,7 +204,7 @@ export default withStyles(theme => ({
 								}}
 							>
 								{ attending.length === 0 
-									? <Typography variant="caption" style={{ padding:4 }}> None yet </Typography>
+									? <Typography variant="caption" style={{ padding:4 }}> No one yet </Typography>
 									: <Typography variant="h6" style={{ padding: 4 }}>{ attending.join(' ') }</Typography>
 								}
 							</Popover>
