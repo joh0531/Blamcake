@@ -3,8 +3,8 @@ import classnames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
 import { Card, CardActions, Typography } from '@material-ui/core'
 import { Collapse, IconButton } from '@material-ui/core'
-import { CardContent, CardMedia } from '@material-ui/core'
-import { FormControlLabel, Checkbox } from '@material-ui/core'
+import { CardContent, CardMedia, Button } from '@material-ui/core'
+import { FormControlLabel, Checkbox, Popover } from '@material-ui/core'
 import { purple } from '@material-ui/core/colors'
 import LocationOn from '@material-ui/icons/LocationOn'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -13,7 +13,7 @@ import { Consumer } from './context'
 
 export default withStyles(theme => ({
 	card: {
-		margin: theme.spacing.unit * 1.5,
+		margin: theme.spacing.unit * 1.8,
 		maxWidth: 600,
 	},
 	location: {
@@ -32,7 +32,8 @@ export default withStyles(theme => ({
 	},
 	expand: {
 		display: 'flex',
-		float: 'right',
+		flexDirection: 'row',
+		float: 'left',
 		transform: 'rotate(0deg)',
 		transition: theme.transitions.create('transform', {
 			duration: theme.transitions.duration.shortest,
@@ -84,15 +85,23 @@ export default withStyles(theme => ({
 		padding: 0,
 		margin: 0,
 		display: 'flex',
+		flexDirection: 'row',
 		justifyContent: 'space-between',
 	},
 }))(class extends Component {
 	state = { 
 		expanded: false,
+		anchorEl: null,
 		checked: this.props.attending.includes(this.props.user) 
 	}
 	handleExpandClick = () => {
 		this.setState({ expanded: !this.state.expanded })
+	}
+	handlePopoverClick = event => {
+		this.setState({ anchorEl: event.currentTarget })
+	}
+	handlePopoverClose = () => {
+		this.setState({ anchorEl: null })
 	}
 	handleCheck = (updateEventAttendees, index, _id, attending, user) => {
 		this.setState(
@@ -120,6 +129,8 @@ export default withStyles(theme => ({
 	render(){
 		const { classes, _id, title, content, location, 
 			attending, index } = this.props
+		const { anchorEl } = this.state
+		const open = Boolean(anchorEl)
 		
 		return (
 			<Card className={classes.card}>
@@ -164,21 +175,56 @@ export default withStyles(theme => ({
 						>
 						<ExpandMoreIcon />
 					</IconButton>
-					<Consumer>
-						{({ updateEventAttendees, user }) => (
-							<FormControlLabel 
-								control={
-								<Checkbox
-									checked={this.state.checked}
-									onChange={() => this.handleCheck(updateEventAttendees, 
-										index, _id, attending, user)}
-									value="checked"
+					<div style={{display: 'flex',flexDirection: 'row-reverse'}}>
+						<div style={{clear: 'both', display: 'flex', justifyContent: 'space-between'}}>
+							<Button
+								aria-owns={open ? 'whosgoing' : undefined}
+								aria-haspopup="true"
+								variant="contained"
+								onClick={this.handlePopoverClick}
+								style={{ margin: 6,
+									padding: 6,  }}
+							>
+								<Typography color="inherit" variant="caption">
+									Who's Going?
+								</Typography>
+							</Button>
+							<Popover
+								id="whosgoing"
+								open={open}
+								anchorEl={anchorEl}
+								onClose={this.handlePopoverClose}
+								anchorOrigin={{
+									vertical: 'bottom',
+									horizontal: 'center',
+								}}
+								transformOrigin={{
+									vertical: 'top',
+									horizontal: 'center',
+								}}
+							>
+							<Typography variant="h6" style={{ padding: 4 }}>
+								{ attending.join(' ') }
+							</Typography>
+							</Popover>
+						</div>
+						<Consumer>
+							{({ updateEventAttendees, user }) => (
+								<FormControlLabel 
+									style={{ display: 'flex',float: 'right', }}
+									control={
+									<Checkbox
+										checked={this.state.checked}
+										onChange={() => this.handleCheck(updateEventAttendees, 
+											index, _id, attending, user)}
+										value="checked"
+									/>
+									}
+								label="I'm Going!"
 								/>
-								}
-							label="Attending?"
-							/>
-						)}
-					</Consumer>
+							)}
+						</Consumer>
+					</div>
 				</CardActions>
 			</Card>
 		);
