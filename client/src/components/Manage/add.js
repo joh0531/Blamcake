@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { Button, Select, Menu, MenuItem, Grid, Card, Switch, Paper, FormControlLabel, TextField, Typography } from '@material-ui/core'
+import { Button, Select, MenuItem, Grid, Card, 
+	Switch, Paper, FormControlLabel, TextField, Typography } from '@material-ui/core'
 import axios from 'axios'
 
 export default withStyles(theme => ({
@@ -79,7 +80,6 @@ export default withStyles(theme => ({
 
 	render() {
 		const{ classes } = this.props
-		const{ title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category, anchorEl } = this.state
 
 		return(
 			<div className={classes.general}>
