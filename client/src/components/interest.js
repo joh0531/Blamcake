@@ -27,7 +27,7 @@ export default withStyles(theme => ({
 	header: {
 		margin: theme.spacing.unit * 5,
 		display: "flex",
-		alignItems: "center",	
+		alignItems: "center",
 		justifyContent: "center",
 		flexDirection: "column",
 	},
@@ -58,7 +58,7 @@ export default withStyles(theme => ({
 			'student-life': false,
 		},
 		user: '',
-		sub:false
+		sub: false
 	}
 	handleInterestChange = name => event => {
 		let newState = Object.assign({}, this.state)
@@ -69,15 +69,7 @@ export default withStyles(theme => ({
 		this.setState({ user: event.target.value })
 	}
 	handleOnClick = event => {
-		this.setState({ sub:!this.state.sub })
-		const { user, sub } = this.state
-		if (sub) {
-			axios.post('/email', {
-				user
-			}).then(function(res) {
-				console.log(res)
-			}).catch(error => console.log(error))
-		}
+		this.setState({ sub: !this.state.sub })
 	}
 	render() {
 		const { classes } = this.props
@@ -93,7 +85,7 @@ export default withStyles(theme => ({
 			'Hesburgh Libraries','Law School','Lectures & Conferences','Research','Official Academic Calendar',
 			'Ongoing Events','Open to the Public','Privately Sponsored Events','Religious & Spiritual',
 			'Science','Service','Student Life',
-		]	
+		]
 		return (
 			<Consumer>
 				{({ setInterests }) => (
@@ -112,7 +104,7 @@ export default withStyles(theme => ({
 						</div>
 						<FormGroup row>
 							{categories.map((category, i) =>
-								<FormControlLabel 
+								<FormControlLabel
 									key={i}
 									control={
 										<Switch
@@ -139,13 +131,13 @@ export default withStyles(theme => ({
 								<br />
 								<FormControl>
 									<InputLabel>User</InputLabel>
-									<Input 
+									<Input
 										value={this.state.user}
 										onChange={this.handleUserChange}
 									/>
 								</FormControl>
-								<Button 
-									variant="contained" 
+								<Button
+									variant="contained"
 									className={classes.button}
 									onClick={() => setInterests(this.state)}
 								>

@@ -15,7 +15,7 @@ export default class extends Component {
 		user: '',
 		events: [],
 	}
-	setInterests = (formState) => {
+	setInterests = formState => {
 		let interests = []
 		Object.entries(formState.interests).forEach(([interest, selected]) => {
 			if (selected){
@@ -24,13 +24,19 @@ export default class extends Component {
 		})
 		let { user } = formState
 		this.setState({ interests, user })
+		if (formState.sub) {
+			console.log('send email!')
+			axios.post('/email', { user })
+				.then(res => console.log(res))
+				.catch(error => console.log(error))
+		}
 	}
 	// server request for events pertaining to interests
 	updateEvents = interests => {
 		return axios.post('/update', { interests })
 			.then(({ data }) =>
-				this.setState({ 
-					events: data 
+				this.setState({
+					events: data
 				})
 			).then(() => console.log(this.state)
 			).catch(error => console.error(error))
@@ -46,7 +52,7 @@ export default class extends Component {
 		}
 		events[index].attending = attending
 		axios.post('/editEvent', { _id, attending })
-			.then(() => 
+			.then(() =>
 				this.setState({ events })
 			)
 	}
