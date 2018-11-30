@@ -19,6 +19,7 @@ const nextMinute = new Date(today.getTime() + minute);
 const nextWeek = new Date(today.getTime() + week);
 
 router.post('/', jsonParser, (req, res) => {
+    const { category, user } = req.body
     Promise.all([
         client.transmissions.send({
             content: {
@@ -28,7 +29,7 @@ router.post('/', jsonParser, (req, res) => {
             },
             recipients: [
                 {
-                    address: `${req.body.user}@nd.edu`
+                    address: `${user}@nd.edu`
                 }
             ]
         }),
@@ -41,28 +42,28 @@ router.post('/', jsonParser, (req, res) => {
 		Event.find({
 			// need interests from user here
 			// title: {$eq: "Bridgestone NHL Winter Classic: Boston Bruins vs. Chicago Blackhawks"},
-			start_at: {$gte: nextWeek}
+            category,
+            start_at: { $gte: nextWeek }
 			// have a string that is declared empty, then concat it with multiple events
 		}).then( eventObj => {
-            let titleConcat = "";
-            eventObj.forEach((event) => {
-                titleConcat = titleConcat + "\n" + event.title;
+            // console.log(eventObj)
+            let content = "";
+            eventObj.forEach(event => {
+                content += `<h1>${event.title}</h1>${event.content}`;
             })
-            if(titleConcat == "") {
-                titleConcat = "Nothing this week";
-            }
+            if (content == "") content = "<h1>Nothing this week</h1>";
 			return client.transmissions.send({
 	            content: {
 	                from: 'blamcake@emailblamcake.me',
 	                subject: 'Blamcake Events!',
-					text: titleConcat
+					html: content
 	            },
 	            options: {
 	                start_time: nextMinute // TODO: change to nextWeek for production
 	            },
 	            recipients: [
 	                {
-	                    address: `${req.body.user}@nd.edu`
+	                    address: `${user}@nd.edu`
 	                }
 	            ]
 	        })

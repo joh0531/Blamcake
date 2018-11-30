@@ -26,7 +26,7 @@ export default class extends Component {
 		this.setState({ interests, user })
 		if (formState.sub) {
 			console.log('send email!')
-			axios.post('/email', { user })
+			axios.post('/email', { user, category: interests })
 				.then(res => console.log(res))
 				.catch(error => console.log(error))
 		}
