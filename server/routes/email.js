@@ -44,15 +44,13 @@ router.post('/', jsonParser, (req, res) => {
 			start_at: {$gte: nextWeek}
 			// have a string that is declared empty, then concat it with multiple events
 		}).then( eventObj => {
-			let titleConcat = "";
-			eventObj.forEach((event) => {
-				titleConcat = titleConcat + "\n" + event.title;
-			})
-			if(titleConcat == "") {
-				titleConcat = "Nothing this week";
-			}
-			return titleConcat;
-		}).then(titleConcat => {
+            let titleConcat = "";
+            eventObj.forEach((event) => {
+                titleConcat = titleConcat + "\n" + event.title;
+            })
+            if(titleConcat == "") {
+                titleConcat = "Nothing this week";
+            }
 			return client.transmissions.send({
 	            content: {
 	                from: 'blamcake@emailblamcake.me',
@@ -60,7 +58,7 @@ router.post('/', jsonParser, (req, res) => {
 					text: titleConcat
 	            },
 	            options: {
-	                start_time: nextMinute
+	                start_time: nextMinute // TODO: change to nextWeek for production
 	            },
 	            recipients: [
 	                {
