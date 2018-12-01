@@ -34,12 +34,8 @@ export default class extends Component {
 	// server request for events pertaining to interests
 	updateEvents = interests => {
 		return axios.post('/update', { interests })
-			.then(({ data }) =>
-				this.setState({
-					events: data
-				})
-			).then(() => console.log(this.state)
-			).catch(error => console.error(error))
+			.then(res => this.setState({ events: res.data }))
+			.catch(error => console.error(error))
 	}
 	updateEventAttendees = (index, _id, attending, doAddUser) => {
 		const { events, user } = this.state
