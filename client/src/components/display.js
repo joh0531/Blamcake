@@ -32,7 +32,6 @@ export default withStyles(theme => ({
 
 	render() {
 		const { classes, interests } = this.props
-
 		return (
 			<Consumer>
 				{({ state: { events, user } }) => (
@@ -64,7 +63,8 @@ export default withStyles(theme => ({
 								start_at,
 								end_at,
 								category,
-								attending }, i) => (
+								attending
+							}, i) => (
 								<EventCard
 									user={user}
 									key={i}
