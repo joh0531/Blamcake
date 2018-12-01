@@ -1,7 +1,20 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
-import { Button, Select, MenuItem, Grid, Card, Switch, Paper, FormControlLabel, TextField, Typography } from '@material-ui/core'
+import {
+	Button,
+	Select,
+	MenuItem,
+	Grid,
+	Card,
+	Switch,
+	Paper,
+	FormControl,
+	FormControlLabel,
+	TextField,
+	Typography,
+	InputLabel
+} from '@material-ui/core'
 import axios from 'axios'
 
 export default withStyles(theme => ({
@@ -25,6 +38,9 @@ export default withStyles(theme => ({
 	},
 	time:{
 		padding: theme.spacing.unit * 2
+	},
+	formControl: {
+		minWidth: 120
 	}
 }))(class extends Component {
 	state = {
@@ -97,7 +113,7 @@ export default withStyles(theme => ({
 	render() {
 		const { classes } = this.props
 		const { redirect } = this.state
-		if (redirect) <Redirect to="/myevents" />
+		if (redirect) return <Redirect to="/myevents" />
 		return(
 			<div className={classes.general}>
 				<Paper className={classes.paper}>
@@ -197,64 +213,67 @@ export default withStyles(theme => ({
 						</div>
 						<div align="center">
 							<TextField
-							name="url"
-							label="Event URL"
-							className={classes.textField}
-							value={this.state.url}
-							onChange={this.handleChange}
-							margin="normal"
+								name="url"
+								label="Event URL"
+								className={classes.textField}
+								value={this.state.url}
+								onChange={this.handleChange}
+								margin="normal"
 							/>
 						</div>
 
 						<div align="center">
 							<TextField
-							name="featured_image_url"
-							label="Image URL"
-							className={classes.textField}
-							value={this.state.featured_image_url}
-							onChange={this.handleChange}
-							margin="normal"
+								name="featured_image_url"
+								label="Image URL"
+								className={classes.textField}
+								value={this.state.featured_image_url}
+								onChange={this.handleChange}
+								margin="normal"
 							/>
 						</div>
 						<div align="center">
-							<Select
-								value={this.state.category}
-								name="category"
-								onChange={this.handleChange}
-							>
-							{[
-								'architecture',
-								'arts-and-entertainment',
-								'arts-and-letters',
-								'athletics',
-								'business',
-								'centers-and-institutes',
-								'engineering',
-								'global-affairs',
-								'graduate-school',
-								'health-and-recreation',
-								'hesburgh-libraries',
-								'law',
-								'lectures-and-conferences',
-								'research',
-								'official-academic-calendar',
-								'ongoing',
-								'open-to-the-public',
-								'privately-sponsored-events',
-								'religious-and-spiritual',
-								'science',
-								'service',
-								'student-life'
-							].map(cat => (
-								<MenuItem
-									key={cat}
-									value={cat}
+							<FormControl required className={classes.formControl}>
+								<InputLabel htmlFor="category-required">Category</InputLabel>
+								<Select
+									value={this.state.category}
+									name="category"
+									onChange={this.handleChange}
+									inputProps={{ id: 'category-required' }}
 								>
-									{cat}
-								</MenuItem>
-							))}
-
-							</Select>
+									{[
+										'architecture',
+										'arts-and-entertainment',
+										'arts-and-letters',
+										'athletics',
+										'business',
+										'centers-and-institutes',
+										'engineering',
+										'global-affairs',
+										'graduate-school',
+										'health-and-recreation',
+										'hesburgh-libraries',
+										'law',
+										'lectures-and-conferences',
+										'research',
+										'official-academic-calendar',
+										'ongoing',
+										'open-to-the-public',
+										'privately-sponsored-events',
+										'religious-and-spiritual',
+										'science',
+										'service',
+										'student-life'
+									].map(cat => (
+										<MenuItem
+											key={cat}
+											value={cat}
+										>
+											{cat}
+										</MenuItem>
+									))}
+								</Select>
+							</FormControl>
 						</div>
 
 						<div>
