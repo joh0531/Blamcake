@@ -22,7 +22,7 @@ router.post('/', jsonParser, (req, res) => {
 
 	// Delete interests first, to update events with new current date
 	// Event.deleteMany({ category: { $in: interests }, user: '' })
-	Event.deleteMany({ end_at: { $lt: new Date() }, user: '' })
+	Event.deleteMany({"end_at": { $lt: new Date() }})
         .then(new Promise((resolve, reject) => {
 			// req.body.interests - array of strings
 			interests.forEach((element, i) => {
