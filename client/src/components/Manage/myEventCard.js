@@ -55,31 +55,37 @@ export default withStyles(theme => ({
 	},
 }))(class extends Component {
 	state = { expanded: false }
-	
 	handleExpandClick = () => {
 		this.setState({ expanded: !this.state.expanded })
 	}
-
-	handleDelete = () => {
+	handleDelete = (handleDeleteEvent, index) => {
 		const { _id } = this.props
-		//to be implemented backend//
-		/*
-		axios.delete(`/delete/${_id}`, {
-				_id
-			}).then(function(res) {
+		axios.delete(`/deleteEvent`, { data: { id: _id } })
+			.then(res => {
 				console.log(res)
-			}).catch(function(error){
-				console.log(error)
-				window.alert("Error! ", error)
-			})
-		*/
+				handleDeleteEvent(index)
+			}).catch(error => console.log(error))
 	}
-
 	render() {
-		const { classes, title, content, location, start_at, end_at, all_day, url, featured_image_url, category, user, _id } = this.props
+		const {
+			classes,
+			title,
+			content,
+			location,
+			start_at,
+			end_at,
+			all_day,
+			url,
+			featured_image_url,
+			category,
+			user,
+			_id,
+			index,
+			handleDeleteEvent
+		} = this.props
 		return (
 			<Card className={classes.card}>
-				<CardMedia 
+				<CardMedia
 					className={classes.media}
 					image={require("../../images/nd1.png")}
 					title="Standard Event Background, ND Campus"
@@ -87,7 +93,7 @@ export default withStyles(theme => ({
 					component={Link}
 					to={{
 						pathname: '/edit',
-						state: { 
+						state: {
 							_id: _id,
 							title: title,
 							content: content,
@@ -103,25 +109,25 @@ export default withStyles(theme => ({
 					}}
 				/>
 				<CardContent className={classes.title}>
-					<Typography 
-						variant="h5" 
+					<Typography
+						variant="h5"
 						color="primary"
 					>
 						{ title }
 					</Typography>
 				</CardContent>
 				<CardActions className={classes.action}>
-					<LocationOn 
-						className={classes.icon} 
+					<LocationOn
+						className={classes.icon}
 						fontSize="small"
 					/>
-					<Typography 
-						variant="overline" 
+					<Typography
+						variant="overline"
 						className={classes.location}
 					>
 						Location : { location }
 					</Typography>
-					<IconButton 
+					<IconButton
 						className={classnames(classes.expand, {
 							[classes.expandOpen]: this.state.expanded,
 						})}
@@ -130,7 +136,7 @@ export default withStyles(theme => ({
 						<ExpandMoreIcon />
 					</IconButton>
 				</CardActions>
-				<Collapse 
+				<Collapse
 					in={this.state.expanded}
 					timeout="auto"
 					unmountOnExit
@@ -143,12 +149,12 @@ export default withStyles(theme => ({
 						variant="contained"
 						color="secondary"
 						className={classes.delete}
-						onClick={this.handleDelete}
+						onClick={() => this.handleDelete(handleDeleteEvent, index)}
 						>
 							Delete
 						</Button>
 					</CardContent>
-					
+
 				</Collapse>
 			</Card>
 		)

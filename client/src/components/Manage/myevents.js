@@ -12,7 +12,7 @@ export default withStyles(theme => ({
 		marginRight: theme.spacing.unit * 10,
 		marginBottom: theme.spacing.unit * 10
 	}
-}))(class extends Component{
+}))(class extends Component {
 	state = {
 		userEvents: [],
 		classes: [],
@@ -29,6 +29,11 @@ export default withStyles(theme => ({
     		console.log(error)
   		})
 	}
+	handleDeleteEvent = index => {
+		const { userEvents } = this.state
+		userEvents.splice(index, 1)
+		this.setState({ userEvents })
+	}
 	render() {
 		const { userEvents, classes, user } = this.state
 
@@ -36,8 +41,8 @@ export default withStyles(theme => ({
 			return (
 				<div className={classes.general}>
 					<br />
-					<Typography 
-					align="center" 
+					<Typography
+					align="center"
 					>
 						Please go back to the homepage and update your user information.
 					</Typography>
@@ -65,6 +70,8 @@ export default withStyles(theme => ({
 								category={category}
 								user={user}
 								_id={_id}
+								index={i}
+								handleDeleteEvent={this.handleDeleteEvent}
 							/>
 						))}
 					</Grid>
@@ -78,7 +85,7 @@ export default withStyles(theme => ({
 				              >
 				              	Add
 						</Button>
-					</div>	
+					</div>
 				</div>
 			</Fragment>
 		)
