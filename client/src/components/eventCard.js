@@ -171,7 +171,7 @@ export default withStyles(theme => ({
 								aria-haspopup="true"
 								variant="contained"
 								onClick={this.handlePopoverClick}
-								style={classes.button}
+								className={classes.button}
 							>
 								<Typography color="inherit" variant="caption">
 									Who's Going?
