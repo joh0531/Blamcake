@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
-import { Link, Redirect } from 'react-router-dom'
-import { Button, Select, Menu, MenuItem, Grid, Card, Switch, Paper, FormControlLabel, TextField, Typography } from '@material-ui/core'
+import { Button, Select, MenuItem, Grid, Card, Switch, Paper, FormControlLabel, TextField, Typography } from '@material-ui/core'
 import axios from 'axios'
 
 export default withStyles(theme => ({
@@ -52,7 +52,7 @@ export default withStyles(theme => ({
 
 		var newend = new Date(end_dt.getTime() - end_dt.getTimezoneOffset()*60000);
 		newend = newend.toISOString().substring(0, newend.toISOString().length - 1)
-		
+
 		this.setState({
 			_id,
 			title,
@@ -86,7 +86,7 @@ export default withStyles(theme => ({
 		this.setState({ category })
 	}
 	handleClickSubmit = () => {
-		const{ redirect, _id, title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category } = this.state
+		const{ _id, title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category } = this.state
 		if( title==="" |
 			user==="" |
 			content==="" |
@@ -117,7 +117,7 @@ export default withStyles(theme => ({
 	}
 	render() {
 		const { classes } = this.props
-		const { redirect, _id, title, content, location, start_at, end_at, all_day, url, featured_image_url, category, user } = this.state
+		const { redirect, title, content, location, start_at, end_at, all_day, url, featured_image_url, category, user } = this.state
 		if ( redirect ) {
 			return <Redirect to='/myevents'/>;
 		}
@@ -217,7 +217,7 @@ export default withStyles(theme => ({
 								multiline
 								rows="10"
 							/>
-						</div>	
+						</div>
 						<div align="center">
 							<TextField
 							name="url"
@@ -244,7 +244,7 @@ export default withStyles(theme => ({
 								value={category}
 								name="category"
 								onChange={this.handleChange}
-							>						
+							>
 							{[
 								'architecture',
 								'arts-and-entertainment',
@@ -285,7 +285,7 @@ export default withStyles(theme => ({
                             	onClick={this.handleClickSubmit}
                             	color="primary"
                             	variant="outlined"
-	                        > 
+	                        >
 	                            Submit
 	                        </Button>
 						</div>
