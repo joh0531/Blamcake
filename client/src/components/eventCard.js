@@ -13,40 +13,28 @@ import { Consumer } from './context'
 
 export default withStyles(theme => ({
 	card: {
-		margin: theme.spacing.unit * 1.8,
-		maxWidth: 600,
+		margin: theme.spacing.unit * 1.8, maxWidth: 600,
 	},
 	location: {
-		color: purple[300],
-		fontSize: 14,
-		float: 'left',
-		paddingRight: 30,
-		paddingLeft: 10,
+		color: purple[300], fontSize: 14, float: 'left',
+		paddingRight: 30, paddingLeft: 10,
 	},
 	icon: {
-		color: purple[300],
-		marginLeft: theme.spacing.unit * 4,
-		fontSize: 20,
-		float: 'left',
-		padding: 0,
+		color: purple[300], marginLeft: theme.spacing.unit * 4,
+		fontSize: 20, float: 'left', padding: 0,
 	},
 	expand: {
-		display: 'flex',
-		flexDirection: 'row',
-		float: 'left',
-		transform: 'rotate(0deg)',
+		display: 'flex', flexDirection: 'row', float: 'left', transform: 'rotate(0deg)',
+		marginLeft: 16,
 		transition: theme.transitions.create('transform', {
 			duration: theme.transitions.duration.shortest,
 		}),
-		// marginLeft: 'auto',
-		marginLeft: 16,
 	},
 	expandOpen: {
 		transform: 'rotate(180deg)',
 	},
 	action: {
-		margin: 0,
-		padding: 0,
+		margin: 0, padding: 0,
 	},
 	media: {
 		height: 165,
@@ -55,38 +43,39 @@ export default withStyles(theme => ({
 		paddingBottom: theme.spacing.unit * 0.5,
 	},
 	content: {
-		paddingLeft: theme.spacing.unit * 4,
-		paddingRight: theme.spacing.unit * 4,
-		paddingBottom: 0,
-		paddingTop: 0,
+		paddingLeft: theme.spacing.unit * 4, paddingRight: theme.spacing.unit * 4,
+		paddingBottom: 0, paddingTop: 0,
 		// For limiting rendered HTML of event collapse details
-		display: "inline-block",
-		maxWidth: 600, // any better way to do this?
-		maxHeight: 200,
-		overflow: "auto"
+		display: "inline-block", maxWidth: 600, // any better way to do this?
+		maxHeight: 200, overflow: "auto"
 	},
 	time: {
-		color: purple[300],
-		fontSize: 14,
-		margin: 0,
-		padding: 0,
-		paddingLeft: 10,
+		color: purple[300], fontSize: 14, margin: 0, padding: 0, paddingLeft: 10,
 	},
 	timewrapper: {
-		color: purple[300],
-		padding: 0,
+		color: purple[300], padding: 0,
 	},
 	timeicon: {
-		marginLeft: theme.spacing.unit * 4,
-		padding: 0,
-		fontSize: 20,
+		marginLeft: theme.spacing.unit * 4, padding: 0, fontSize: 20,
 	},
 	footer: {
-		padding: 0,
-		margin: 0,
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
+		padding: 0, margin: 0, display: 'flex',
+		flexDirection: 'row', justifyContent: 'space-between',
+	},
+	attendingSection: {
+		display: 'flex', flexDirection: 'row-reverse',
+	},
+	othersAttending: {
+		clear: 'both', display: 'flex', justifyContent: 'space-between'
+	},
+	imattending: {
+		display: 'flex', float: 'right',
+	},
+	button: {
+		margin: 6, padding: 6,
+	},
+	popover: {
+		padding: 4,	
 	},
 }))(class extends Component {
 	state = { 
@@ -175,15 +164,14 @@ export default withStyles(theme => ({
 						>
 						<ExpandMoreIcon />
 					</IconButton>
-					<div style={{display: 'flex',flexDirection: 'row-reverse'}}>
-						<div style={{clear: 'both', display: 'flex', justifyContent: 'space-between'}}>
+					<div className={classes.attendingSection}>
+						<div className={classes.othersAttending}> 
 							<Button
 								aria-owns={open ? 'whosgoing' : undefined}
 								aria-haspopup="true"
 								variant="contained"
 								onClick={this.handlePopoverClick}
-								style={{ margin: 6,
-									padding: 6,  }}
+								style={classes.button}
 							>
 								<Typography color="inherit" variant="caption">
 									Who's Going?
@@ -204,15 +192,15 @@ export default withStyles(theme => ({
 								}}
 							>
 								{ attending.length === 0 
-									? <Typography variant="caption" style={{ padding:4 }}> No one yet </Typography>
-									: <Typography variant="h6" style={{ padding: 4 }}>{ attending.join(' ') }</Typography>
+									? <Typography variant="caption" className={classes.popover}> No one yet </Typography>
+									: <Typography variant="h6" className={classes.popover}>{ attending.join(' ') }</Typography>
 								}
 							</Popover>
 						</div>
 						<Consumer>
 							{({ updateEventAttendees, user }) => (
 								<FormControlLabel 
-									style={{ display: 'flex',float: 'right', }}
+									className={classes.imattending}	
 									control={
 									<Checkbox
 										checked={this.state.checked}
