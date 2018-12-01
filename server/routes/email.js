@@ -25,7 +25,7 @@ router.post('/', jsonParser, (req, res) => {
             content: {
                 from: 'blamcake@emailblamcake.me',
                 subject: 'Welcome to Blamcake!',
-                text: 'hi from blamcake!'
+                html: '<h1>Welcome to Blamcake!</h1><p>You are receiving this email because you have opted to get emails about events that you have shown interest in.</p><a href="http://blamcake.me">Click here to go to Blamcake to check out more events!</a>'
             },
             recipients: [
                 {
@@ -47,11 +47,16 @@ router.post('/', jsonParser, (req, res) => {
 			// have a string that is declared empty, then concat it with multiple events
 		}).then( eventObj => {
             // console.log(eventObj)
-            let content = "";
-            eventObj.forEach(event => {
-                content += `<h1>${event.title}</h1>${event.content}`;
+            let content = '<h1>Blamcake</h1><p>You are subscribed to these categories: '
+            category.forEach((c, i) => {
+                content += `<b><i>${c}</i></b>`
+                if (i != category.length - 1) content += ', '
             })
-            if (content == "") content = "<h1>Nothing this week</h1>";
+            content += '</p>'
+            eventObj.forEach(event => {
+                content += `<h2>${event.title}</h2>${event.content}`;
+            })
+            if (!eventObj.length) content = "<h1>Nothing this week</h1>";
 			return client.transmissions.send({
 	            content: {
 	                from: 'blamcake@emailblamcake.me',
