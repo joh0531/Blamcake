@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { Button, Grid, Paper, Typography } from '@material-ui/core'
+import { Grid, Paper, Typography } from '@material-ui/core'
 import EventCard from './eventCard'
 import { Consumer } from './context'
 
@@ -38,12 +38,12 @@ export default withStyles(theme => ({
 				{({ state: { events, user } }) => (
 					<Fragment>
 						<Grid container>
-							<Typography 
-								variant="h5" 
+							<Typography
+								variant="h5"
 								color="secondary"
 								className={classes.prompt}
 							>
-								Categories chosen: 
+								Categories chosen:
 							</Typography>
 							{interests.map((interest, i) =>
 								<Grid item xs className={classes.item} key={i}>
@@ -56,11 +56,11 @@ export default withStyles(theme => ({
 							)}
 						</Grid>
 						<Grid container className={classes.eventsdisplay}>
-							{events.map(({ 
+							{events.map(({
 								_id,
-								title, 
-								content, 
-								location, 
+								title,
+								content,
+								location,
 								start_at,
 								end_at,
 								category,

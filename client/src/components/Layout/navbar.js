@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import BuildIcon from '@material-ui/icons/Build'
 import EventIcon from '@material-ui/icons/Event'
-import { AppBar, Grid, Tab, Tabs, Typography, Menu, MenuItem, Button } from '@material-ui/core'
+import { AppBar, Grid, Tab, Tabs, Button } from '@material-ui/core'
 import { Consumer } from '../context'
 
 export default withStyles(theme => ({
@@ -24,7 +24,7 @@ export default withStyles(theme => ({
 	}
     render() {
         const { classes } = this.props
-        const { value, anchorEl } = this.state
+        const { value } = this.state
         return (
             <AppBar position="static">
                 <Grid alignItems="center" container justify="space-around">
@@ -43,36 +43,36 @@ export default withStyles(theme => ({
 							<Tab component={Link} label="Home" to="/"
 								icon={ <EventIcon color="inherit"/> }
 							/>
-							<Tab component={Link} label="Stage 1" to="/stage1" 
+							<Tab component={Link} label="Stage 1" to="/stage1"
 								icon={ <BuildIcon color="inherit"/> }
 							/>
 							<Tab component={Link} label="Stage 2" to="/stage2"
 								icon={ <BuildIcon color="inherit"/> }
 							/>
                         </Tabs>
-                    </Grid> 
-                    <Grid item>
-						<Consumer>
-							{({ state: { user } }) => {
-								if (user !== ''){
-									return (
-										<Button
-											color="secondary"
-											className={classes.title}
-											variant="text"
-											onClick={this.handleClick}
-											component={Link}
-											to="/myevents"
-										> 
-											My Events
-										</Button>
-									)	
-								} else {
-									return <div className={classes.title}></div>	
-								}
-							}}
-						</Consumer>
                     </Grid>
+                    <Grid item>
+                      <Consumer>
+                        {({ state: { user } }) => {
+                          if (user !== ''){
+                            return (
+                              <Button
+                                color="secondary"
+                                className={classes.title}
+                                variant="text"
+                                onClick={this.handleClick}
+                                component={Link}
+                                to="/myevents"
+                              > 
+                                My Events
+                              </Button>
+                            )	
+                          } else {
+                            return <div className={classes.title}></div>	
+                          }
+                        }}
+                      </Consumer>
+                   </Grid>
                 </Grid>
             </AppBar>
         )

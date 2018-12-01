@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { Link, Redirect } from 'react-router-dom'
-import { Button, Select, Menu, MenuItem, Grid, Card, Switch, Paper, FormControlLabel, TextField, Typography } from '@material-ui/core'
+import { Button, Select, MenuItem, Grid, Card, Switch, Paper, FormControlLabel, TextField, Typography } from '@material-ui/core'
 import axios from 'axios'
 
 export default withStyles(theme => ({
@@ -58,7 +57,7 @@ export default withStyles(theme => ({
     }
 
 	handleClickSubmit = () => {
-		const{ redirect, title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category } = this.state
+		const{ title, user, content, location, all_day, start_at, end_at, url, featured_image_url, category } = this.state
 		var start_dt = new Date(start_at);
 		var end_dt = new Date(end_at);
 
@@ -193,7 +192,7 @@ export default withStyles(theme => ({
 								multiline
 								rows="10"
 							/>
-						</div>	
+						</div>
 						<div align="center">
 							<TextField
 							name="url"
@@ -220,7 +219,7 @@ export default withStyles(theme => ({
 								value={this.state.category}
 								name="category"
 								onChange={this.handleChange}
-							>						
+							>
 							{[
 								'architecture',
 								'arts-and-entertainment',
@@ -261,7 +260,7 @@ export default withStyles(theme => ({
                             	onClick={this.handleClickSubmit}
                             	color="primary"
                             	variant="outlined"
-	                        > 
+	                        >
 	                            Submit
 	                        </Button>
 						</div>
@@ -269,5 +268,5 @@ export default withStyles(theme => ({
 				</Paper>
 			</div>
 		)
-	} 
+	}
 })
