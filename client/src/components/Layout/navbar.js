@@ -5,8 +5,12 @@ import BuildIcon from '@material-ui/icons/Build'
 import EventIcon from '@material-ui/icons/Event'
 import { AppBar, Grid, Tab, Tabs, Button } from '@material-ui/core'
 import { Consumer } from '../context'
+import { blamcake_icon } from '../../images'
 
 export default withStyles(theme => ({
+    icon: {
+        padding: 10
+    },
     title: {
         color: theme.palette.primary.contrastText,
 		width: 200,
@@ -28,6 +32,11 @@ export default withStyles(theme => ({
         return (
             <AppBar position="static">
                 <Grid alignItems="center" container justify="space-around">
+                    <Grid item>
+                        <div classes={classes.icon}>
+                            <img width="50" height="50" src={blamcake_icon} />
+                        </div>
+                    </Grid>
                     <Grid item>
 						<Button
                             className={classes.title}
@@ -63,12 +72,12 @@ export default withStyles(theme => ({
                                 onClick={this.handleClick}
                                 component={Link}
                                 to="/myevents"
-                              > 
+                              >
                                 My Events
                               </Button>
-                            )	
+                            )
                           } else {
-                            return <div className={classes.title}></div>	
+                            return <div className={classes.title}></div>
                           }
                         }}
                       </Consumer>

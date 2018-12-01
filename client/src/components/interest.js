@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { Button, FormControlLabel, FormGroup, Switch } from '@material-ui/core'
 import { Checkbox, FormControl, InputLabel, Input, Paper, Typography } from '@material-ui/core'
 import { Consumer } from './context'
+import { blamcake_icon } from '../images'
 
 export default withStyles(theme => ({
 	content: {
@@ -96,6 +97,7 @@ export default withStyles(theme => ({
 							<Typography variant="h2" color="primary" gutterBottom>
 								BLAMCAKE
 							</Typography>
+							<img width="200" height="250" src={blamcake_icon} />
 							<Typography variant="overline" color="primary">
 								Which ND Events do you want to view?
 							</Typography>
