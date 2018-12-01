@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import { Button, Select, MenuItem, Grid, Card, Switch, Paper, FormControlLabel, TextField, Typography } from '@material-ui/core'
 import axios from 'axios'
@@ -94,8 +95,9 @@ export default withStyles(theme => ({
 	}
 
 	render() {
-		const{ classes } = this.props
-
+		const { classes } = this.props
+		const { redirect } = this.state
+		if (redirect) <Redirect to="/myevents" />
 		return(
 			<div className={classes.general}>
 				<Paper className={classes.paper}>
