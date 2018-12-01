@@ -8,6 +8,7 @@ import { CardContent, CardMedia, Button } from '@material-ui/core'
 import { purple } from '@material-ui/core/colors'
 import LocationOn from '@material-ui/icons/LocationOn'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import AccessTime from '@material-ui/icons/AccessTime'
 import axios from 'axios'
 
 export default withStyles(theme => ({
@@ -50,8 +51,17 @@ export default withStyles(theme => ({
 	content: {
 		paddingLeft: theme.spacing.unit * 4,
 		paddingRight: theme.spacing.unit * 4,
-		paddingBottom: theme.spacing.unit * 4,
+		paddingBottom: theme.spacing.unit * 1,
 		paddingTop: 0,
+	},
+	time: {
+		color: purple[300], fontSize: 14, margin: 0, padding: 0, paddingLeft: 10,
+	},
+	timewrapper: {
+		color: purple[300], padding: 0,
+	},
+	timeicon: {
+		marginLeft: theme.spacing.unit * 3, padding: 0, fontSize: 16,
 	},
 }))(class extends Component {
 	state = { expanded: false }
@@ -65,6 +75,23 @@ export default withStyles(theme => ({
 				console.log(res)
 				handleDeleteEvent(index)
 			}).catch(error => console.log(error))
+	}
+	getCorrectTimeFormat = () => {
+		const { start_at, end_at } = this.props
+
+		let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+			"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+		let datestart = new Date(start_at)
+		let dateend = new Date(end_at)
+		let dateperiod = monthNames[datestart.getMonth()] + ' '
+			+ datestart.getDate() + ', '
+			+ (parseInt(datestart.getHours(),10)%12 === 0 ? '12' : datestart.getHours()%12) + ' '
+			+ (parseInt(datestart.getHours(),10)/11 > 0 ? 'PM' : 'AM') + ' - '
+			+ (parseInt(dateend.getHours(),10)%12 === 0 ? '12' : dateend.getHours()%12) + ' '
+			+ (parseInt(dateend.getHours(),10)/11 > 0 ? 'PM' : 'AM') + ' '
+			+ datestart.getFullYear()
+
+		return dateperiod
 	}
 	render() {
 		const {
@@ -125,8 +152,16 @@ export default withStyles(theme => ({
 						variant="overline"
 						className={classes.location}
 					>
-						Location : { location }
+						{ location }
 					</Typography>
+				</CardActions>
+				<CardActions className={classes.timewrapper}>
+					<AccessTime className={classes.timeicon}/>
+					<Typography variant="overline" className={classes.time}>
+						{ this.getCorrectTimeFormat() }
+					</Typography>
+				</CardActions>
+				<CardActions>
 					<IconButton
 						className={classnames(classes.expand, {
 							[classes.expandOpen]: this.state.expanded,
@@ -141,7 +176,7 @@ export default withStyles(theme => ({
 					timeout="auto"
 					unmountOnExit
 				>
-					<CardContent className={classes.content}>
+					<CardContent className={classes.content} style={{ marginBottom: 20 }}>
 						<Typography variant="body1">
 							{ content }
 						</Typography>
